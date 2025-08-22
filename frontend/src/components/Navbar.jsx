@@ -94,6 +94,10 @@ export const Navbar = () => {
                         </div>
                         <hr className="border-gray-300 mt-2 mb-3"></hr>
                         <div>
+                            <p>Refer a host</p>
+                        </div>
+                        <div className=" my-4"></div>
+                        <div>
                             <p>Find a Co-host</p>
                         </div>
                         <hr className="border-gray-300 my-3"></hr>
