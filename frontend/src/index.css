@@ -33,3 +33,14 @@ body {
   /* Shadows */
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
+
+
+@layer utilities {
+  .scrollbar-none {
+    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none;    /* Firefox */
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;            /* Chrome/Safari/Opera */
+  }
+}

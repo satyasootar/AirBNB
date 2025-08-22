@@ -109,23 +109,23 @@ export const Navbar = () => {
             <div className='flex border border-gray-2 shadow-xl   rounded-full w-fit '>
                 <div className='flex flex-col rounded-full py-3 pl-10 p-2 hover:bg-gray-1'>
                     <label htmlFor="destinations">Where</label>
-                    <input id='destinations' type="text" placeholder='Search Destinations' />
+                    <input id='destinations' type="text" placeholder='Search Destinations' className='outline-0' />
                 </div>
                 <div className='flex flex-col rounded-full py-3 pl-5 p-2 hover:bg-gray-1'>
                     <label htmlFor='checkin'>Check in</label>
-                    <DatePicker id='checkin' placeholderText='Add dates' />
+                    <DatePicker id='checkin' placeholderText='Add dates' className='outline-0' />
                 </div>
                 <div className='flex flex-col rounded-full py-3 pl-5 p-2 hover:bg-gray-1'>
                     <label htmlFor='checkout'>Check Out</label>
-                    <DatePicker id='checkout' placeholderText='Add dates' />
+                    <DatePicker id='checkout' placeholderText='Add dates' className='outline-0' />
                 </div>
                 <div className='flex py-3 pl-5 p-2 hover:bg-gray-1 rounded-full'>
                     <div className='flex flex-col  '>
                         <label htmlFor="who">Who</label>
-                        <input id='who' placeholder='Add guests' type='text' />
+                        <input id='who' placeholder='Add guests' type='text' className='outline-0' />
                     </div>
                     <div className='bg-airbnb rounded-full w-11 h-11 flex justify-center items-center'>
-                        <svg xmlns="http://www.w3.org/2000/svg" className='text-white' width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search-icon lucide-search text-white"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
                     </div>
                 </div>
             </div>
