@@ -1,0 +1,5 @@
+private.py
+API/    
+__pycache__/
+migrations/
+.vscode/
