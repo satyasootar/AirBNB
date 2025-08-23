@@ -1,11 +1,11 @@
-from rest_framework import generics, status
+from rest_framework import generics, status , permissions ,viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.shortcuts import get_object_or_404
 
-from .models import HotelsListing, HotelImages
-from .serializers import HotelsListingSerializer, HotelImageSerializer
+from .models import HotelsListing, HotelImages , Review
+from .serializers import HotelsListingSerializer, HotelImageSerializer , ReviewSerializer
 from .permissions import IsHostOrReadOnly, IsListingOwner
 
 
@@ -58,3 +58,18 @@ class ListingImageUploadView(generics.CreateAPIView):
             created.append(HotelImageSerializer(img).data)
 
         return Response({"uploaded": created}, status=status.HTTP_201_CREATED)
+
+
+class ReviewListCreateView(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        hotel_id = self.kwargs["pk"]
+        return Review.objects.filter(hotel_id=hotel_id).select_related("user")
+
+    def perform_create(self, serializer):
+        hotel_id = self.kwargs.get("pk")  # hotel id from URL
+        hotel = HotelsListing.objects.get(pk=hotel_id)
+        serializer.save(user=self.request.user, hotel=hotel)

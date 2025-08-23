@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import HotelsListing, HotelImages, Location, RoomList
+from .models import HotelsListing, HotelImages, Location, RoomList , Review
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -23,6 +23,27 @@ class HotelImageSerializer(serializers.ModelSerializer):
 
     def get_url(self, obj):
         return obj.image.url if obj.image else None
+    
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Review
+        fields = ["id", "hotel","user", "rating", "comment", "created_at"]
+        read_only_fields = ['hotel']
+    def get_user(self, obj):
+        return {
+            "id": obj.user.id,
+            "username": obj.user.username,
+            "email": obj.user.email,
+            "role": getattr(obj.user, "role", None),
+        }
+
+    def create(self, validated_data):
+        # DRF will pass hotel and user from serializer.save()
+        return Review.objects.create(**validated_data)
 
 
 class HotelsListingSerializer(serializers.ModelSerializer):
@@ -30,13 +51,13 @@ class HotelsListingSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
     rooms = RoomSerializer(many=True)  # ✅ allow nested input
     host = serializers.SerializerMethodField(read_only=True)
-
+    reviews = ReviewSerializer(many=True, read_only=True)
     class Meta:
         model = HotelsListing
         fields = [
             "id", "title", "description", "multiple_rooms",
             "rooms", "location", "address",
-            "price_per_night", "offersOrExtras",
+            "price_per_night", "offersOrExtras","reviews",
             "created_at", "updated_at",
             "host", "images"
         ]
@@ -113,3 +134,5 @@ class HotelsListingSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+

@@ -43,6 +43,7 @@ class HotelsListing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     host_id = models.ForeignKey(Users , on_delete=models.DO_NOTHING)
+
     offersOrExtras = ArrayField(
         models.CharField(max_length=50),
         blank=True,
@@ -58,3 +59,25 @@ class HotelImages(models.Model):
 
     def __str__(self):
         return f'Images of {self.hotel.title}'
+
+class Review(models.Model):
+    hotel = models.ForeignKey(
+        HotelsListing,
+        related_name="reviews",
+        on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        Users,
+        related_name="reviews",
+        on_delete=models.CASCADE
+    )
+    rating = models.PositiveSmallIntegerField(default=3)  # 1-5 scale
+    comment = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("hotel", "user")  # ❌ one user cannot review same hotel twice
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Review({self.user.username} -- {self.hotel.title})"

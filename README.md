@@ -2,23 +2,30 @@
 # POST : listings/
 ```
  {
-     "title": "Lolita",
-     "description": "A 5-start Hotel With 5-start Services and large Yard to enjoy your view to an entire Bhubaneshwar City",
-     "multiple_rooms": 1,
-     "rooms":[{
-         "bedroom":4,
-         "bathroom":3,
-         "beds":8,
-         "guest":16
-     }], 
-     "location": {
-         "city":"Bhubaneshwar",
-         "state":"Odisha",
-         "country":"India"
-     },  
-     "address": "Bhubaneshwar, India",
-     "price_per_night": 15000,
-     "offersOrExtras": ["Wi-Fi", "Food", "Airport Pickup"]
- }
+    "title": "Mayfair",
+    "description": "A beautiful and Peaceful View from the terrace with the most luxiriousity in the entireity of Bhubaneshwar",
+    "multiple_rooms": 5,
+    "rooms": [{
+"bedroom":2,
+"bathroom":2,
+"beds":4,
+"guest":7,
+}],
+    "location": {
+        "city": "Bhubaneshwar",
+        "state": "Odisha",
+        "country": "India"
+    },
+    "address": "InfoCity Sq. , Bhubaneshwar",
+    "price_per_night": 19000,
+    "offersOrExtras": ["Wi-Fi" , "Foods" , "Door-to-Door servvices" , "Airport Services"]
+}
 ```
 
+# POST : reviews
+```
+{ 
+    "rating": 5,
+    "comment": "It was Quite a Good Exprince with someone"
+}
+```

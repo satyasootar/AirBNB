@@ -30,6 +30,8 @@ urlpatterns = [
     path('api/auth/', include('users.urls')),
     #Listing Endpoint
     path('api/listings/',include('listings.urls')),
+    #Bookings Endpoint
+    path("api/bookings/", include("bookings.urls")),
 
 
     # JWT TOKEN PATH
