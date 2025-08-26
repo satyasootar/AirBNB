@@ -30,7 +30,7 @@
 }
 ```
 
-# POST : bookings/
+# GET : bookings/
 ```
  {
             "id": 22,
