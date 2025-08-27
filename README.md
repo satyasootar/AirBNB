@@ -70,7 +70,11 @@ PATCH /api/bookings/{id}/ → Partially update booking
 DELETE /api/bookings/{id}/ → Cancel booking
 ```
 
+
 ### 🔹 Payments
+
+# GET : bookings/
+
 ```
 
 GET /api/bookings/payments/{id}/ → Retrieve payment
@@ -269,6 +273,7 @@ DELETE /api/bookings/payments/{id}/ → Delete payment
 
 - Install dependencies
 
+
 - Configure PostgreSQL & Django environment
 
 ### Run migrations:
@@ -282,3 +287,6 @@ python manage.py migrate
 ```
 python manage.py runserver
 ```
+
+```
+
