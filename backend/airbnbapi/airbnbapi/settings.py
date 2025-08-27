@@ -1,7 +1,12 @@
 import os
 from pathlib import Path
 from datetime import timedelta
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 import private as p 
+
 
 DB_NAME = p.DB_NAME
 DB_USER = p.DB_USER
@@ -9,6 +14,13 @@ DB_PASSWORD =  p.DB_PASSWORD
 DB_HOST = p.DB_HOST
 DB_PORT = p.DB_PORT
 
+
+cloudinary.config(
+    cloud_name = p.CLOUD_NAME,
+    api_key = p.API_KEY,
+    api_secret = p.API_SECRET
+)
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +52,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     "corsheaders",
+    'cloudinary',
+    'cloudinary_storage',
     "users",
     "listings",
     "bookings",
@@ -141,7 +155,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 4,
+    'PAGE_SIZE': 1,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -158,7 +172,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #JWT Settings
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False, # make sure to change TRUE to Rotate and blacklist
     "BLACKLIST_AFTER_ROTATION": False,
