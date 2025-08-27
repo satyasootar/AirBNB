@@ -13,6 +13,10 @@ const Room = () => {
     const [isChevronUp, setIsChevornUp] = useState(false)
     const [isDropdownOn, setIsDropdownOn] = useState(false)
 
+    const [adult, setAdult] = useState(1)
+    const [children, setChindren] = useState(0)
+    const [infant, setInfant] = useState(0)
+
     const dropDownMenu = () => {
         setIsChevornUp(!isChevronUp)
         setIsDropdownOn(!isDropdownOn)
@@ -237,22 +241,24 @@ const Room = () => {
                                         onClick={dropDownMenu} >
                                         <div>
                                             <div className='font-medium '>Guests</div>
-                                            <div>1 Guests</div>
+                                            <div>{adult + children + infant} Guests</div>
                                         </div>
                                         <div>{isChevronUp ? <ChevronUp /> : <ChevronDown />}</div>
                                     </div>
 
+
                                     <button className='bg-airbnb py-3 rounded-full text-white font-semibold mt-5' >Check availability</button>
-                                    <div className={`  absolute bg-white h-80 w-[21rem] top-55 z-10 p-5 rounded-xl ${isDropdownOn? "block": "hidden"} `}>
+                                    {/* dopdown menu */}
+                                    <div className={`  absolute bg-white h-80 w-[21rem] top-55 z-10 p-5 rounded-xl ${isDropdownOn ? "block" : "hidden"} shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] `}>
                                         <div className='flex justify-between pt-3' >
                                             <div>
                                                 <div className='font-semibold text-lg' >Adults</div>
                                                 <div>Age 13+</div>
                                             </div>
                                             <div className='flex gap-2.5 items-center' >
-                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' >-</div>
-                                                <div>1</div>
-                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' >+</div>
+                                                <button className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' disabled={adult <= 1} onClick={() => setAdult((prev => prev - 1))} >-</button>
+                                                <div>{adult}</div>
+                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' onClick={() => setAdult((prev => prev + 1))} >+</div>
                                             </div>
                                         </div>
                                         <div className='flex justify-between pt-3' >
@@ -261,9 +267,9 @@ const Room = () => {
                                                 <div>Age 2-12</div>
                                             </div>
                                             <div className='flex gap-2.5 items-center' >
-                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' >-</div>
-                                                <div>1</div>
-                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' >+</div>
+                                                <button className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' disabled={children <= 0} onClick={() => setChindren((prev => prev - 1))} >-</button>
+                                                <div>{children}</div>
+                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' onClick={() => setChindren((prev => prev + 1))} >+</div>
                                             </div>
                                         </div>
                                         <div className='flex justify-between pt-3' >
@@ -271,23 +277,13 @@ const Room = () => {
                                                 <div className='font-semibold text-lg' >Infants</div>
                                                 <div>Under 2</div>
                                             </div>
-                                            <div className='flex gap-2.5 items-center' >
-                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' >-</div>
-                                                <div>1</div>
-                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' >+</div>
-                                            </div>
+                                            <button className='flex gap-2.5 items-center' >
+                                                <button className={`p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full`} disabled={infant <= 0} onClick={() => setInfant((prev => prev - 1))}>-</button>
+                                                <div>{infant}</div>
+                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' onClick={() => setInfant((prev => prev + 1))}>+</div>
+                                            </button>
                                         </div>
-                                        <div className='flex justify-between pt-3' >
-                                            <div>
-                                                <div className='font-semibold text-lg' >Adults</div>
-                                                <div>Age 13+</div>
-                                            </div>
-                                            <div className='flex gap-2.5 items-center' >
-                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' >-</div>
-                                                <div>1</div>
-                                                <div className='p-2 flex justify-center items-center size-8 border border-gray-600 rounded-full' >+</div>
-                                            </div>
-                                        </div>
+                                        <p className='py-3 text-gray-600'>Pets are not allowed in this stay</p>
                                         <div className='flex justify-end pt-3' >
                                             <div className='underline font-bold cursor-pointer'
                                                 onClick={() => setIsDropdownOn(false)} >
@@ -300,7 +296,6 @@ const Room = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     )
