@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
+import { Link } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
 
@@ -8,9 +9,7 @@ export const Navbar = () => {
 
     const [toggleHamburger, setToggleHamburger] = useState(false)
     const [hide, setHide] = useState(false)
-    console.log("hide: ", hide);
     const [lastScrollY, setLastScrollY] = useState(0)
-    console.log("lastScrollY: ", lastScrollY);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -30,16 +29,13 @@ export const Navbar = () => {
     return (
 
         <div className='flex flex-col items-center gap-2 sticky top-0  z-50'
-
         >
-
-
             {/* Top navbar */}
             <div className=" flex justify-between items-center relative w-full bg-white">
                 {/* Logo */}
-                <div>
+                <Link to="/">
                     <img src='/logo/Airbnb_Logo_1.png' alt='logo' className='w-25 cursor-pointer' />
-                </div>
+                </Link>
 
 
                 <div className='flex justify-center items-center gap-4 pl-25' >
