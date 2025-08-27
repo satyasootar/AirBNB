@@ -71,6 +71,9 @@ class Review(models.Model):
         related_name="reviews",
         on_delete=models.CASCADE
     )
+    cleanliness = models.IntegerField(null=True, blank=True)
+    location = models.IntegerField(null=True, blank=True)
+    service = models.IntegerField(null=True, blank=True) 
     rating = models.PositiveSmallIntegerField(default=3)  # 1-5 scale
     comment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

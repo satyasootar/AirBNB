@@ -11,5 +11,6 @@ urlpatterns = [
     path("<int:pk>/", views.ListingDetailView.as_view(), name="listing-detail"),
     path("<int:pk>/images/", views.ListingImageUploadView.as_view(), name="listing-image-upload"),
     path("<int:pk>/reviews/",  include(router.urls)),
+    # path("<int:pk>/reviews/<int:id>",  include(router.urls)),
 
 ]

@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     "corsheaders",
     'cloudinary',
     'cloudinary_storage',
+    'drf_spectacular',
+    'django_filters',
     "users",
     "listings",
     "bookings",
@@ -159,10 +161,23 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        
+
     ),
     
+'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'AirBnb API',
+    'DESCRIPTION': 'A Simple API similar to Airbnb',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 
 }
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

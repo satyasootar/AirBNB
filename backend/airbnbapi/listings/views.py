@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.shortcuts import get_object_or_404
-
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import HotelsListing, HotelImages , Review
 from .serializers import HotelsListingSerializer, HotelImageSerializer , ReviewSerializer
 from .permissions import IsHostOrReadOnly, IsListingOwner
@@ -15,7 +15,8 @@ class ListingListCreateView(generics.ListCreateAPIView):
     queryset = HotelsListing.objects.select_related("location", "host_id").prefetch_related("rooms", "images")
     serializer_class = HotelsListingSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsHostOrReadOnly]
-
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["location" , "title" , "price_per_night"]
     def perform_create(self, serializer):
         # attach the currently logged-in user as host (field is host_id)
         serializer.save(host_id=self.request.user)
@@ -63,7 +64,7 @@ class ListingImageUploadView(generics.CreateAPIView):
 class ReviewListCreateView(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly] 
 
     def get_queryset(self):
         hotel_id = self.kwargs["pk"]
@@ -72,4 +73,29 @@ class ReviewListCreateView(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         hotel_id = self.kwargs.get("pk")  # hotel id from URL
         hotel = HotelsListing.objects.get(pk=hotel_id)
-        serializer.save(user=self.request.user, hotel=hotel)
+        user = self.request.user
+        
+        existing_review = Review.objects.filter(hotel_id=hotel, user=user).first()
+        if existing_review:
+            # Update instead of creating a duplicate
+            serializer.instance = existing_review
+            serializer.save()
+        else:
+            serializer.save(user=user, hotel=hotel)
+
+    
+    def retrieve(self, request, pk ):
+        review = get_object_or_404(Review, pk=pk)
+        
+        serializer = ReviewSerializer(review)
+        
+        return Response(serializer.data)
+    
+    def destroy(self, request, *args, **kwargs):
+        review = self.get_object()
+        if review.user != request.user:
+            return Response(
+                {"error": "You can only delete your own review."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        return super().destroy(request, *args, **kwargs)

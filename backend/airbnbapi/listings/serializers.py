@@ -31,7 +31,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ["id", "hotel","user", "rating", "comment", "created_at"]
+        fields = ["id", "hotel","user", "rating" ,"cleanliness" , "location","service", "comment", "created_at"]
         read_only_fields = ['hotel']
     def get_user(self, obj):
         return {
@@ -75,7 +75,7 @@ class HotelsListingSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        rooms_data = validated_data.pop("rooms", [])
+        rooms_data = validated_data.pop("rooms", [{"bedroom":2,"bathroom":2,"beds":4 , "guest":4}])
         location_data = validated_data.pop("location")
 
         # ✅ handle location
@@ -96,12 +96,12 @@ class HotelsListingSerializer(serializers.ModelSerializer):
                     room_obj = RoomList.objects.get(pk=room_data)
                     hotel.rooms.add(room_obj)
                 except RoomList.DoesNotExist:
-                    pass
+                    return serializers.ValidationError("Those Rooms are not available.")
 
         return hotel
 
     def update(self, instance, validated_data):
-        rooms_data = validated_data.pop("rooms", [])
+        rooms_data = validated_data.pop("rooms", [{"bedroom":2,"bathroom":2,"beds":4 , "guest":4}])
         location_data = validated_data.pop("location", None)
 
         # ✅ update location
@@ -112,7 +112,7 @@ class HotelsListingSerializer(serializers.ModelSerializer):
             try:
                 instance.location = Location.objects.get(pk=location_data)
             except Location.DoesNotExist:
-                pass
+                return serializers.ValidationError("The Location is not available.")
 
         # ✅ update hotel fields
         for attr, value in validated_data.items():
@@ -130,7 +130,7 @@ class HotelsListingSerializer(serializers.ModelSerializer):
                         room_obj = RoomList.objects.get(pk=room_data)
                         instance.rooms.add(room_obj)
                     except RoomList.DoesNotExist:
-                        pass
+                        return serializers.ValidationError("Those Room's are not available.")
 
         instance.save()
         return instance
