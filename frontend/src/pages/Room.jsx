@@ -11,7 +11,6 @@ import ReviewCard from '../components/utils/ReviewCard';
 import MapEmbed from '../components/MapEmbed';
 import { StoreContext } from '../context/StoreContext.js';
 
-
 const Room = () => {
     const { id } = useParams();
     const { hotels } = useContext(StoreContext)

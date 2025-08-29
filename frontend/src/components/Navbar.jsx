@@ -4,12 +4,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Link } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
+import { SearchCards } from './utils/SearchCards';
 
 export const Navbar = () => {
 
     const [toggleHamburger, setToggleHamburger] = useState(false)
     const [hide, setHide] = useState(false)
     const [lastScrollY, setLastScrollY] = useState(0)
+    const [SearchSuggestionBox, setSearchSuggestionBox] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -26,9 +28,73 @@ export const Navbar = () => {
 
     }, [lastScrollY])
 
+
+    const searchItems = [
+        {
+            id: 1,
+            destination: "Puri Beach",
+            text: "Relax by the golden sands and waves",
+            image: "/assets/beachsearch.png",
+        },
+        {
+            id: 2,
+            destination: "Shimla Hills",
+            text: "Snow-capped peaks and pine forests",
+            image: "/assets/mountainsearch.png",
+        },
+        {
+            id: 3,
+            destination: "Goa",
+            text: "Beach parties and water sports",
+            image: "/assets/beachsearch.png",
+        },
+        {
+            id: 4,
+            destination: "Manali",
+            text: "Adventure hub for trekking and skiing",
+            image: "/assets/mountainsearch.png",
+        },
+        {
+            id: 5,
+            destination: "Kerala Backwaters",
+            text: "Houseboats and serene waterways",
+            image: "/assets/beachsearch.png",
+        },
+        {
+            id: 6,
+            destination: "Leh-Ladakh",
+            text: "Mountains and Buddhist monasteries",
+            image: "/assets/mountainsearch.png",
+        },
+        {
+            id: 7,
+            destination: "Andaman Islands",
+            text: "Tropical beaches and coral reefs",
+            image: "/assets/beachsearch.png",
+        },
+        {
+            id: 8,
+            destination: "Darjeeling",
+            text: "Tea gardens and scenic mountains",
+            image: "/assets/mountainsearch.png",
+        },
+        {
+            id: 9,
+            destination: "Vizag",
+            text: "Beautiful coastline with rocky cliffs",
+            image: "/assets/beachsearch.png",
+        },
+        {
+            id: 10,
+            destination: "Ooty",
+            text: "Green hills and botanical gardens",
+            image: "/assets/mountainsearch.png",
+        },
+    ];
+
     return (
 
-        <div className='flex flex-col items-center gap-2 sticky top-0  z-50'
+        <div className='flex flex-col items-center gap-2 sticky top-0 z-50 '
         >
             {/* Top navbar */}
             <div className=" flex justify-between items-center relative w-full bg-white">
@@ -153,7 +219,15 @@ export const Navbar = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search-icon lucide-search text-white"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
                     </div>
                 </div>
+                <div className={`absolute bg-white h-[30rem] w-[25rem] top-40 left-85 rounded-4xl p-6 pt-10 shadow-card overflow-scroll scrollbar-none scrollbar-thin-y hidden ${setSearchSuggestionBox ? "block" : ""} `}>
+                    {
+                        searchItems.map((Item,) => (
+                            <SearchCards key={Item.id} destination={Item.destination} text={Item.text} img={Item.image} />
+                        ))
+                    }
+                </div>
             </motion.div>
+
         </div>
 
     )
