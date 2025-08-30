@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from users.views import home
 from django.urls import path , include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -25,7 +26,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-
+    path("", home)
     #Users Endpoint
     path('api/auth/', include('users.urls')),
     #Listing Endpoint

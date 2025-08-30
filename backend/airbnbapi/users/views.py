@@ -12,6 +12,8 @@ from rest_framework_simplejwt import authentication
 
 User = get_user_model()
 # Create your views here.
+def home(request):
+    return HttpResponse("Welcome to the HomePage")
 
 class RegisterView(APIView):
     def post(self, request):
