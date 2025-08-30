@@ -61,9 +61,18 @@ MIDDLEWARE = [
 ]
 
 
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+]
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:5173",
+    "https://airbnbapi-6s4b.onrender.com",
 ]
 
 ROOT_URLCONF = 'airbnbapi.urls'
