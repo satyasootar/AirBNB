@@ -5,7 +5,6 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-import private as p 
 
 
 
