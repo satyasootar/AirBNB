@@ -100,47 +100,24 @@ WSGI_APPLICATION = 'airbnbapi.wsgi.application'
 
 # settings.
 
-
-
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD =  os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-CLOUD_NAME = os.getenv("CLOUD_NAME")
-CLOUD_API_KEY = os.getenv("CLOUD_API_KEY")
-CLOUD_API_SECRET = os.getenv("CLOUD_API_SECRET")
-
-# DB_NAME = p.DB_NAME
-# DB_USER = p.DB_USER
-# DB_PASSWORD =  p.DB_PASSWORD
-# DB_HOST = p.DB_HOST
-# DB_PORT = p.DB_PORT
-# CLOUD_NAME = p.CLOUD_NAME
-# CLOUD_API_KEY = p.API_KEY
-# CLOUD_API_SECRET = p.API_SECRET
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST':DB_HOST,
-        'PORT': DB_PORT,
-        "OPTIONS": {
-            "sslmode": "require"
-        }
+        'NAME':  os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': os.getenv("DB_PORT"),
+        "OPTIONS": {"sslmode": "require"},
     }
 }
 
-
-
 cloudinary.config(
-    cloud_name = CLOUD_NAME,
-    api_key = CLOUD_API_KEY,
-    api_secret = CLOUD_API_SECRET
+    cloud_name = os.getenv("CLOUD_NAME"),
+    api_key = os.getenv("CLOUD_API_KEY"),
+    api_secret = os.getenv("CLOUD_API_SECRET"),
 )
+
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 

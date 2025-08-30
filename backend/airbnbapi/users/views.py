@@ -24,16 +24,15 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Simple Custom Authentication for Login
-def Authenticate(email , password):
-    try:
-        check = User.objects.filter(email=email).exists()
-        if check:
-            user = User.objects.get(email=email )
-            if user.check_password(password):
-                
-                return user
-    except not check :
+def Authenticate(email, password):
+    check = User.objects.filter(email=email).exists()
+    if not check:
         return None
+    user = User.objects.get(email=email)
+    if not user.check_password(password):
+        return None
+    return user
+
 
 class LoginView(APIView):
     def post(self, request):
