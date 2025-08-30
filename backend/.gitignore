@@ -3,3 +3,4 @@ API/
 __pycache__/
 migrations/
 .vscode/
+airbnbapi/backup.sql
