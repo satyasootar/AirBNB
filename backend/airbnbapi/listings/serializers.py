@@ -5,7 +5,7 @@ from .models import HotelsListing, HotelImages, Location, RoomList , Review
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ["id", "city", "state", "country"]
+        fields = ["id", "city", "state", "country" , "lat","lon"]
 
 
 class RoomSerializer(serializers.ModelSerializer):

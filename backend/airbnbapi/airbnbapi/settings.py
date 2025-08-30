@@ -8,19 +8,6 @@ import cloudinary.api
 import private as p 
 
 
-DB_NAME = p.DB_NAME
-DB_USER = p.DB_USER
-DB_PASSWORD =  p.DB_PASSWORD
-DB_HOST = p.DB_HOST
-DB_PORT = p.DB_PORT
-
-
-cloudinary.config(
-    cloud_name = p.CLOUD_NAME,
-    api_key = p.API_KEY,
-    api_secret = p.API_SECRET
-)
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +22,8 @@ SECRET_KEY = 'django-insecure-2)a!)xw1bqrt(8nid!)wy@yq@ja6nv7_n+uiu8o6)yiv$!nc(7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['127.0.0.1:8000',]
+# CSRF_TRUSTED_ORIGINS = ["http://*.on-acorn.io","https://*.on-acorn.io"]
 
 # Set it up before migrations
 AUTH_USER_MODEL = 'users.Users'
@@ -102,18 +90,48 @@ WSGI_APPLICATION = 'airbnbapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# settings.py
+# settings.
+
+
+
+# DB_NAME = os.getenv("POSTGRES_DB")
+# DB_USER = os.getenv("POSTGRES_USER")
+# DB_PASSWORD =  os.getenv("POSTGRES_PASSWORD")
+# DB_HOST = os.getenv("POSTGRES_HOST")
+# DB_PORT = os.getenv("POSTGRES_PORT")
+
+DB_NAME = p.DB_NAME
+DB_USER = p.DB_USER
+DB_PASSWORD =  p.DB_PASSWORD
+DB_HOST = p.DB_HOST
+DB_PORT = p.DB_PORT
+CLOUD_NAME = p.CLOUD_NAME
+CLOUD_API_KEY = p.API_KEY
+CLOUD_API_SECRET = p.API_SECRET
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,         # The database name you created
-        'USER': DB_USER,             # The user you created
-        'PASSWORD': DB_PASSWORD,     # The password for that user
-        'HOST': DB_HOST,             # Or your server's IP address (e.g., '192.168.1.100')
-        'PORT': DB_PORT ,                  # Default PostgreSQL port
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST':DB_HOST,
+        'PORT': DB_PORT,
     }
 }
+
+
+
+cloudinary.config(
+    cloud_name = CLOUD_NAME,
+    api_key = CLOUD_API_KEY,
+    api_secret = CLOUD_API_SECRET
+)
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+
+
+
 
 
 # Password validation
@@ -157,7 +175,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 1,
+    'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -188,9 +206,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #JWT Settings
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "ROTATE_REFRESH_TOKENS": False, # make sure to change TRUE to Rotate and blacklist
-    "BLACKLIST_AFTER_ROTATION": False,
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+    "ROTATE_REFRESH_TOKENS": True, # make sure to change TRUE to Rotate and blacklist
+    "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
 
     "ALGORITHM": "HS256",

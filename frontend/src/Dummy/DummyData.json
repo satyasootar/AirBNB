@@ -1,0 +1,762 @@
+
+
+{
+  "listings": [
+        {
+            "id": 1,
+            "title": "Mayfair",
+            "description": "A beautiful and Peaceful View from the terrace with the most luxiriousity in the entireity of Bhubaneshwar",
+            "multiple_rooms": 5,
+            "rooms": [
+                {
+                    "id": 2,
+                    "bedroom": 2,
+                    "bathroom": 2,
+                    "beds": 4,
+                    "guest": 7,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 1,
+                "city": "Bhubaneshwar",
+                "state": "Odisha",
+                "country": "India",
+                "lat": "20.282329710423333",
+                "lon": "85.8273925182868"
+            },
+            "address": "InfoCity Sq. , Bhubaneshwar",
+            "price_per_night": 19000,
+            "offersOrExtras": [
+                "Wi-Fi",
+                "Foods",
+                "Door-to-Door servvices",
+                "Airport Services"
+            ],
+            "reviews": [
+                {
+                    "id": 10,
+                    "hotel": 1,
+                    "user": {
+                        "id": 4,
+                        "username": "swayam",
+                        "email": "swayam@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 4,
+                    "cleanliness": 3,
+                    "location": 2,
+                    "service": 4,
+                    "comment": "Quite Good Exprience  gave good vibes and luxirioius lifestyle as i was there for 1 week",
+                    "created_at": "2025-08-27T19:55:50.826616Z"
+                },
+                {
+                    "id": 9,
+                    "hotel": 1,
+                    "user": {
+                        "id": 3,
+                        "username": "rahul",
+                        "email": "",
+                        "role": "HO"
+                    },
+                    "rating": 3,
+                    "cleanliness": 3,
+                    "location": 5,
+                    "service": 5,
+                    "comment": "It was an amazing experince it was hygenic and the location was ok but the service waqs quite average or worse you can say",
+                    "created_at": "2025-08-27T19:55:28.982387Z"
+                }
+            ],
+            "created_at": "2025-08-23T18:13:28.053028Z",
+            "updated_at": "2025-08-26T17:06:05.162799Z",
+            "host": {
+                "id": 7,
+                "username": "swayam21",
+                "email": "swayam1@gamil.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 1,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755972999/hkfbesfukzfi6yj6oqnj.avif"
+                },
+                {
+                    "id": 2,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973001/wuflle1gavg3slypixzl.webp"
+                },
+                {
+                    "id": 3,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973002/rhanbe6ce3dcsjndkayq.avif"
+                },
+                {
+                    "id": 4,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973003/dqxgnkmegkukjujuhhtj.avif"
+                },
+                {
+                    "id": 5,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973005/rujuz3dgwddxqt6q7m2q.avif"
+                },
+                {
+                    "id": 6,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973007/hxnm8rpkdkfdwq936ths.avif"
+                },
+                {
+                    "id": 7,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973008/tuennib2hyfw2xg0nj2e.avif"
+                },
+                {
+                    "id": 8,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973009/wjeceibvcbxcm9k9khbq.avif"
+                },
+                {
+                    "id": 9,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973010/ivainwvneer7pzgjzug2.avif"
+                },
+                {
+                    "id": 10,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973012/lzth6xzzmvludw0tiphg.avif"
+                },
+                {
+                    "id": 11,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973012/czjm6ydj2wwig1zvfyoa.avif"
+                },
+                {
+                    "id": 12,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973014/lyqialhvfud3zu9y6ewg.webp"
+                },
+                {
+                    "id": 13,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973016/kj2r1xgkncrkhexasvjr.avif"
+                },
+                {
+                    "id": 14,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973017/ijrbmw9spo399qqhvand.avif"
+                },
+                {
+                    "id": 15,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973019/cashexi7bz8cgs1lrz5k.avif"
+                },
+                {
+                    "id": 16,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973020/rqnbeygtrv1tqqrpvkpa.avif"
+                },
+                {
+                    "id": 17,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973021/j3y5rio8gugcxnqiacxv.avif"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Layla",
+            "description": "Amazing %-start Hotels with bunch of Stuff to do like swimming , jogging , Sitting at lakeside anything you want",
+            "multiple_rooms": 10,
+            "rooms": [
+                {
+                    "id": 1,
+                    "bedroom": 2,
+                    "bathroom": 2,
+                    "beds": 4,
+                    "guest": 8,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": true
+                }
+            ],
+            "location": {
+                "id": 2,
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "country": "India",
+                "lat": "19.09241453075015",
+                "lon": "72.8309371803421"
+            },
+            "address": "Near the Beach , with a Personal Beach Area for our guests to enjoy a peacful day",
+            "price_per_night": 45000,
+            "offersOrExtras": [
+                "Wi-Fi",
+                "Foods",
+                "Door-to-Door servvices",
+                "Airport Services",
+                "swimming",
+                "Beach"
+            ],
+            "reviews": [
+                {
+                    "id": 13,
+                    "hotel": 2,
+                    "user": {
+                        "id": 7,
+                        "username": "swayam21",
+                        "email": "swayam1@gamil.com",
+                        "role": "HO"
+                    },
+                    "rating": 3,
+                    "cleanliness": 3,
+                    "location": 3,
+                    "service": 3,
+                    "comment": "Quite Average in everything",
+                    "created_at": "2025-08-27T20:47:06.494988Z"
+                },
+                {
+                    "id": 12,
+                    "hotel": 2,
+                    "user": {
+                        "id": 4,
+                        "username": "swayam",
+                        "email": "swayam@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 5,
+                    "cleanliness": 3,
+                    "location": 4,
+                    "service": 4,
+                    "comment": "Overall a must visit place keeps the vibes as said Calm , Toned , Peaceful Vibes  , Best for its Price",
+                    "created_at": "2025-08-27T20:44:43.753606Z"
+                }
+            ],
+            "created_at": "2025-08-27T20:32:35.898965Z",
+            "updated_at": "2025-08-27T20:32:35.898980Z",
+            "host": {
+                "id": 3,
+                "username": "rahul",
+                "email": "",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 18,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327027/kninhtxxmj1wkw2te1ev.avif"
+                },
+                {
+                    "id": 19,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327028/ohinhokunyhn7bnpjzd4.avif"
+                },
+                {
+                    "id": 20,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327029/c7im9xbuhmmwfcagww4x.avif"
+                },
+                {
+                    "id": 21,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327030/uvsvqqbvacii4xgavazd.avif"
+                },
+                {
+                    "id": 22,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327030/sbbirxzmzry69eet3icp.avif"
+                },
+                {
+                    "id": 23,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327031/u7jcicvn0thefnpbhbjq.avif"
+                },
+                {
+                    "id": 24,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327032/a5yf3h38aqiw54gzexsq.avif"
+                },
+                {
+                    "id": 25,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327033/oetqdjkmwzfwuphvka44.avif"
+                },
+                {
+                    "id": 26,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327034/mg4fngsqdtpxxe0oerca.avif"
+                },
+                {
+                    "id": 27,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327035/w5ydrnksxzgheehdgvvr.avif"
+                },
+                {
+                    "id": 28,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327035/ehgx4te22rfmljgjterd.webp"
+                },
+                {
+                    "id": 29,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327036/tzof5mpoeodvvh85wqn8.avif"
+                },
+                {
+                    "id": 30,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327037/opska6deher2ehpy6jnw.avif"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "title": "Taj",
+            "description": "The Taj Mahal Palace is a heritage, five-star, luxury hotel in the Colaba area of Mumbai, Maharashtra, India, situated next to the Gateway of India.",
+            "multiple_rooms": 50,
+            "rooms": [
+                {
+                    "id": 1,
+                    "bedroom": 2,
+                    "bathroom": 2,
+                    "beds": 4,
+                    "guest": 8,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": true
+                }
+            ],
+            "location": {
+                "id": 2,
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "country": "India",
+                "lat": "19.09241453075015",
+                "lon": "72.8309371803421"
+            },
+            "address": "Apollo Bandar, Colaba, Mumbai, Maharashtra 400001",
+            "price_per_night": 100000,
+            "offersOrExtras": [
+                "Wi-Fi",
+                "Foods",
+                "Door-to-Door servvices",
+                "Airport Services",
+                "Cab-services"
+            ],
+            "reviews": [],
+            "created_at": "2025-08-30T09:12:57.942814Z",
+            "updated_at": "2025-08-30T09:19:06.174668Z",
+            "host": {
+                "id": 7,
+                "username": "swayam21",
+                "email": "swayam1@gamil.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 31,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545326/eelw662zzlu47vavcet8.avif"
+                },
+                {
+                    "id": 32,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545327/tyru3rfhrxgmsjgblczu.avif"
+                },
+                {
+                    "id": 33,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545328/j86ilgwfq8zu5t7go2t8.avif"
+                },
+                {
+                    "id": 34,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545329/tu3niqsgr6w5ml0c06a8.avif"
+                },
+                {
+                    "id": 35,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545330/mfpbhlco0mfybjvdxihm.avif"
+                },
+                {
+                    "id": 36,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545331/ic2fteofwpn7iqntdk3d.avif"
+                },
+                {
+                    "id": 37,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545332/m4p12k8m2sncexoiqdv5.avif"
+                },
+                {
+                    "id": 38,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545333/laqrbqjp6oqvzsbnxzwn.avif"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Leela Palace",
+            "description": "A collection of luxury hotels in India operated by The Leela Palaces, Hotels & Resorts, a brand known for its opulent properties and personalized, butler-driven guest services",
+            "multiple_rooms": 100,
+            "rooms": [
+                {
+                    "id": 2,
+                    "bedroom": 2,
+                    "bathroom": 2,
+                    "beds": 4,
+                    "guest": 7,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 3,
+                "city": "Bengaluru",
+                "state": "Karnataka",
+                "country": "India",
+                "lat": "12.96247865285667",
+                "lon": "77.576834612013871"
+            },
+            "address": "23, HAL Old Airport Rd, HAL 2nd Stage, Kodihalli, Bengaluru, Karnataka 560008",
+            "price_per_night": 12000,
+            "offersOrExtras": [
+                "Wi-Fi",
+                "Foods",
+                "Door-to-Door servvices",
+                "Airport Services",
+                "swimming",
+                "Beach"
+            ],
+            "reviews": [],
+            "created_at": "2025-08-30T09:18:57.670222Z",
+            "updated_at": "2025-08-30T09:18:57.670242Z",
+            "host": {
+                "id": 3,
+                "username": "rahul",
+                "email": "",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 39,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545640/xxqnjbrlycnctwojwxhf.avif"
+                },
+                {
+                    "id": 40,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545643/fheg7uz1bc9pdvjfxxf7.avif"
+                },
+                {
+                    "id": 41,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545644/p1ezandaunletgdb4nn7.avif"
+                },
+                {
+                    "id": 42,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545646/ari9ejc87avwkfigttgw.avif"
+                },
+                {
+                    "id": 43,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545647/yasygiuqw0lykm0sp70p.avif"
+                },
+                {
+                    "id": 44,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545648/gjidl1hnqwhejfgr6fuj.avif"
+                },
+                {
+                    "id": 45,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545649/amvvjlms0dt94cviuwkg.avif"
+                },
+                {
+                    "id": 46,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545651/fp5julll5ahmiqlqemph.avif"
+                },
+                {
+                    "id": 47,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545652/kbctlu9q02kdrbtgyrnc.avif"
+                },
+                {
+                    "id": 48,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545653/ql3muqsvdcnx4mcjlbxr.avif"
+                },
+                {
+                    "id": 49,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545654/yxdzjamhvc1r37fnwl8v.avif"
+                },
+                {
+                    "id": 50,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545655/bfuukf707kp9qvj9j8cq.avif"
+                },
+                {
+                    "id": 51,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545656/jtxvk9cunhuy4jzqcjrg.avif"
+                },
+                {
+                    "id": 52,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545657/k5hhcl9zyjifeczzabfw.avif"
+                },
+                {
+                    "id": 53,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545658/tiuxagnovacza4zmfl1t.avif"
+                },
+                {
+                    "id": 54,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545659/pealwzw4njixhqz1zqe8.avif"
+                },
+                {
+                    "id": 55,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545660/tkkbsubc4gbqx5tcyhjv.avif"
+                },
+                {
+                    "id": 56,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545661/tlbqo77qiod4x52f3cen.avif"
+                },
+                {
+                    "id": 57,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545662/ljrgtwdlh7imb6cvfqji.avif"
+                },
+                {
+                    "id": 58,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545663/fedkfm9lxjg9vrvznu2b.avif"
+                },
+                {
+                    "id": 59,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545664/jje4pbtj9k1df2g290bu.avif"
+                },
+                {
+                    "id": 60,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545665/rdb2t07keds6ae01wcm8.avif"
+                },
+                {
+                    "id": 61,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545666/likwzokpidsvyhtciqnf.avif"
+                },
+                {
+                    "id": 62,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545667/ke5lfe1mtweczkoq467p.avif"
+                },
+                {
+                    "id": 63,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545669/w4mzvqwywysob4fh1f90.avif"
+                },
+                {
+                    "id": 64,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545670/gratjsvustqmgz59rc8w.avif"
+                },
+                {
+                    "id": 65,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545671/atd5c7hzwjg62adhseyz.avif"
+                },
+                {
+                    "id": 66,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545672/adtrrnq3m3oc1qzy9wpx.avif"
+                },
+                {
+                    "id": 67,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545673/khbgbnqug8jwmtwmjvyc.avif"
+                },
+                {
+                    "id": 68,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545674/alkdcuwzw7ifxfsrtzwl.avif"
+                },
+                {
+                    "id": 69,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545675/xkpyoidtwhxvnxc31p4a.avif"
+                },
+                {
+                    "id": 70,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545676/cfrunlic9pewhixqhd44.avif"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "title": "The Oberois Stay",
+            "description": "Experience The Oberoi, Bengaluru - the best 5-star hotel in MG Road, Bengaluru offering spacious accommodations, exquisite dining, and warm hospitality.",
+            "multiple_rooms": 55,
+            "rooms": [
+                {
+                    "id": 2,
+                    "bedroom": 2,
+                    "bathroom": 2,
+                    "beds": 4,
+                    "guest": 7,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 3,
+                "city": "Bengaluru",
+                "state": "Karnataka",
+                "country": "India",
+                "lat": "12.96247865285667",
+                "lon": "77.576834612013871"
+            },
+            "address": "37-39, Mahatma Gandhi Rd, Yellappa Garden, Yellappa Chetty Layout, Sivanchetti Gardens, Bengaluru, Karnataka 560001",
+            "price_per_night": 75000,
+            "offersOrExtras": [
+                "Wi-Fi",
+                "Foods",
+                "Door-to-Door servvices",
+                "Airport Services",
+                "swimming",
+                "Beach"
+            ],
+            "reviews": [],
+            "created_at": "2025-08-30T09:23:41.507688Z",
+            "updated_at": "2025-08-30T09:23:41.507705Z",
+            "host": {
+                "id": 3,
+                "username": "rahul",
+                "email": "",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 71,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545871/zx4oowqyutq61koszl7e.jpg"
+                },
+                {
+                    "id": 72,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545872/y2zdfecjtp3bt3xaluhi.jpg"
+                },
+                {
+                    "id": 73,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545873/rhxnnrhmyew5hyskfh1j.avif"
+                },
+                {
+                    "id": 74,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545875/osjqd14gejltwknrmwp0.avif"
+                },
+                {
+                    "id": 75,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545876/tltl2ucsgc1qfcjfz2sc.avif"
+                },
+                {
+                    "id": 76,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545878/gxketmtapepnrnspt80l.jpg"
+                },
+                {
+                    "id": 77,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545879/pfy05wnhmusmentxjqe2.avif"
+                },
+                {
+                    "id": 78,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545880/opodw70tiyhzqjmjttcy.avif"
+                },
+                {
+                    "id": 79,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545881/wjvrhnxvtolknebmb9kr.avif"
+                },
+                {
+                    "id": 80,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545882/u8uyobryat7gekq6ccwm.avif"
+                },
+                {
+                    "id": 81,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545883/c230qkcmrckjyk3zkjzh.avif"
+                },
+                {
+                    "id": 82,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545884/xlckqstdxhczf7jo9hws.avif"
+                },
+                {
+                    "id": 83,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545885/fcuuub1b4icd3gpbjkzm.avif"
+                },
+                {
+                    "id": 84,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545887/fbwcovyon2eetapbogum.avif"
+                },
+                {
+                    "id": 85,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545888/lc1anzi0uv1tdnzz0kgh.avif"
+                },
+                {
+                    "id": 86,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545889/tohgg7x5yk3jkyfs3wuw.avif"
+                },
+                {
+                    "id": 87,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545890/doqeifct2ggbjwx9z7br.avif"
+                },
+                {
+                    "id": 88,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545891/dolmjndateolefmo8phm.avif"
+                },
+                {
+                    "id": 89,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545891/zemwqytlz7ruar16cy9a.avif"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                },
+                {
+                    "id": 94,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545897/un5qctjcwton55qx9tho.avif"
+                },
+                {
+                    "id": 95,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545898/gy0uuwnaz2luwinlblqt.jpg"
+                },
+                {
+                    "id": 96,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545899/zepwbag6aycrncqwjfxd.avif"
+                },
+                {
+                    "id": 97,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545900/eexsb4y4zkz0eeiryyii.avif"
+                },
+                {
+                    "id": 98,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545901/kvu2xg7zgxeb4odfoqcd.avif"
+                }
+            ]
+        }
+    ],
+
+
+  "Users":[
+    {
+    "id": 4,
+    "username": "swayam",
+    "email": "swayam@gmail.com",
+    "date_of_birth": "2005-08-20",
+    "role": "GU",
+    "date_joined": "2025-08-20T07:19:14.950184Z"
+},{
+    "id": 5,
+    "username": "swayam21",
+    "email": "swayam21@gmail.com",
+    "date_of_birth": "2005-08-20",
+    "role": "HO",
+    "date_joined": "2025-08-20T07:19:14.950184Z"
+},{
+    "id": 6,
+    "username": "rahul",
+    "email": "rahul@gmail.com",
+    "date_of_birth": "2005-08-20",
+    "role": "HO",
+    "date_joined": "2025-08-20T07:19:14.950184Z"
+}
+  ],
+
+  "bookings":[
+     [
+        {
+            "id": 22,
+            "listing": 1,
+            "listing_info": {
+                "id": 1,
+                "title": "Mayfair",
+                "address": "InfoCity Sq. , Bhubaneshwar",
+                "price_per_night": 19000,
+                "host": {
+                    "id": 7,
+                    "username": "swayam21",
+                    "email": "swayam1@gamil.com",
+                    "role": "HO"
+                }
+            },
+            "user": {
+                "id": 3,
+                "username": "rahul",
+                "email": ""
+            },
+            "check_in": "2025-09-18",
+            "check_out": "2025-09-23",
+            "guests": 5,
+            "total_price": "95000.00",
+            "status": "confirmed",
+            "nights": 5,
+            "created_at": "2025-08-26T19:27:25.565493Z",
+            "updated_at": "2025-08-26T19:27:25.565512Z"
+        }
+    ]
+  ]
+}
+
+
+
+
+
+

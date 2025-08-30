@@ -26,7 +26,8 @@ class Location(models.Model):
     city = models.CharField(max_length=100,blank=True)
     state = models.CharField(max_length=100,blank=True)
     country = models.CharField(max_length=100,blank=True)
-
+    lat = models.CharField(default="20.648605079085772")
+    lon = models.CharField(default="85.58521124492003")
     def __str__(self):
 
         return ", ".join([p for p in [self.city, self.state, self.country] if p])

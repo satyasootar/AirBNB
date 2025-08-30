@@ -55,7 +55,7 @@ class ListingImageUploadView(generics.CreateAPIView):
 
         created = []
         for f in files:
-            img = HotelImages.objects.create(hotel=listing, image=f)  # upload to Cloudinary via storage
+            img = HotelImages.objects.create(hotel=listing, image=f)  
             created.append(HotelImageSerializer(img).data)
 
         return Response({"uploaded": created}, status=status.HTTP_201_CREATED)
