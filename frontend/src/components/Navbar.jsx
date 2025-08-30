@@ -11,7 +11,7 @@ export const Navbar = () => {
     const [toggleHamburger, setToggleHamburger] = useState(false)
     const [hide, setHide] = useState(false)
     const [lastScrollY, setLastScrollY] = useState(0)
-    const [SearchSuggestionBox, setSearchSuggestionBox] = useState(false)
+    const [searchSuggestionBox, setSearchSuggestionBox] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -198,7 +198,7 @@ export const Navbar = () => {
             <motion.div className='flex border border-gray-2 shadow-xl z-20  rounded-full w-fit bg-white'
                 animate={{ y: hide ? "-300%" : "0%" }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}>
-                <div className='flex flex-col rounded-full py-3 pl-10 p-2 hover:bg-gray-1'>
+                <div className='flex flex-col rounded-full py-3 pl-10 p-2 hover:bg-gray-1' onClick={() => setSearchSuggestionBox(true)}>
                     <label htmlFor="destinations">Where</label>
                     <input id='destinations' type="text" placeholder='Search Destinations' className='outline-0' />
                 </div>
@@ -219,7 +219,7 @@ export const Navbar = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search-icon lucide-search text-white"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
                     </div>
                 </div>
-                <div className={`absolute bg-white h-[30rem] w-[25rem] top-40 left-85 rounded-4xl p-6 pt-10 shadow-card overflow-scroll scrollbar-none scrollbar-thin-y hidden ${setSearchSuggestionBox ? "block" : ""} `}>
+                <div className={`absolute bg-white h-[30rem] w-[25rem] top-40 left-85 rounded-4xl p-6 pt-10 shadow-card overflow-scroll scrollbar-none scrollbar-thin-y ${searchSuggestionBox ? "block" : "hidden"} `}>
                     {
                         searchItems.map((Item,) => (
                             <SearchCards key={Item.id} destination={Item.destination} text={Item.text} img={Item.image} />
