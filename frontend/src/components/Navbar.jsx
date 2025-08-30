@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
 import { SearchCards } from './utils/SearchCards';
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
 
@@ -12,6 +13,11 @@ export const Navbar = () => {
     const [hide, setHide] = useState(false)
     const [lastScrollY, setLastScrollY] = useState(0)
     const [searchSuggestionBox, setSearchSuggestionBox] = useState(false)
+    const [checkIn, setCheckIn] = useState("")
+    const [checkOut, setCheckOut] = useState("")
+    const [query, setQuery] = useState("");
+    const wrapperRef = useRef(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -28,6 +34,15 @@ export const Navbar = () => {
 
     }, [lastScrollY])
 
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+                setSearchSuggestionBox(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [])
 
     const searchItems = [
         {
@@ -91,6 +106,19 @@ export const Navbar = () => {
             image: "/assets/mountainsearch.png",
         },
     ];
+
+    const filteredItems = searchItems.filter((item) =>
+        item.destination.toLowerCase().includes(query.toLowerCase())
+    );
+
+    const handleSearch = () => {
+        if (query.trim() !== "") {
+            // convert spaces to hyphens/lowercase for URL
+            const citySlug = query.toLowerCase().replace(/\s+/g, "-");
+            navigate(`/${citySlug}`);
+        }
+    };
+
 
     return (
 
@@ -198,33 +226,64 @@ export const Navbar = () => {
             <motion.div className='flex border border-gray-2 shadow-xl z-20  rounded-full w-fit bg-white'
                 animate={{ y: hide ? "-300%" : "0%" }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}>
-                <div className='flex flex-col rounded-full py-3 pl-10 p-2 hover:bg-gray-1' onClick={() => setSearchSuggestionBox(true)}>
+                <div className='flex flex-col rounded-full py-3 pl-10 p-2 hover:bg-gray-1'
+                    ref={wrapperRef}>
                     <label htmlFor="destinations">Where</label>
-                    <input id='destinations' type="text" placeholder='Search Destinations' className='outline-0' />
+                    <input id='destinations' type="text" placeholder='Search Destinations' className='outline-0'
+                        onFocus={() => setSearchSuggestionBox(true)}
+                        onChange={(e) => setQuery(e.target.value)}
+                        value={query}
+                    />
                 </div>
                 <div className='flex flex-col rounded-full py-3 pl-5 p-2 hover:bg-gray-1'>
                     <label htmlFor='checkin'>Check in</label>
-                    <DatePicker id='checkin' placeholderText='Add dates' className='outline-0  w-25' />
+                    <DatePicker id='checkin'
+                        placeholderText='Add dates'
+                        className='outline-0  w-25'
+                        selected={checkIn}
+                        onChange={(date) => setCheckIn(date)}
+                        dateFormat="dd/MM/yyyy"
+
+                    />
                 </div>
                 <div className='flex flex-col rounded-full py-3 pl-5 p-2 hover:bg-gray-1'>
                     <label htmlFor='checkout'>Check Out</label>
-                    <DatePicker id='checkout' placeholderText='Add dates' className='outline-0  w-25' />
+                    <DatePicker id='checkout'
+                        placeholderText='Add dates'
+                        className='outline-0  w-25'
+                        selected={checkOut}
+                        onChange={(date) => setCheckOut(date)}
+                        dateFormat="dd/MM/yyyy"
+                    />
                 </div>
                 <div className='flex py-3 pl-5 p-2 hover:bg-gray-1 rounded-full'>
                     <div className='flex flex-col  '>
                         <label htmlFor="who">Who</label>
                         <input id='who' placeholder='Add guests' type='text' className='outline-0' />
                     </div>
-                    <div className='bg-airbnb rounded-full w-11 h-11 flex justify-center items-center'>
+                    <button className='bg-airbnb rounded-full w-11 h-11 flex justify-center items-center cursor-pointer'
+                        onClick={handleSearch}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search-icon lucide-search text-white"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
-                    </div>
+                    </button>
                 </div>
                 <div className={`absolute bg-white h-[30rem] w-[25rem] top-40 left-85 rounded-4xl p-6 pt-10 shadow-card overflow-scroll scrollbar-none scrollbar-thin-y ${searchSuggestionBox ? "block" : "hidden"} `}>
-                    {
-                        searchItems.map((Item,) => (
-                            <SearchCards key={Item.id} destination={Item.destination} text={Item.text} img={Item.image} />
+                    {filteredItems.length > 0 ? (
+                        filteredItems.map((item) => (
+                            <div className='cursor-pointer' key={item.id} onMouseDown={() => {
+                                setQuery(item.destination)
+                                setSearchSuggestionBox(false)
+                            }} >
+                                <SearchCards
+                                    destination={item.destination}
+                                    text={item.text}
+                                    img={item.image}
+                                />
+                            </div>
                         ))
-                    }
+                    ) : (
+                        <p className="text-gray-500">No matches found</p>
+                    )}
                 </div>
             </motion.div>
 

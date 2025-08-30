@@ -1,7 +1,5 @@
-
-
 {
-  "listings": [
+    "hotels": [
         {
             "id": 1,
             "title": "Mayfair",
@@ -151,7 +149,7 @@
         {
             "id": 2,
             "title": "Layla",
-            "description": "Amazing %-start Hotels with bunch of Stuff to do like swimming , jogging , Sitting at lakeside anything you want",
+            "description": "Amazing 5-start Hotels with bunch of Stuff to do like swimming , jogging , Sitting at lakeside anything you want",
             "multiple_rooms": 10,
             "rooms": [
                 {
@@ -691,72 +689,867 @@
                     "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545901/kvu2xg7zgxeb4odfoqcd.avif"
                 }
             ]
+        },
+        {
+            "id": 6,
+            "title": "Golden Sands Resort",
+            "description": "Beachfront luxury resort with stunning ocean views and traditional Odishan hospitality in the holy city of Puri",
+            "multiple_rooms": 8,
+            "rooms": [
+                {
+                    "id": 3,
+                    "bedroom": 3,
+                    "bathroom": 2,
+                    "beds": 6,
+                    "guest": 8,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 2,
+                "city": "Puri",
+                "state": "Odisha",
+                "country": "India",
+                "lat": "19.8106",
+                "lon": "85.8312"
+            },
+            "address": "Marine Drive Road, Near Jagannath Temple, Puri",
+            "price_per_night": 15000,
+            "offersOrExtras": [
+                "Beach Access",
+                "Temple Tours",
+                "Wi-Fi",
+                "Ayurvedic Spa",
+                "Traditional Cuisine"
+            ],
+            "reviews": [
+                {
+                    "id": 11,
+                    "hotel": 2,
+                    "user": {
+                        "id": 5,
+                        "username": "priya_traveler",
+                        "email": "priya@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 5,
+                    "cleanliness": 4,
+                    "location": 5,
+                    "service": 5,
+                    "comment": "Perfect location near the beach and temple. The sunrise view from the room was breathtaking!",
+                    "created_at": "2025-08-28T10:30:15.123456Z"
+                }
+            ],
+            "created_at": "2025-08-24T12:00:00.000000Z",
+            "updated_at": "2025-08-28T14:20:30.000000Z",
+            "host": {
+                "id": 8,
+                "username": "purihost",
+                "email": "purihost@gmail.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 18,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973025/puri_beach_view1.avif"
+                },
+                {
+                    "id": 19,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973026/puri_temple_view.webp"
+                },
+                {
+                    "id": 97,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545900/eexsb4y4zkz0eeiryyii.avif"
+                },
+                {
+                    "id": 98,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545901/kvu2xg7zgxeb4odfoqcd.avif"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Seaside Heritage Villa",
+            "description": "A charming heritage property with traditional architecture, just steps away from the sacred Jagannath Temple",
+            "multiple_rooms": 6,
+            "rooms": [
+                {
+                    "id": 4,
+                    "bedroom": 2,
+                    "bathroom": 1,
+                    "beds": 3,
+                    "guest": 5,
+                    "booked_from": "2025-09-15",
+                    "booked_to": "2025-09-20",
+                    "is_reserved": true
+                }
+            ],
+            "location": {
+                "id": 3,
+                "city": "Puri",
+                "state": "Odisha",
+                "country": "India",
+                "lat": "19.8135",
+                "lon": "85.8365"
+            },
+            "address": "Grand Road, Puri Heritage Quarter",
+            "price_per_night": 12000,
+            "offersOrExtras": [
+                "Heritage Tours",
+                "Cultural Programs",
+                "Wi-Fi",
+                "Traditional Breakfast",
+                "Temple Darshan Arrangements"
+            ],
+            "reviews": [
+                {
+                    "id": 12,
+                    "hotel": 3,
+                    "user": {
+                        "id": 6,
+                        "username": "cultural_explorer",
+                        "email": "explorer@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 4,
+                    "cleanliness": 5,
+                    "location": 5,
+                    "service": 4,
+                    "comment": "Authentic Odishan experience with rich cultural immersion. The host's knowledge about local traditions was amazing.",
+                    "created_at": "2025-08-27T16:45:20.987654Z"
+                }
+            ],
+            "created_at": "2025-08-25T08:15:45.000000Z",
+            "updated_at": "2025-08-29T11:30:12.000000Z",
+            "host": {
+                "id": 9,
+                "username": "heritage_keeper",
+                "email": "heritage@puri.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 20,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973027/puri_heritage1.avif"
+                },
+                {
+                    "id": 21,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973028/puri_heritage2.webp"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "title": "Tech Hub Executive Suites",
+            "description": "Modern luxury accommodation in the heart of India's Silicon Valley, perfect for business travelers and tech professionals",
+            "multiple_rooms": 12,
+            "rooms": [
+                {
+                    "id": 5,
+                    "bedroom": 1,
+                    "bathroom": 1,
+                    "beds": 2,
+                    "guest": 2,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 4,
+                "city": "Bangalore",
+                "state": "Karnataka",
+                "country": "India",
+                "lat": "12.9716",
+                "lon": "77.5946"
+            },
+            "address": "Koramangala, Near Forum Mall, Bangalore",
+            "price_per_night": 22000,
+            "offersOrExtras": [
+                "High-Speed Wi-Fi",
+                "Business Center",
+                "Gym",
+                "Rooftop Pool",
+                "Airport Shuttle",
+                "Co-working Space"
+            ],
+            "reviews": [
+                {
+                    "id": 13,
+                    "hotel": 4,
+                    "user": {
+                        "id": 7,
+                        "username": "tech_nomad",
+                        "email": "technomad@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 5,
+                    "cleanliness": 5,
+                    "location": 4,
+                    "service": 5,
+                    "comment": "Perfect for business stays. Lightning fast internet and excellent workspace facilities. The location is ideal for tech meetups.",
+                    "created_at": "2025-08-26T14:22:33.445566Z"
+                }
+            ],
+            "created_at": "2025-08-22T10:30:00.000000Z",
+            "updated_at": "2025-08-29T09:15:45.000000Z",
+            "host": {
+                "id": 10,
+                "username": "bangalore_biz",
+                "email": "biz@bangalore.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 22,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973029/bangalore_suite1.avif"
+                },
+                {
+                    "id": 23,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973030/bangalore_suite2.webp"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "title": "Garden City Retreat",
+            "description": "Peaceful oasis with lush gardens and modern amenities in Bangalore's prime residential area, away from the city chaos",
+            "multiple_rooms": 7,
+            "rooms": [
+                {
+                    "id": 6,
+                    "bedroom": 3,
+                    "bathroom": 3,
+                    "beds": 5,
+                    "guest": 9,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 5,
+                "city": "Bangalore",
+                "state": "Karnataka",
+                "country": "India",
+                "lat": "12.9352",
+                "lon": "77.6245"
+            },
+            "address": "Indiranagar, 100 Feet Road, Bangalore",
+            "price_per_night": 18000,
+            "offersOrExtras": [
+                "Garden Views",
+                "Yoga Sessions",
+                "Wi-Fi",
+                "Organic Breakfast",
+                "Bicycle Rental",
+                "Pet Friendly"
+            ],
+            "reviews": [
+                {
+                    "id": 14,
+                    "hotel": 5,
+                    "user": {
+                        "id": 8,
+                        "username": "nature_lover",
+                        "email": "nature@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 4,
+                    "cleanliness": 4,
+                    "location": 3,
+                    "service": 4,
+                    "comment": "Lovely green space in the middle of the city. The garden is beautiful and perfect for morning walks. Peaceful environment.",
+                    "created_at": "2025-08-25T12:18:44.778899Z"
+                }
+            ],
+            "created_at": "2025-08-21T15:45:30.000000Z",
+            "updated_at": "2025-08-28T16:20:15.000000Z",
+            "host": {
+                "id": 11,
+                "username": "garden_host",
+                "email": "garden@bangalore.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 24,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973031/bangalore_garden1.avif"
+                },
+                {
+                    "id": 25,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973032/bangalore_garden2.webp"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "title": "Marine Drive Penthouse",
+            "description": "Luxurious penthouse with panoramic views of the Arabian Sea and Mumbai's iconic skyline, epitome of urban sophistication",
+            "multiple_rooms": 4,
+            "rooms": [
+                {
+                    "id": 7,
+                    "bedroom": 4,
+                    "bathroom": 3,
+                    "beds": 8,
+                    "guest": 10,
+                    "booked_from": "2025-09-01",
+                    "booked_to": "2025-09-05",
+                    "is_reserved": true
+                }
+            ],
+            "location": {
+                "id": 6,
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "country": "India",
+                "lat": "18.9220",
+                "lon": "72.8347"
+            },
+            "address": "Marine Drive, Nariman Point, Mumbai",
+            "price_per_night": 35000,
+            "offersOrExtras": [
+                "Sea Views",
+                "Private Terrace",
+                "Wi-Fi",
+                "Concierge Service",
+                "City Tours",
+                "Fine Dining"
+            ],
+            "reviews": [
+                {
+                    "id": 15,
+                    "hotel": 6,
+                    "user": {
+                        "id": 9,
+                        "username": "luxury_seeker",
+                        "email": "luxury@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 5,
+                    "cleanliness": 5,
+                    "location": 5,
+                    "service": 5,
+                    "comment": "Absolutely stunning! The view from the terrace during sunset is unforgettable. Premium location and world-class amenities.",
+                    "created_at": "2025-08-24T20:15:30.112233Z"
+                }
+            ],
+            "created_at": "2025-08-20T11:00:00.000000Z",
+            "updated_at": "2025-08-29T13:45:22.000000Z",
+            "host": {
+                "id": 12,
+                "username": "mumbai_luxury",
+                "email": "luxury@mumbai.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 26,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973033/mumbai_penthouse1.avif"
+                },
+                {
+                    "id": 27,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973034/mumbai_skyline.webp"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "title": "Bollywood Dreams Studio",
+            "description": "Unique themed accommodation in the entertainment capital, with Bollywood memorabilia and proximity to film studios",
+            "multiple_rooms": 3,
+            "rooms": [
+                {
+                    "id": 8,
+                    "bedroom": 2,
+                    "bathroom": 2,
+                    "beds": 4,
+                    "guest": 6,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 7,
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "country": "India",
+                "lat": "19.1136",
+                "lon": "72.8697"
+            },
+            "address": "Andheri West, Near Film City, Mumbai",
+            "price_per_night": 25000,
+            "offersOrExtras": [
+                "Bollywood Tours",
+                "Film Studio Visits",
+                "Wi-Fi",
+                "Themed Decor",
+                "Celebrity Chef Meals",
+                "Entertainment System"
+            ],
+            "reviews": [
+                {
+                    "id": 16,
+                    "hotel": 7,
+                    "user": {
+                        "id": 10,
+                        "username": "film_fan",
+                        "email": "filmfan@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 4,
+                    "cleanliness": 4,
+                    "location": 4,
+                    "service": 5,
+                    "comment": "Dream come true for any Bollywood fan! The themed rooms are incredible and the studio tour was an amazing experience.",
+                    "created_at": "2025-08-23T18:30:45.334455Z"
+                }
+            ],
+            "created_at": "2025-08-19T14:20:15.000000Z",
+            "updated_at": "2025-08-27T10:35:50.000000Z",
+            "host": {
+                "id": 13,
+                "username": "bollywood_host",
+                "email": "bollywood@mumbai.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 28,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973035/mumbai_bollywood1.avif"
+                },
+                {
+                    "id": 29,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973036/mumbai_bollywood2.webp"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "title": "Himalayan Snow Peaks Lodge",
+            "description": "Cozy mountain lodge with breathtaking views of snow-capped Himalayan peaks, perfect for adventure seekers and nature lovers",
+            "multiple_rooms": 9,
+            "rooms": [
+                {
+                    "id": 9,
+                    "bedroom": 2,
+                    "bathroom": 1,
+                    "beds": 3,
+                    "guest": 5,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 8,
+                "city": "Manali",
+                "state": "Himachal Pradesh",
+                "country": "India",
+                "lat": "32.2432",
+                "lon": "77.1892"
+            },
+            "address": "Old Manali, Near Hadimba Temple, Manali",
+            "price_per_night": 14000,
+            "offersOrExtras": [
+                "Mountain Views",
+                "Trekking Guides",
+                "Wi-Fi",
+                "Bonfire Evenings",
+                "Local Cuisine",
+                "Adventure Sports"
+            ],
+            "reviews": [
+                {
+                    "id": 17,
+                    "hotel": 8,
+                    "user": {
+                        "id": 11,
+                        "username": "mountain_climber",
+                        "email": "climber@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 5,
+                    "cleanliness": 3,
+                    "location": 5,
+                    "service": 4,
+                    "comment": "Spectacular mountain views! Perfect base for trekking. The hospitality was warm and the food was delicious. Rustic charm at its best.",
+                    "created_at": "2025-08-22T08:45:15.556677Z"
+                }
+            ],
+            "created_at": "2025-08-18T09:30:30.000000Z",
+            "updated_at": "2025-08-26T15:20:40.000000Z",
+            "host": {
+                "id": 14,
+                "username": "manali_mountain",
+                "email": "mountain@manali.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 30,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973037/manali_lodge1.avif"
+                },
+                {
+                    "id": 31,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973038/manali_peaks.webp"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "title": "Riverside Apple Orchard Cottage",
+            "description": "Charming cottage nestled in apple orchards beside the Beas River, offering tranquil retreat with organic farm experiences",
+            "multiple_rooms": 4,
+            "rooms": [
+                {
+                    "id": 10,
+                    "bedroom": 1,
+                    "bathroom": 1,
+                    "beds": 2,
+                    "guest": 3,
+                    "booked_from": "2025-09-10",
+                    "booked_to": "2025-09-18",
+                    "is_reserved": true
+                }
+            ],
+            "location": {
+                "id": 9,
+                "city": "Manali",
+                "state": "Himachal Pradesh",
+                "country": "India",
+                "lat": "32.2694",
+                "lon": "77.1635"
+            },
+            "address": "Naggar Village, Apple Orchard Road, Manali",
+            "price_per_night": 11000,
+            "offersOrExtras": [
+                "River Views",
+                "Organic Farming",
+                "Wi-Fi",
+                "Apple Picking",
+                "Fishing",
+                "Nature Walks"
+            ],
+            "reviews": [
+                {
+                    "id": 18,
+                    "hotel": 9,
+                    "user": {
+                        "id": 12,
+                        "username": "organic_traveler",
+                        "email": "organic@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 4,
+                    "cleanliness": 4,
+                    "location": 4,
+                    "service": 3,
+                    "comment": "Beautiful riverside location with fresh mountain air. The apple orchard experience was unique and the cottage was very cozy.",
+                    "created_at": "2025-08-21T11:20:25.667788Z"
+                }
+            ],
+            "created_at": "2025-08-17T16:15:45.000000Z",
+            "updated_at": "2025-08-28T12:40:30.000000Z",
+            "host": {
+                "id": 15,
+                "username": "orchard_keeper",
+                "email": "orchard@manali.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 32,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973039/manali_cottage1.avif"
+                },
+                {
+                    "id": 33,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973040/manali_orchard.webp"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "title": "Heritage Palace Residency",
+            "description": "Restored maharaja's palace offering royal luxury with modern amenities, showcasing traditional Indian architecture and hospitality",
+            "multiple_rooms": 15,
+            "rooms": [
+                {
+                    "id": 11,
+                    "bedroom": 5,
+                    "bathroom": 4,
+                    "beds": 10,
+                    "guest": 15,
+                    "booked_from": null,
+                    "booked_to": null,
+                    "is_reserved": false
+                }
+            ],
+            "location": {
+                "id": 10,
+                "city": "Puri",
+                "state": "Odisha",
+                "country": "India",
+                "lat": "19.8045",
+                "lon": "85.8249"
+            },
+            "address": "Palace Road, Heritage Quarter, Puri",
+            "price_per_night": 28000,
+            "offersOrExtras": [
+                "Royal Suites",
+                "Heritage Tours",
+                "Wi-Fi",
+                "Classical Music",
+                "Traditional Spa",
+                "Royal Cuisine"
+            ],
+            "reviews": [
+                {
+                    "id": 19,
+                    "hotel": 10,
+                    "user": {
+                        "id": 13,
+                        "username": "history_buff",
+                        "email": "history@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 5,
+                    "cleanliness": 5,
+                    "location": 4,
+                    "service": 5,
+                    "comment": "Living like royalty! The palace architecture is magnificent and the service is impeccable. A truly regal experience with rich history.",
+                    "created_at": "2025-08-20T14:55:40.889900Z"
+                },
+                {
+                    "id": 20,
+                    "hotel": 10,
+                    "user": {
+                        "id": 14,
+                        "username": "luxury_historian",
+                        "email": "historian@gmail.com",
+                        "role": "GU"
+                    },
+                    "rating": 4,
+                    "cleanliness": 4,
+                    "location": 3,
+                    "service": 4,
+                    "comment": "Amazing heritage property with authentic royal ambiance. The traditional spa treatments were exceptional. Highly recommend for cultural enthusiasts.",
+                    "created_at": "2025-08-19T09:30:22.101112Z"
+                }
+            ],
+            "created_at": "2025-08-16T13:45:20.000000Z",
+            "updated_at": "2025-08-29T17:25:35.000000Z",
+            "host": {
+                "id": 16,
+                "username": "royal_heritage",
+                "email": "royal@puri.com",
+                "role": "HO"
+            },
+            "images": [
+                {
+                    "id": 34,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973041/puri_palace1.avif"
+                },
+                {
+                    "id": 35,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973042/puri_palace2.webp"
+                },
+                {
+                    "id": 36,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1755973043/puri_palace3.avif"
+                },
+                {
+                    "id": 90,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545893/dr1a5imp3tyhwdd6h4mm.avif"
+                },
+                {
+                    "id": 91,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545894/zpjvvhyaqy4tsd7fg3eq.avif"
+                },
+                {
+                    "id": 92,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545895/gbpqinue71mfvuazmody.webp"
+                },
+                {
+                    "id": 93,
+                    "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756545896/kn4ybgeinftqfteai8eg.avif"
+                }
+            ]
         }
     ],
-
-
-  "Users":[
-    {
-    "id": 4,
-    "username": "swayam",
-    "email": "swayam@gmail.com",
-    "date_of_birth": "2005-08-20",
-    "role": "GU",
-    "date_joined": "2025-08-20T07:19:14.950184Z"
-},{
-    "id": 5,
-    "username": "swayam21",
-    "email": "swayam21@gmail.com",
-    "date_of_birth": "2005-08-20",
-    "role": "HO",
-    "date_joined": "2025-08-20T07:19:14.950184Z"
-},{
-    "id": 6,
-    "username": "rahul",
-    "email": "rahul@gmail.com",
-    "date_of_birth": "2005-08-20",
-    "role": "HO",
-    "date_joined": "2025-08-20T07:19:14.950184Z"
-}
-  ],
-
-  "bookings":[
-     [
+    "Users": [
         {
-            "id": 22,
-            "listing": 1,
-            "listing_info": {
-                "id": 1,
-                "title": "Mayfair",
-                "address": "InfoCity Sq. , Bhubaneshwar",
-                "price_per_night": 19000,
-                "host": {
-                    "id": 7,
-                    "username": "swayam21",
-                    "email": "swayam1@gamil.com",
-                    "role": "HO"
-                }
-            },
-            "user": {
-                "id": 3,
-                "username": "rahul",
-                "email": ""
-            },
-            "check_in": "2025-09-18",
-            "check_out": "2025-09-23",
-            "guests": 5,
-            "total_price": "95000.00",
-            "status": "confirmed",
-            "nights": 5,
-            "created_at": "2025-08-26T19:27:25.565493Z",
-            "updated_at": "2025-08-26T19:27:25.565512Z"
+            "id": 4,
+            "username": "swayam",
+            "email": "swayam@gmail.com",
+            "date_of_birth": "2005-08-20",
+            "role": "GU",
+            "date_joined": "2025-08-20T07:19:14.950184Z"
+        },
+        {
+            "id": 5,
+            "username": "swayam21",
+            "email": "swayam21@gmail.com",
+            "date_of_birth": "2005-08-20",
+            "role": "HO",
+            "date_joined": "2025-08-20T07:19:14.950184Z"
+        },
+        {
+            "id": 6,
+            "username": "rahul",
+            "email": "rahul@gmail.com",
+            "date_of_birth": "2005-08-20",
+            "role": "HO",
+            "date_joined": "2025-08-20T07:19:14.950184Z"
         }
+    ],
+    "bookings": [
+        [
+            {
+                "id": 22,
+                "listing": 1,
+                "listing_info": {
+                    "id": 1,
+                    "title": "Mayfair",
+                    "address": "InfoCity Sq. , Bhubaneshwar",
+                    "price_per_night": 19000,
+                    "host": {
+                        "id": 7,
+                        "username": "swayam21",
+                        "email": "swayam1@gamil.com",
+                        "role": "HO"
+                    }
+                },
+                "user": {
+                    "id": 3,
+                    "username": "rahul",
+                    "email": ""
+                },
+                "check_in": "2025-09-18",
+                "check_out": "2025-09-23",
+                "guests": 5,
+                "total_price": "95000.00",
+                "status": "confirmed",
+                "nights": 5,
+                "created_at": "2025-08-26T19:27:25.565493Z",
+                "updated_at": "2025-08-26T19:27:25.565512Z"
+            }
+        ]
     ]
-  ]
 }
-
-
-
-
-
-
