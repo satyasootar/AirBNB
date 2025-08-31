@@ -2,6 +2,7 @@ from rest_framework import generics, status , permissions ,viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework_simplejwt import authentication
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import HotelsListing, HotelImages , Review
@@ -14,6 +15,7 @@ from .permissions import IsHostOrReadOnly, IsListingOwner
 class ListingListCreateView(generics.ListCreateAPIView):
     queryset = HotelsListing.objects.select_related("location", "host_id").prefetch_related("rooms", "images")
     serializer_class = HotelsListingSerializer
+    authentication_classes = [authentication.JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsHostOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["location" , "title" , "price_per_night"]
@@ -24,10 +26,11 @@ class ListingListCreateView(generics.ListCreateAPIView):
 class ListingDetailView(generics.RetrieveUpdateAPIView):
     queryset = HotelsListing.objects.select_related("location", "host_id").prefetch_related("rooms", "images")
     serializer_class = HotelsListingSerializer
+    authentication_classes = [authentication.JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsHostOrReadOnly, IsListingOwner]
 
-class ListingImageUploadView(generics.CreateAPIView):
-
+class ListingImageUploadView(generics.ListCreateAPIView):
+    authentication_classes = [authentication.JWTAuthentication]
     serializer_class = HotelImageSerializer
     permission_classes = [IsAuthenticated, IsHostOrReadOnly, IsListingOwner]
     parser_classes = [MultiPartParser, FormParser]
@@ -64,6 +67,7 @@ class ListingImageUploadView(generics.CreateAPIView):
 class ReviewListCreateView(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    authentication_classes = [authentication.JWTAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly] 
 
     def get_queryset(self):

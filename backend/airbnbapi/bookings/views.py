@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated  
 from rest_framework.response import Response 
 from rest_framework.decorators import permission_classes
+from rest_framework_simplejwt import authentication
 from .models import Booking, BookingStatus, Payment , PaymentStatus
 from .serializers import BookingSerializer, PaymentSerializer
 from .permissions import IsBookingOwnerOrHost
@@ -18,6 +19,7 @@ from django.urls import reverse
 
 class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
+    authentication_classes = [authentication.JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
 
@@ -75,8 +77,6 @@ class BookingViewSet(viewsets.ModelViewSet):
             amount=total_amount,
             status=PaymentStatus.PENDING,
         )
-
-        print("Payment : ",payment)
         return payment
 
       
@@ -107,6 +107,7 @@ class BookingViewSet(viewsets.ModelViewSet):
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
+    authentication_classes = [authentication.JWTAuthentication]
     permission_classes = [IsAuthenticated]
     
     def retrieve(self , request, pk):
@@ -115,7 +116,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
             booking = payment.booking
             price = int(booking.total_price)
             payment.amount = price
-            print("HEHHE", price)
+           
             payment.save(update_fields=["amount"])
             serializer = PaymentSerializer(payment)
             
@@ -125,12 +126,11 @@ class PaymentViewSet(viewsets.ModelViewSet):
             return Response({"detail": "No Payment matches the given query."}, status=status.HTTP_404_NOT_FOUND)
     
     def update(self, request, pk):
-        print('PK: ', pk)
-        print("status : ", request.data.get("status"))
+        
         try:
             
             payment = Payment.objects.get(booking_id=pk)
-            print(payment)
+            
             status = request.data.get("status")
             payment_method =  request.data.get("payment_method")
             provider_payment_id =  request.data.get("provider_payment_id")
@@ -144,7 +144,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
                 booking = payment.booking
                 booking.status = BookingStatus.CONFIRMED
                 booking.total_price = str(amount)
-                print("Price:", booking.total_price)
+                
                 
                 booking.save(update_fields=["status" , "total_price"])
             else:

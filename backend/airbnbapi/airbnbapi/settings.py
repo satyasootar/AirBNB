@@ -5,7 +5,6 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-import private as p 
 
 
 
@@ -20,9 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2)a!)xw1bqrt(8nid!)wy@yq@ja6nv7_n+uiu8o6)yiv$!nc(7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ["airbnbapi-6s4b.onrender.com"]
 
 
 # Set it up before migrations
@@ -62,9 +61,18 @@ MIDDLEWARE = [
 ]
 
 
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+]
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:5173",
+    "https://airbnbapi-6s4b.onrender.com",
 ]
 
 ROOT_URLCONF = 'airbnbapi.urls'
@@ -92,44 +100,24 @@ WSGI_APPLICATION = 'airbnbapi.wsgi.application'
 
 # settings.
 
-
-
-DB_NAME = os.getenv("POSTGRES_DB")
-DB_USER = os.getenv("POSTGRES_USER")
-DB_PASSWORD =  os.getenv("POSTGRES_PASSWORD")
-DB_HOST = os.getenv("POSTGRES_HOST")
-DB_PORT = os.getenv("POSTGRES_PORT")
-CLOUD_NAME = os.getenv("CLOUD_NAME")
-CLOUD_API_KEY = os.getenv("CLOUD_API_KEY")
-CLOUD_API_SECRET = os.getenv("CLOUD_API_SECRET")
-
-# DB_NAME = p.DB_NAME
-# DB_USER = p.DB_USER
-# DB_PASSWORD =  p.DB_PASSWORD
-# DB_HOST = p.DB_HOST
-# DB_PORT = p.DB_PORT
-# CLOUD_NAME = p.CLOUD_NAME
-# CLOUD_API_KEY = p.API_KEY
-# CLOUD_API_SECRET = p.API_SECRET
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST':DB_HOST,
-        'PORT': DB_PORT,
+        'NAME':  os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': os.getenv("DB_PORT"),
+        "OPTIONS": {"sslmode": "require"},
     }
 }
 
-
-
 cloudinary.config(
-    cloud_name = CLOUD_NAME,
-    api_key = CLOUD_API_KEY,
-    api_secret = CLOUD_API_SECRET
+    cloud_name = os.getenv("CLOUD_NAME"),
+    api_key = os.getenv("CLOUD_API_KEY"),
+    api_secret = os.getenv("CLOUD_API_SECRET"),
 )
+
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
