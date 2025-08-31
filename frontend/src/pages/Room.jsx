@@ -24,6 +24,7 @@ const Room = () => {
     const [children, setChindren] = useState(0)
     const [infant, setInfant] = useState(0)
 
+
     const aminites = [
         {
             Icon: DoorClosed,
@@ -250,7 +251,7 @@ const Room = () => {
             <div>
                 {/* Headers */}
                 <div className='flex justify-between' >
-                    <div className='font-semibold text-2xl'>1-BHK Fully furnished Flat near Sea Beach</div>
+                    <div className='font-semibold text-2xl'>{hotel.title}</div>
                     <div className='flex gap-5' >
                         <div className='flex gap-3 items-center justify-center' >
                             <Share className='size-4' />
@@ -268,35 +269,35 @@ const Room = () => {
                 </div>
 
                 {/* Image Grid */}
-                <div className="flex gap-2 relative py-5">
+                <div className="flex gap-2 relative py-5 ">
                     {/* Left big image */}
-                    <div className="w-1/2 object-cover">
+                    <div className="w-1/2 object-cover overflow-hidden max-h-[25rem] rounded-l-md">
                         <img
-                            src={hotel.image[0]}
+                            src={hotel.images[0].url}
                             alt="Hotel"
-                            className="max-w-[37.5rem] object-cover rounded-l-md"
+                            className="max-w-[37.5rem] object-cover "
                         />
                     </div>
 
                     {/* Right 2x2 grid */}
                     <div className="w-1/2 grid grid-cols-2 grid-rows-2 gap-2 l max-h-[25rem] ">
                         <img
-                            src={hotel.image[1]}
+                            src={hotel.images[1].url}
                             alt="Hotel"
                             className="w-full h-full object-cover "
                         />
                         <img
-                            src={hotel.image[2]}
+                            src={hotel.images[2].url}
                             alt="Hotel"
                             className="w-full h-full object-cover rounded-tr-md"
                         />
                         <img
-                            src={hotel.image[1]}
+                            src={hotel.images[3].url}
                             alt="Hotel"
                             className="w-full h-full  object-cover "
                         />
                         <img
-                            src={hotel.image[2]}
+                            src={hotel.images[4].url}
                             alt="Hotel"
                             className="w-full h-full object-cover rounded-br-md"
                         />
@@ -310,8 +311,8 @@ const Room = () => {
                 </div>
 
                 <div>
-                    <div className='text-2xl font-medium'>Entire rental unit in Puri, India</div>
-                    <div>5 guests | 1 bedroom | 2 beds | 1 bathroom</div>
+                    <div className='text-2xl font-medium'>Entire rental unit in {hotel.location.city}, India</div>
+                    <div>5 guests | {hotel.rooms[0].bedroom} bedroom | {hotel.rooms[0].beds} beds | {hotel.rooms[0].bathroom} bathroom</div>
                 </div>
 
 
@@ -323,10 +324,10 @@ const Room = () => {
                         {/* Host Small card */}
                         <div className='mt-5 py-10 flex gap-5 border-b-1  border-gray-300' >
                             <div className="rounded-full bg-black inline-flex items-center justify-center size-10 text-amber-50">
-                                A
+                                {hotel.host.username.charAt(0).toUpperCase()}
                             </div>
                             <div>
-                                <div className='font-semibold' >Hosted by Asutosh</div>
+                                <div className='font-semibold' >Hosted by {hotel.host.username}</div>
                                 <div className='text-gray-600' >2 Months Hosting</div>
                             </div>
                         </div>
@@ -345,9 +346,8 @@ const Room = () => {
 
                         <div className='py-10 border-b-1  border-gray-300' >
                             <p className='text-3xl font-semibold py-7'>About this place</p>
-                            <p className='py-2'>Welcome to our beautiful Luxury stay at Puri. This modern home(1 BHK) is designed with the best interiors and all the modern premium furnishings to enhance your stay.</p>
-                            <p>Essentials: Free Wi-Fi, towels, soap, toilet</p>
-                            <p>Guest Capacity:5(1 double bed+1 sofabed)</p>
+                            <p className='py-2'>{hotel.description}</p>
+                            <p>Guest Capacity: 5(1 double bed+1 sofabed)</p>
                             <p>Comfort: AC, ceiling fans, smart TV, washing machine</p>
                             <p>Kitchen: Fully equipped with stove, fridge, basic cookware, utensils.</p>
                             <p>This property is located close to railway station,in front of Zilla School. Beach is 800 m far and Temple is 1.5 km.</p>
@@ -456,7 +456,7 @@ const Room = () => {
                     <div className='flex' >
                         <img src='/assets/leaf.png' className='w-25' />
                         <div className='text-8xl font-bold' >
-                            {"5.0"}
+                            {hotel.reviews[0].rating}
                         </div>
                         <img src='/assets/leaf.png' className='w-25 transform scale-x-[-1]' />
                     </div>
@@ -508,9 +508,9 @@ const Room = () => {
                 <div className='py-5 border-y border-gray-300'>
 
                     <div className='font-semibold text-2xl py-5' >Where you’ll be</div>
-                    <MapEmbed />
-                    <div className='font-medium py-5 text-xl' >Puri, Odisha, India</div>
-                    <div className='text-lg'>Ananth Apartment, very near to Railway Station</div>
+                    <MapEmbed latitude={hotel.location.lat} longitude={hotel.location.lon} />
+                    <div className='font-medium py-5 text-xl' >{hotel.address}</div>
+                    <div className='text-lg'></div>
                 </div>
 
             </div>

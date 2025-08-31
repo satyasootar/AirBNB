@@ -4,11 +4,10 @@ import { useContext, useRef } from 'react'
 import { ScrollButton } from './utils/ScrollButton'
 import { StoreContext } from '../context/StoreContext'
 
-
-
 export const CardCarousel = () => {
 
     const { hotels } = useContext(StoreContext)
+    console.log("hotels: ", hotels);
 
     const scrollRef = useRef(null)
     const scrollLeft = () => {
@@ -32,10 +31,10 @@ export const CardCarousel = () => {
                     </button>
                 </div>
             </div>
-            <div className='flex gap-3 overflow-x-auto scrollbar-none' ref={scrollRef} >
+            <div className='flex gap-3 overflow-x-auto scrollbar-none h-60' ref={scrollRef} >
                 {
                     hotels.hotels.map((item, idx) => (
-                        <Card key={idx} hotelName={item.name} price={item.price} image={item.image[0]} id={item.id} />
+                        <Card cardHeight={170} cardWidth={170} key={idx} hotelName={item.title} price={item.price_per_night} image={item.images[0].url} id={item.id} />
                     ))
                 }
             </div>

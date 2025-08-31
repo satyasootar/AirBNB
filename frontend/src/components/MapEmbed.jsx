@@ -1,6 +1,6 @@
-import React from "react";
 
-const MapEmbed = ({ latitude = "21.0533731", longitude = "86.5056662" }) => {
+
+const MapEmbed = ({ latitude , longitude  }) => {
   const mapSrc = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&hl=en&output=embed`;
 
   return (

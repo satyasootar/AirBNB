@@ -1,5 +1,5 @@
 import { StoreContext } from './StoreContext.js'
-import data from '../Dummy/Dummy.json'
+import data from '../Dummy/DummyData.json'
 
 const StoreContextProvider = ({ children }) => {
     const hotels = structuredClone(data)

@@ -46,65 +46,42 @@ export const Navbar = () => {
 
     const searchItems = [
         {
-            id: 1,
-            destination: "Puri Beach",
-            text: "Relax by the golden sands and waves",
-            image: "/assets/beachsearch.png",
+            id: 11,
+            destination: "Bhubaneshwar",
+            text: "Capital city with ancient temples and modern luxury",
+            image: "/assets/citysearch.png"
         },
         {
-            id: 2,
-            destination: "Shimla Hills",
-            text: "Snow-capped peaks and pine forests",
-            image: "/assets/mountainsearch.png",
+            id: 12,
+            destination: "Mumbai",
+            text: "City of dreams with beaches and Bollywood glamour",
+            image: "/assets/citysearch.png"
         },
         {
-            id: 3,
+            id: 13,
+            destination: "Bengaluru",
+            text: "Garden city and India's Silicon Valley",
+            image: "/assets/citysearch.png"
+        },
+        {
+            id: 14,
             destination: "Goa",
-            text: "Beach parties and water sports",
-            image: "/assets/beachsearch.png",
+            text: "Coastal paradise of sun-kissed beaches, bohemian nightlife, and Portuguese charm",
+            image: "/assets/beachsearch.png"
         },
         {
-            id: 4,
+            id: 15,
+            destination: "Kolkata",
+            text: "India’s Cultural Capital – poetry, history, food, and the ‘City of Joy’ spirit",
+            image: "/assets/citysearch.png"
+        },
+        {
+            id: 16,
             destination: "Manali",
-            text: "Adventure hub for trekking and skiing",
-            image: "/assets/mountainsearch.png",
-        },
-        {
-            id: 5,
-            destination: "Kerala Backwaters",
-            text: "Houseboats and serene waterways",
-            image: "/assets/beachsearch.png",
-        },
-        {
-            id: 6,
-            destination: "Leh-Ladakh",
-            text: "Mountains and Buddhist monasteries",
-            image: "/assets/mountainsearch.png",
-        },
-        {
-            id: 7,
-            destination: "Andaman Islands",
-            text: "Tropical beaches and coral reefs",
-            image: "/assets/beachsearch.png",
-        },
-        {
-            id: 8,
-            destination: "Darjeeling",
-            text: "Tea gardens and scenic mountains",
-            image: "/assets/mountainsearch.png",
-        },
-        {
-            id: 9,
-            destination: "Vizag",
-            text: "Beautiful coastline with rocky cliffs",
-            image: "/assets/beachsearch.png",
-        },
-        {
-            id: 10,
-            destination: "Ooty",
-            text: "Green hills and botanical gardens",
-            image: "/assets/mountainsearch.png",
-        },
+            text: "Himalayan haven of snow-clad valleys, adventure, and serene mountain vibes",
+            image: "/assets/mountainsearch.png"
+        }
+
     ];
 
     const filteredItems = searchItems.filter((item) =>
@@ -267,7 +244,7 @@ export const Navbar = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search-icon lucide-search text-white"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
                     </button>
                 </div>
-                <div className={`absolute bg-white h-[30rem] w-[25rem] top-40 left-85 rounded-4xl p-6 pt-10 shadow-card overflow-scroll scrollbar-none scrollbar-thin-y ${searchSuggestionBox ? "block" : "hidden"} `}>
+                <div className={`absolute bg-white max-h-[30rem] w-[25rem] top-40 left-85 rounded-4xl p-6 pt-10 shadow-card overflow-scroll scrollbar-none scrollbar-thin-y ${searchSuggestionBox ? "block" : "hidden"} `}>
                     {filteredItems.length > 0 ? (
                         filteredItems.map((item) => (
                             <div className='cursor-pointer' key={item.id} onMouseDown={() => {
