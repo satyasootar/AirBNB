@@ -29,7 +29,7 @@ class ListingDetailView(generics.RetrieveUpdateAPIView):
     authentication_classes = [authentication.JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsHostOrReadOnly, IsListingOwner]
 
-class ListingImageUploadView(generics.CreateAPIView):
+class ListingImageUploadView(generics.ListCreateAPIView):
     authentication_classes = [authentication.JWTAuthentication]
     serializer_class = HotelImageSerializer
     permission_classes = [IsAuthenticated, IsHostOrReadOnly, IsListingOwner]
