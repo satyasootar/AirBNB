@@ -7,12 +7,8 @@ import { calculateDays } from './utils/CalculateDays';
 
 export default function PaymentMethod({
     hotelId,
-    destination,
     checkIn,
     checkOut,
-    adult,
-    children,
-    infant
 }) {
     const [selectedMethod, setSelectedMethod] = useState('upi-id');
     const [showUpiIdField, setShowUpiIdField] = useState(true);

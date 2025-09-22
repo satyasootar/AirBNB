@@ -10,7 +10,7 @@ export default function BookingConfirmation() {
             setDetails(bookingDetails.current);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [bookingDetails.current]); // note: this won't trigger because ref doesn't change identity
+    }, [bookingDetails.current]); 
 
     if (!details) {
         return <p className="text-gray-600 text-lg">Loading booking details...</p>;
