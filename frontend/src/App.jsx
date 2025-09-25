@@ -1,6 +1,5 @@
 import Footer from './components/Footer'
-import { Navbar } from './components/Navbar'
-import { Card } from './components/utils/Card'
+import { Navbar } from './components/Navbar/Navbar'
 import { Routing } from './routing/Routing'
 
 export const App = () => {
