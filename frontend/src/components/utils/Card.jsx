@@ -16,7 +16,7 @@ export const Card = ({
 
     return (
         <div
-            className="flex-shrink-0 cursor-pointer bg-red-100"
+            className="flex-shrink-0 cursor-pointer"
             onClick={() => navigate(`/room/${id}`)}
             style={{ width: cardWidth, height: cardHeight }}
         >

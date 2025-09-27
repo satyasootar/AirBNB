@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Share, Heart, Grip, DoorClosed, MessageCircleHeart, CircleParking, Shell, Wifi, Car, WashingMachine, BellOff, ChevronUp, ChevronDown, AirVent, Tv, Briefcase, CookingPot, BellRing } from 'lucide-react';
 import DatePicker from 'react-datepicker';
@@ -11,11 +11,15 @@ import ReviewCard from '../components/utils/ReviewCard';
 import MapEmbed from '../components/MapEmbed';
 import { StoreContext } from '../context/StoreContext.js';
 import { calculateDays } from '../components/utils/CalculateDays.js';
+import HotelGallery from '../components/Room/HotelGallery.jsx';
+import AboutPlace from '../components/Room/AboutPlace.jsx';
+import RareFind from '../components/utils/RareFind.jsx';
+import GuestFavourite from '../components/Room/GuestFavourite.jsx';
 
 const Room = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { userData, updateUserData ,hotels } = useContext(StoreContext)
+    const { userData, updateUserData, hotels } = useContext(StoreContext)
     const hotel = hotels.hotels.find(hotel => hotel.id === parseInt(id))
     const bookingData = JSON.parse(localStorage.getItem("userData"))
     const [isChevronUp, setIsChevornUp] = useState(false)
@@ -260,6 +264,7 @@ const Room = () => {
             setCheckIn(userData.current.checkIn ? new Date(userData.current.checkIn) : bookingData.checkIn);
             setCheckOut(userData.current.checkOut ? new Date(userData.current.checkOut) : bookingData.checkOut);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -268,12 +273,12 @@ const Room = () => {
             destination: bookingData.destination,
             checkIn: new Date(checkIn).toISOString().split("T")[0],
             checkOut: new Date(checkOut).toISOString().split("T")[0],
-            adult: adult, 
-            children: children, 
-            infant: infant ,
+            adult: adult,
+            children: children,
+            infant: infant,
             hotelId: id
         };
-       // Convert object → string (encode for URL)
+        // Convert object → string (encode for URL)
         const queryString = new URLSearchParams(booking).toString();
         console.log("queryString: ", queryString);
         updateUserData(booking)
@@ -282,7 +287,7 @@ const Room = () => {
 
 
     return (
-        <div className='flex flex-col items-center max-w-[75rem] mx-auto py-10'>
+        <div className='flex flex-col items-center mx-auto py-10'>
             <div>
                 {/* Headers */}
                 <div className='flex justify-between' >
@@ -304,55 +309,16 @@ const Room = () => {
                 </div>
 
                 {/* Image Grid */}
-                <div className="flex gap-2 relative py-5 ">
-                    {/* Left big image */}
-                    <div className="w-1/2 object-cover overflow-hidden max-h-[25rem] rounded-l-md">
-                        <img
-                            src={hotel.images[0].url}
-                            alt="Hotel"
-                            className="max-w-[37.5rem] object-cover "
-                        />
-                    </div>
-
-                    {/* Right 2x2 grid */}
-                    <div className="w-1/2 grid grid-cols-2 grid-rows-2 gap-2 l max-h-[25rem] ">
-                        <img
-                            src={hotel.images[1].url}
-                            alt="Hotel"
-                            className="w-full h-full object-cover "
-                        />
-                        <img
-                            src={hotel.images[2].url}
-                            alt="Hotel"
-                            className="w-full h-full object-cover rounded-tr-md"
-                        />
-                        <img
-                            src={hotel.images[3].url}
-                            alt="Hotel"
-                            className="w-full h-full  object-cover "
-                        />
-                        <img
-                            src={hotel.images[4].url}
-                            alt="Hotel"
-                            className="w-full h-full object-cover rounded-br-md"
-                        />
-                    </div>
-
-                    {/* Show all photo button */}
-                    <div className='bg-white w-[10rem] h-[2rem] rounded-lg flex justify-center items-center gap-2 absolute bottom-10 right-3' >
-                        <Grip size="20" />
-                        <div className='font-semibold'>Show all photos</div>
-                    </div>
-                </div>
+                <HotelGallery hotel={hotel} />
 
                 <div>
-                    <div className='text-2xl font-medium'>Entire rental unit in {hotel.location.city}, India</div>
+                    <div className='sm:text-md md:text-xl lg:text-2xl font-medium'>Entire rental unit in {hotel.location.city}, India</div>
                     <div>5 guests | {hotel.rooms[0].bedroom} bedroom | {hotel.rooms[0].beds} beds | {hotel.rooms[0].bathroom} bathroom</div>
                 </div>
 
 
-                <div className='flex justify-between' >
-                    <div className='w-3/5 '>
+                <div className='flex flex-col-reverse md:flex-row justify-between' >
+                    <div className='md:w-3/5 '>
                         {/* Guest Favourite card */}
                         <GuestFavCard ratings={"5.0"} reviews={"7"} />
 
@@ -379,23 +345,13 @@ const Room = () => {
 
                         {/* About this place */}
 
-                        <div className='py-10 border-b-1  border-gray-300' >
-                            <p className='text-3xl font-semibold py-7'>About this place</p>
-                            <p className='py-2'>{hotel.description}</p>
-                            <p>Guest Capacity: 5(1 double bed+1 sofabed)</p>
-                            <p>Comfort: AC, ceiling fans, smart TV, washing machine</p>
-                            <p>Kitchen: Fully equipped with stove, fridge, basic cookware, utensils.</p>
-                            <p>This property is located close to railway station,in front of Zilla School. Beach is 800 m far and Temple is 1.5 km.</p>
-
-                            <p className='text-xl font-semibold pt-3' >Other things to note</p>
-                            <p className='py-2'>Non-Veg including eggs cooking is not allowed.</p>
-                        </div>
+                        <AboutPlace />
 
 
                         {/* What this place offers */}
                         <div className='py-10' >
                             <div className='text-3xl font-semibold py-7' >What this place offers</div>
-                            <div className='grid grid-cols-2' >
+                            <div className='grid lg:grid-cols-2' >
                                 {
                                     features.map((item, idx) => (
                                         <Features key={idx} icon={item.icon} title={item.title} strikethrough={item.strikethrough} />
@@ -405,67 +361,42 @@ const Room = () => {
                         </div>
                     </div>
 
-                    <div className='w-2/5 flex justify-end'>
+                    <div className='md:w-2/5 flex justify-end'>
                         <div>
-                            <div className='font-medium py-4 px-10 my-5 rounded-xl shadow-[0_7px_29px_0_rgba(100,100,111,0.2)]'>
-                                <div className='flex justify-center items-center gap-5'>
-
-                                    <svg
-                                        viewBox="0 0 48 48"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true"
-                                        role="presentation"
-                                        focusable="false"
-                                        className='h-8'
-                                    >
-                                        <g stroke="none">
-                                            <path
-                                                d="m32.62 6 9.526 11.114-18.146 23.921-18.147-23.921 9.526-11.114z"
-                                                fillOpacity=".2"
-                                            ></path>
-                                            <path
-                                                d="m34.4599349 2 12.8243129 14.9616983-23.2842478 30.6928721-23.28424779-30.6928721 12.82431289-14.9616983zm-17.9171827 16h-12.52799999l18.25899999 24.069zm27.441 0h-12.528l-5.73 24.069zm-14.583 0h-10.802l5.4012478 22.684zm-15.92-12.86-9.30799999 10.86h11.89399999zm19.253-1.141h-17.468l2.857 12.001h11.754zm1.784 1.141-2.586 10.86h11.894z"
-                                            ></path>
-                                        </g>
-                                    </svg>
-                                    <div>
-                                        Rare find! This place is usually booked
-                                    </div>
-                                </div>
-                            </div>
-
+                            <RareFind />
 
                             {/* Check out form */}
-                            <div className='border border-gray-300 p-5 inline-block rounded-xl sticky top-50' >
-                            <div className='py-4'> 
-                                <span className='text-xl py-5 font-bold underline' >{nights == 0 ? "Add dates to get the price" : `₹${(nights * hotel.price_per_night).toLocaleString("en-IN")}`}</span>
-                                <span> For {calculateDays(checkIn,checkOut)} nights </span>
-                            </div>
-                                
-                                <div className=' inline-flex flex-col' >
+                            <div className='border border-gray-300 p-5 inline-block rounded-xl sticky top-50 
+                w-full md:w-auto md:max-w-lg lg:max-w-md xl:max-w-sm 2xl:max-w-xs' >
+                                <div className='py-4'>
+                                    <span className='text-xl py-5 font-bold underline' >{nights == 0 ? "Add dates to get the price" : `₹${(nights * hotel.price_per_night).toLocaleString("en-IN")}`}</span>
+                                    <span> For {calculateDays(checkIn, checkOut)} nights </span>
+                                </div>
+
+                                <div className='inline-flex flex-col w-full' >
                                     <div className='flex border-b-0 border border-gray-700 rounded-t-xl' >
-                                        <div className='inline-flex flex-col p-3 px-8  border-r-1'>
+                                        <div className='inline-flex flex-col p-3 px-4 md:px-8 border-r-1 flex-1'>
                                             <label className='font-medium text-xs' htmlFor='checkin'>CHECK-IN</label>
                                             <DatePicker onChange={(date) => setCheckIn(date)}
                                                 selected={checkIn}
                                                 dateFormat="dd/MM/yyyy"
                                                 id='checkin'
                                                 placeholderText='Add dates'
-                                                className='outline-0  w-25'
+                                                className='outline-0 w-full'
                                             />
                                         </div>
-                                        <div className='inline-flex flex-col p-3 px-8 '>
+                                        <div className='inline-flex flex-col p-3 px-4 md:px-8 flex-1'>
                                             <label className='font-medium text-xs ' htmlFor='checkin'>CHECK-OUT</label>
                                             <DatePicker onChange={(date) => setCheckOut(date)}
                                                 dateFormat="dd/MM/yyyy"
                                                 id='checkin'
                                                 placeholderText='Add dates'
                                                 selected={checkOut}
-                                                className='outline-0  w-25'
+                                                className='outline-0 w-full'
                                             />
                                         </div>
                                     </div>
-                                    <div className='border flex justify-between items-center border-gray-700 rounded-b-xl px-8 p-3 '
+                                    <div className='border flex justify-between items-center border-gray-700 rounded-b-xl px-4 md:px-8 p-3 '
                                         onClick={dropDownMenu} >
                                         <div>
                                             <div className='font-medium '>Guests</div>
@@ -476,9 +407,8 @@ const Room = () => {
 
                                     <button onClick={handleReservation} className='bg-airbnb py-3 rounded-full text-white font-semibold mt-5' >Reserve</button>
 
-
                                     {/* dropdown menu */}
-                                    <div className={`absolute bg-white h-80 w-[21rem] top-55 z-10 p-5 rounded-xl ${isDropdownOn ? "block" : "hidden"} shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] `}>
+                                    <div className={`absolute bg-white h-80 w-full md:w-[21rem] top-55 z-10 p-5 rounded-xl ${isDropdownOn ? "block" : "hidden"} shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] `}>
                                         <div className='flex justify-between pt-3' >
                                             <div>
                                                 <div className='font-semibold text-lg' >Adults</div>
@@ -527,26 +457,16 @@ const Room = () => {
                 </div>
 
                 {/* Ratings */}
-                <div className='flex flex-col justify-center items-center' >
-                    <div className='flex' >
-                        <img src='/assets/leaf.png' className='w-25' />
-                        <div className='text-8xl font-bold' >
-                            {hotel.reviews[0].rating}
-                        </div>
-                        <img src='/assets/leaf.png' className='w-25 transform scale-x-[-1]' />
-                    </div>
+                <GuestFavourite
+                    rating={hotel.reviews[0].rating}
+                    title="Guests favourite"
+                    description="This home is a guest favourite based on ratings, reviews and reliability"
+                />
 
-                    <div className='text-2xl font-semibold' >
-                        {"Guests favourite"}
-                    </div>
-                    <div className='text-xl font-medium text-gray-400 text-balance w-1/2 text-center' >
-                        {"This home is a guest favourite based on ratings, reviews and reliability"}
-                    </div>
-                </div>
 
                 {/* Rating in details */}
 
-                <div className='border-b border-gray-300'>
+                <div className='border-b border-gray-300 hidden lg:block'>
                     <div className='flex justify-between py-10'>
                         <div className='max-w-[10rem] min-w-[10rem] p-3' >
                             <div className='font-medium' >Overall rating</div>
@@ -565,7 +485,7 @@ const Room = () => {
                 </div>
 
                 {/* ----------------------Reviews------------------------- */}
-                <div className='py-5 grid grid-cols-2' >
+                <div className='py-5 grid md:grid-cols-2 ' >
                     {
                         reviews.map((item) => (
                             <ReviewCard
@@ -579,6 +499,8 @@ const Room = () => {
                         ))
                     }
                 </div>
+
+
                 {/* Map embeddings */}
                 <div className='py-5 border-y border-gray-300'>
 

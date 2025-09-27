@@ -30,10 +30,10 @@ export const CardCarousel = () => {
                     </button>
                 </div>
             </div>
-            <div className='flex gap-3 overflow-x-auto scrollbar-none h-60' ref={scrollRef} >
+            <div className='flex gap-3 overflow-x-auto scrollbar-none h-70' ref={scrollRef} >
                 {
                     hotels.hotels.map((item, idx) => (
-                        <Card cardHeight={170} cardWidth={170} key={idx} hotelName={item.title} price={item.price_per_night} image={item.images[0].url} id={item.id} />
+                        <Card key={idx} hotelName={item.title} price={item.price_per_night} image={item.images[0].url} id={item.id} />
                     ))
                 }
             </div>
