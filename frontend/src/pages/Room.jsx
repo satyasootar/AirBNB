@@ -366,7 +366,7 @@ const Room = () => {
                             <RareFind />
 
                             {/* Check out form */}
-                            <div className='border border-gray-300 p-5 inline-block rounded-xl sticky top-50 w-full md:w-auto md:max-w-lg lg:max-w-md xl:max-w-sm 2xl:max-w-xs' >
+                            <div className='border border-gray-300 p-5 inline-block rounded-xl sticky top-50 w-full md:w-auto md:max-w-lg lg:max-w-md ' >
                                 <div className='py-4'>
                                     <span className='text-xl py-5 font-bold underline' >{nights == 0 ? "Add dates to get the price" : `₹${(nights * hotel.price_per_night).toLocaleString("en-IN")}`}</span>
                                     <span> For {calculateDays(checkIn, checkOut)} nights </span>
@@ -407,7 +407,7 @@ const Room = () => {
                                     <button onClick={handleReservation} className='bg-airbnb py-3 rounded-full text-white font-semibold mt-5' >Reserve</button>
 
                                     {/* dropdown menu */}
-                                    <div className={`absolute bg-white h-80 w-full md:w-[21rem] top-55 z-10 p-5 rounded-xl ${isDropdownOn ? "block" : "hidden"} shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] `}>
+                                    <div className={`absolute bg-white h-80 w-full md:w-[25rem] top-55 z-10 p-5 rounded-xl ${isDropdownOn ? "block" : "hidden"} shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] `}>
                                         <div className='flex justify-between pt-3' >
                                             <div>
                                                 <div className='font-semibold text-lg' >Adults</div>
