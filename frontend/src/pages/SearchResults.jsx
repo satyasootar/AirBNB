@@ -47,7 +47,7 @@ export const SearchResults = () => {
             </div>
 
             {/* Right side - Map */}
-            <div className="sticky top-10 self-start">
+            <div className="sticky top-10 self-start hidden lg:block">
                 <div className="w-[588px] h-[588px] rounded-2xl overflow-hidden shadow-lg">
                     <iframe
                         title="Google Map"
