@@ -29,9 +29,9 @@ def Authenticate(email, password):
     if not check:
         return None
     user = User.objects.get(email=email)
-    if not user.check_password(password):
-        return None
-    return user
+    if user.check_password(password):
+        return user
+    return None
 
 
 class LoginView(APIView):
