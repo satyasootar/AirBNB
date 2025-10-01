@@ -2,6 +2,8 @@
 import { useContext, useState } from 'react';
 import { StoreContext } from '../context/StoreContext';
 import Loader from '../components/utils/Loader';
+import { ToastContainer } from 'react-toastify';
+
 
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -28,12 +30,12 @@ const Auth = () => {
             login(formData)
         } else {
             signup(formData)
-            login(formData)
         }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center py-10">
+            <ToastContainer />
             <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
                 {/* Header */}
                 <div className="text-center mb-8">

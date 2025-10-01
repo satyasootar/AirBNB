@@ -1,14 +1,20 @@
 import { StoreContext } from './StoreContext.js'
 import data from '../Dummy/DummyData.json'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import axiosInstance from '../components/utils/axiosInstance.js'
+import { toast } from 'react-toastify'
 
 const StoreContextProvider = ({ children }) => {
     const hotels = structuredClone(data)
+
+    // Auth state
     const [accessToken, setAccessToken] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
     const [loader, setLoader] = useState(false);
-    const [authError, setAuthError] = useState(null)
+    const [authError, setAuthError] = useState(null);
+    const [user, setUser] = useState({})
+
+    // Refs
     const userData = useRef({
         destination: "",
         checkIn: "",
@@ -26,134 +32,185 @@ const StoreContextProvider = ({ children }) => {
         cancleBy: ""
     })
 
-    const signup = async (formData) => {
+    // Error message helper
+    const getErrorMessage = (error) => {
+        return (
+            error?.response?.data?.detail ||
+            error?.response?.data?.message ||
+            error?.response?.data?.non_field_errors?.[0] ||
+            (error?.response?.data && typeof error.response.data === "object"
+                ? Object.values(error.response.data).flat().join(" ")
+                : null) ||
+            error?.message ||
+            "Something went wrong. Please try again."
+        );
+    };
+
+    // Token management
+    const updateTokens = useCallback((access, refresh) => {
+        setAccessToken(access);
+        setRefreshToken(refresh);
+        localStorage.setItem("access", access);
+        localStorage.setItem("refresh", refresh);
+    }, []);
+
+    const signup = useCallback(async (formData) => {
+        if (formData.password !== formData.confirmPassword) {
+            setAuthError("Passwords don't match");
+            return;
+        }
+
+        if (formData.password.length < 8) {
+            setAuthError("Password must be at least 8 characters");
+            return;
+        }
+
         const credential = {
             username: formData.firstName,
             email: formData.email,
             password: formData.password,
             confirm_password: formData.confirmPassword
         }
+
         try {
-            setLoader(true)
-            setAuthError(null)
-            let res = await axiosInstance.post('/api/auth/register/', credential)
-            setLoader(false)
+            setLoader(true);
+            setAuthError(null);
+            let res = await axiosInstance.post('/api/auth/register/', credential);
+            setLoader(false);
+            toast.success("Registration Successful!");
             console.log(res.data);
         } catch (error) {
-            setLoader(false)
-            const errMsg =
-                error?.response?.data?.detail ||
-                error?.response?.data?.message ||
-                error?.response?.data?.non_field_errors?.[0] ||
-                // For Django REST Framework field errors (object): {email: ["..."], password: ["..."]}
-                (error?.response?.data && typeof error.response.data === "object"
-                    ? Object.values(error.response.data).flat().join(" ")
-                    : null) ||
-                error?.message ||
-                "Something went wrong. Please try again.";
-
+            setLoader(false);
+            const errMsg = getErrorMessage(error);
             setAuthError(errMsg);
+            toast.error("Registration failed");
             console.log("Signup error: ", errMsg);
-
         }
+    }, []);
 
-    }
-
-    const login = async (formData) => {
+    const login = useCallback(async (formData) => {
         const credential = {
             email: formData.email,
             password: formData.password
         }
+
         try {
-            setLoader(true)
-            let res = await axiosInstance.post("/api/auth/login/", credential)
+            setLoader(true);
+            setAuthError(null);
+            let res = await axiosInstance.post("/api/auth/login/", credential);
+            const { access, refresh } = res.data;
 
-            const { access, refresh } = res.data; // destructure response
-
-            // update state
-            setAccessToken(access);
-            setRefreshToken(refresh);
-
-            // save immediately using response values (not state)
-            localStorage.setItem("access", access);
-            localStorage.setItem("refresh", refresh);
-            setLoader(false)
-            setAuthError(null)
+            updateTokens(access, refresh);
+            setLoader(false);
+            toast.success("Login Successful!");
             console.log("Login successful:", res.data);
 
         } catch (error) {
-            setLoader(false)
-            const errMsg =
-                error?.response?.data?.detail ||
-                error?.response?.data?.message ||
-                error?.response?.data?.non_field_errors?.[0] ||
-                (error?.response?.data && typeof error.response.data === "object"
-                    ? Object.values(error.response.data).flat().join(" ")
-                    : null) ||
-                error?.message ||
-                "Invalid credentials. Please try again.";
-
+            setLoader(false);
+            const errMsg = getErrorMessage(error);
             setAuthError(errMsg);
+            toast.error("Login failed");
             console.log("Login error: ", errMsg);
-
         }
-    }
+    }, [updateTokens]);
 
-    const logout = () => {
+    const logout = useCallback(() => {
         setAccessToken("");
         setRefreshToken("");
+        setUser({});
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
+        toast.success("Logged out successfully");
         console.log("User logged out");
-    };
+    }, []);
 
-
+    // Combined initialization effect
     useEffect(() => {
-        const savedData = localStorage.getItem("userData");
-        if (savedData && savedData !== "undefined" && savedData !== "null") {
+        // Load from localStorage
+        const storedAccess = localStorage.getItem("access");
+        const storedRefresh = localStorage.getItem("refresh");
+        const savedUserData = localStorage.getItem("userData");
+        const savedBookingDetails = localStorage.getItem("bookingDetails");
+
+        if (storedAccess) setAccessToken(storedAccess);
+        if (storedRefresh) setRefreshToken(storedRefresh);
+
+        if (savedUserData && savedUserData !== "undefined" && savedUserData !== "null") {
             try {
-                userData.current = JSON.parse(savedData);
+                userData.current = JSON.parse(savedUserData);
             } catch (e) {
                 console.error("Failed to parse userData:", e);
                 localStorage.removeItem("userData");
             }
         }
-    }, []);
 
-    useEffect(() => {
-        const savedData = localStorage.getItem("bookingDetails");
-        if (savedData && savedData !== "undefined" && savedData !== "null") {
+        if (savedBookingDetails && savedBookingDetails !== "undefined" && savedBookingDetails !== "null") {
             try {
-                bookingDetails.current = JSON.parse(savedData);
+                bookingDetails.current = JSON.parse(savedBookingDetails);
             } catch (e) {
-                console.error("Failed to parse userData:", e);
+                console.error("Failed to parse bookingDetails:", e);
                 localStorage.removeItem("bookingDetails");
             }
         }
     }, []);
 
+    // User data effect with proper authentication
     useEffect(() => {
-        const storedAccess = localStorage.getItem("access");
-        const storedRefresh = localStorage.getItem("refresh");
-        if (storedAccess) setAccessToken(storedAccess);
-        if (storedRefresh) setRefreshToken(storedRefresh);
-    }, []);
+        if (!accessToken) {
+            setUser({});
+            return;
+        }
 
+        const abortController = new AbortController();
 
+        (async () => {
+            try {
+                const response = await axiosInstance.get("/api/auth/me/", {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                    signal: abortController.signal
+                });
+                setUser(response.data);
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error("Error fetching user:", error);
+                    if (error.response?.status === 401) {
+                        logout();
+                    }
+                }
+            }
+        })();
 
-    // Function to update data and save in storage
-    const updateUserData = (newData) => {
+        return () => abortController.abort();
+    }, [accessToken, logout]);
+
+    // Update functions
+    const updateUserData = useCallback((newData) => {
         userData.current = newData;
         localStorage.setItem("userData", JSON.stringify(newData));
-    };
-    const updateBookingdetails = (newData) => {
+    }, []);
+
+    const updateBookingdetails = useCallback((newData) => {
         bookingDetails.current = newData;
         localStorage.setItem("bookingDetails", JSON.stringify(newData));
-    };
+    }, []);
 
+    const value = {
+        hotels,
+        userData,
+        updateUserData,
+        bookingDetails,
+        updateBookingdetails,
+        accessToken,
+        refreshToken,
+        login,
+        signup,
+        logout,
+        loader,
+        authError,
+        setAuthError,
+        user
+    }
 
-
-    const value = { hotels, userData, updateUserData, bookingDetails, updateBookingdetails, accessToken, setAccessToken, refreshToken, setRefreshToken, login, signup, logout, loader, authError, setAuthError }
     return (
         <StoreContext.Provider value={value}>
             {children}

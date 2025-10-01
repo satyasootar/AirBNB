@@ -10,7 +10,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const access = localStorage.getItem("access");
     if (access) {
-      config.headers["Authorization"] = `Bearer ${access}`;
+      config.headers["Authorization"] = `AIRBNB ${access}`;
     }
     return config;
   },
