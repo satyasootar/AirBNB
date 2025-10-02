@@ -3,16 +3,19 @@ import data from '../Dummy/DummyData.json'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import axiosInstance from '../components/utils/axiosInstance.js'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const StoreContextProvider = ({ children }) => {
     const hotels = structuredClone(data)
+    const navigate = useNavigate()
 
     // Auth state
     const [accessToken, setAccessToken] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
     const [loader, setLoader] = useState(false);
     const [authError, setAuthError] = useState(null);
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState(null)
+
 
     // Refs
     const userData = useRef({
@@ -103,6 +106,7 @@ const StoreContextProvider = ({ children }) => {
             updateTokens(access, refresh);
             setLoader(false);
             toast.success("Login Successful!");
+            navigate("/")
             console.log("Login successful:", res.data);
 
         } catch (error) {

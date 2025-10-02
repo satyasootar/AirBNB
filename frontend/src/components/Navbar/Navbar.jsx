@@ -29,8 +29,8 @@ export const Navbar = () => {
     const searchWrapperRef = useRef(null);
     const deskGuestWrapperRef = useRef(null);
     const mobileGuestWrapperRef = useRef(null);
-    const navigate = useNavigate()
-    const { updateUserData } = useContext(StoreContext)
+    const navigate = useNavigate();
+    const { updateUserData } = useContext(StoreContext);
 
 
     useEffect(() => {
