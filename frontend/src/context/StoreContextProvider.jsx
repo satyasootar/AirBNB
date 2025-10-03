@@ -1,12 +1,14 @@
 import { StoreContext } from './StoreContext.js'
-import data from '../Dummy/DummyData.json'
+// import data from '../Dummy/DummyData.json'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import axiosInstance from '../components/utils/axiosInstance.js'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
 const StoreContextProvider = ({ children }) => {
-    const hotels = structuredClone(data)
+    // const hotels = structuredClone(data)
+    const [hotels, setHotels] = useState([]);
+    console.log("hotels: ", hotels);
     const navigate = useNavigate()
 
     // Auth state
@@ -116,6 +118,7 @@ const StoreContextProvider = ({ children }) => {
             toast.error("Login failed");
             console.log("Login error: ", errMsg);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updateTokens]);
 
     const logout = useCallback(() => {
@@ -128,10 +131,11 @@ const StoreContextProvider = ({ children }) => {
         console.log("User logged out");
     }, []);
 
-    const fetchHotels= async()=>{
+    const fetchHotels = async () => {
         try {
-            let res = await axiosInstance.get("/api/listings/?offset=10&limit=10")
+            let res = await axiosInstance.get("/api/listings/")
             console.log("res: ", res.data.results);
+            setHotels(res.data.results)
         } catch (error) {
             const errMsg = getErrorMessage(error);
             setAuthError(errMsg);
@@ -167,6 +171,7 @@ const StoreContextProvider = ({ children }) => {
                 localStorage.removeItem("bookingDetails");
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // User data effect with proper authentication

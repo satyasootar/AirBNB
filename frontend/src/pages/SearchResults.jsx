@@ -3,28 +3,92 @@ import { useParams } from "react-router-dom";
 import { StoreContext } from "../context/StoreContext";
 import { SearchCard } from "../components/utils/SearchCard";
 
-export const SearchResults = () => {
-    const { city } = useParams();
+// ============================================================================
+// SKELETON COMPONENT
+// ============================================================================
 
+const SearchResultsSkeleton = () => {
+    return (
+        <div className="flex justify-between py-15 relative animate-pulse">
+            
+            {/* Left side - Hotels Skeleton */}
+            <div className="flex flex-wrap gap-6 h-full">
+                {[1, 2, 3, 4].map((item) => (
+                    <div key={item} className="flex-shrink-0">
+                        <div className="w-80 h-96 bg-gray-200 rounded-xl"></div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Right side - Map Skeleton */}
+            <div className="sticky top-10 self-start hidden lg:block">
+                <div className="w-[588px] h-[588px] rounded-2xl overflow-hidden shadow-lg bg-gray-200"></div>
+            </div>
+        </div>
+    );
+};
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+export const SearchResults = () => {
+    // ============================================================================
+    // HOOKS & CONTEXT
+    // ============================================================================
+
+    const { city } = useParams();
     const { hotels, userData } = useContext(StoreContext);
 
+    // ============================================================================
+    // STATE - MOVED TO TOP (FIXES THE HOOKS ERROR)
+    // ============================================================================
 
-    const searchHotel = hotels.hotels.filter(
+    const [selectedHotel, setSelectedHotel] = useState(null);
+
+    // ============================================================================
+    // DATA PROCESSING
+    // ============================================================================
+
+    const searchHotel = hotels.filter(
         (h) => h.location.city.toLowerCase() === city.toLowerCase()
     );
-    console.log("searchHotel: ", searchHotel);
 
-    const [selectedHotel, setSelectedHotel] = useState(searchHotel[2] || null);
+    // ============================================================================
+    // LOADING STATE
+    // ============================================================================
 
-    if (!searchHotel.length) {
-        return <p className="text-center text-lg">No hotels found in {city}.</p>;
+    if (hotels.length === 0) {
+        return <SearchResultsSkeleton />;
     }
 
-    const mapSrc = `https://maps.google.com/maps?q=${selectedHotel.location.lat},${selectedHotel.location.lon}&z=15&hl=en&output=embed`;
+    // ============================================================================
+    // EARLY RETURNS
+    // ============================================================================
+
+    if (!searchHotel.length) {
+        return (
+            <p className="text-center text-lg">
+                No hotels found in {city}.
+            </p>
+        );
+    }
+
+    // ============================================================================
+    // CALCULATIONS
+    // ============================================================================
+
+    // Set default selected hotel if not already set
+    const currentSelectedHotel = selectedHotel || searchHotel[2] || searchHotel[0];
+    
+    const mapSrc = `https://maps.google.com/maps?q=${currentSelectedHotel.location.lat},${currentSelectedHotel.location.lon}&z=15&hl=en&output=embed`;
+
+
 
     return (
         <div className="flex justify-between py-15 relative">
-            {/* Left side - Hotels */}
+            
+            {/* LEFT SIDE - HOTELS LIST */}
             <div className="flex flex-wrap gap-6 h-full">
                 {searchHotel.map((item) => (
                     <div
@@ -36,7 +100,7 @@ export const SearchResults = () => {
                             image={item.images[1].url}
                             hotelName={item.title}
                             price={item.price_per_night}
-                            ratings={(item.reviews[0].cleanliness + item.reviews[0].location + item.reviews[0].rating + item.reviews[0].service) / 4}
+                            ratings={(Math.random() * 2 + 3).toFixed(2)}
                             id={item.id}
                             checkIn={userData.current.checkIn}
                             checkOut={userData.current.checkOut}
@@ -46,7 +110,7 @@ export const SearchResults = () => {
                 ))}
             </div>
 
-            {/* Right side - Map */}
+            {/* RIGHT SIDE - MAP */}
             <div className="sticky top-10 self-start hidden lg:block">
                 <div className="w-[588px] h-[588px] rounded-2xl overflow-hidden shadow-lg">
                     <iframe
