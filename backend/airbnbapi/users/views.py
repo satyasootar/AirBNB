@@ -10,6 +10,8 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt import authentication
 
+
+
 User = get_user_model()
 # Create your views here.
 def home(request):
@@ -55,8 +57,16 @@ class LoginView(APIView):
 
 class SelfView(APIView):
     authentication_classes = [authentication.JWTAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated ,]
 
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
+    
+    
+    def patch(self, request):
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)

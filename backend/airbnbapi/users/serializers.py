@@ -2,12 +2,14 @@ from rest_framework import serializers
 from .models import Users
 from django.contrib.auth.hashers import make_password
 
+
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = Users
-        fields = ['id', 'username', 'email', 'date_of_birth', 'role', 'date_joined', 'password']
+        fields = ['id', 'username', 'email', 'role', 'date_joined', 'password' , "profile_pic"]
         read_only_fields = ['id', 'date_joined']
 
     def create(self, validated_data):
