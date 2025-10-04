@@ -53,6 +53,10 @@ class HotelsListing(models.Model):
     
     def __str__(self):
         return f'{self.title} --- {self.host_id.username}'
+    
+    
+    
+    
 
 class HotelImages(models.Model):
     hotel = models.ForeignKey(HotelsListing , on_delete=models.CASCADE , related_name="images")
@@ -60,6 +64,8 @@ class HotelImages(models.Model):
 
     def __str__(self):
         return f'Images of {self.hotel.title}'
+    
+    
 
 class Review(models.Model):
     hotel = models.ForeignKey(

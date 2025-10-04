@@ -8,6 +8,7 @@ router.register(r'', views.ReviewListCreateView)
 
 urlpatterns = [
     path("",views.ListingListCreateView.as_view(), name="listing-list"),
+    path("hotels/",views.ListingAllHotelsView.as_view() , name="all-hotel-listing"),    
     path("<int:pk>/", views.ListingDetailView.as_view(), name="listing-detail"),
     path("<int:pk>/images/", views.ListingImageUploadView.as_view(), name="listing-image-upload"),
     path("<int:pk>/reviews/",  include(router.urls)),
