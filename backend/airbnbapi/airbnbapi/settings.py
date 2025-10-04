@@ -21,7 +21,7 @@ SECRET_KEY = 'django-insecure-2)a!)xw1bqrt(8nid!)wy@yq@ja6nv7_n+uiu8o6)yiv$!nc(7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["airbnbapi-6s4b.onrender.com" ]
+ALLOWED_HOSTS = ["airbnbapi-6s4b.onrender.com" ,"air-bnb-beige-phi.vercel.app"]
 
 
 # Set it up before migrations
@@ -73,6 +73,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:5173",
     "https://airbnbapi-6s4b.onrender.com",
+    "https://air-bnb-beige-phi.vercel.app/",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
