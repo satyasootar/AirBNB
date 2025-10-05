@@ -12,6 +12,26 @@ from .permissions import IsHostOrReadOnly, IsListingOwner
 
 
 
+
+class ListingAllHotelsView(generics.ListAPIView):
+    serializer_class = HotelsListingSerializer
+    authentication_classes = [authentication.JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsHostOrReadOnly]
+    pagination_class = None  
+
+    def get_queryset(self):
+        
+        queryset = (
+            HotelsListing.objects.select_related("location", "host_id")
+            .prefetch_related("rooms", "images")
+            .order_by("id")
+        )
+        
+        
+        return queryset[:500]
+    
+    
+
 class ListingListCreateView(generics.ListCreateAPIView):
     queryset = HotelsListing.objects.select_related("location", "host_id").prefetch_related("rooms", "images")
     serializer_class = HotelsListingSerializer
@@ -19,6 +39,9 @@ class ListingListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly, IsHostOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["location" , "title" , "price_per_night"]
+    
+    
+    
     def perform_create(self, serializer):
         # attach the currently logged-in user as host (field is host_id)
         serializer.save(host_id=self.request.user)
