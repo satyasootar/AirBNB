@@ -77,7 +77,7 @@ class BookingViewSet(viewsets.ModelViewSet):
             defaults={
                 "amount": total_amount,
                 "status": PaymentStatus.PENDING,
-                "payment_method": "UPI",  # optional default
+                "payment_method": "upi",  # optional default
             },
         )
 
@@ -95,9 +95,9 @@ class BookingViewSet(viewsets.ModelViewSet):
             payment, _ = Payment.objects.update_or_create(
                 booking=booking,
                 defaults={
-                    "amount": payment_data.get("amount", booking.total_price),
+                    "amount": payment_data.get("amount", booking.total_price + (booking.total_price * 0.18) ),
                     "status": payment_data.get("status", PaymentStatus.PENDING),
-                    "payment_method": payment_data.get("payment_method", "UPI"),
+                    "payment_method": payment_data.get("payment_method", "upi"),
                     "provider_payment_id": payment_data.get("provider_payment_id"),
                 },
             )
