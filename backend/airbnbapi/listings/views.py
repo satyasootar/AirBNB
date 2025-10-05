@@ -14,11 +14,22 @@ from .permissions import IsHostOrReadOnly, IsListingOwner
 
 
 class ListingAllHotelsView(generics.ListAPIView):
-    queryset = HotelsListing.objects.all()
     serializer_class = HotelsListingSerializer
-    pagination_class = None
     authentication_classes = [authentication.JWTAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly, IsHostOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsHostOrReadOnly]
+    pagination_class = None  
+
+    def get_queryset(self):
+        
+        queryset = (
+            HotelsListing.objects.select_related("location", "host_id")
+            .prefetch_related("rooms", "images")
+            .order_by("id")
+        )
+        
+        
+        return queryset[:500]
+    
     
 
 class ListingListCreateView(generics.ListCreateAPIView):
