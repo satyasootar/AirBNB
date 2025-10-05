@@ -67,10 +67,11 @@ export const CardCarousel = ({ destination }) => {
                             price={item.price_per_night}
                             image={item.images[0].url}
                             id={item.id}
+                            ratings={item.price_per_night}
                         />
                     ))
                 )}
-            </div>
+            </div>  
         </div>
     )
 }

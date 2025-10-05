@@ -2,6 +2,7 @@
 import { motion } from "framer-motion"
 import { SearchCards } from "../utils/SearchCards"
 import DatePicker from "react-datepicker"
+import { X } from 'lucide-react';
 
 export const DesktopSearchBar = ({
     hide,
@@ -37,15 +38,19 @@ export const DesktopSearchBar = ({
             <div>
                 <div className='flex flex-col rounded-full py-3 pl-10 p-2 hover:bg-gray-1' ref={searchWrapperRef}>
                     <label htmlFor="destinations">Where</label>
-                    <input
-                        id='destinations'
-                        type="text"
-                        placeholder='Search Destinations'
-                        className='outline-0'
-                        onFocus={() => setSearchSuggestionBox(true)}
-                        onChange={(e) => setQuery(e.target.value)}
-                        value={query}
-                    />
+                    <div className="flex">
+                        <input
+                            id='destinations'
+                            type="text"
+                            placeholder='Search Destinations'
+                            className='outline-0'
+                            onFocus={() => setSearchSuggestionBox(true)}
+                            onChange={(e) => setQuery(e.target.value)}
+                            value={query}
+                        /><span className={query?.trim().length ? "block" : "hidden"} onClick={() => setQuery("")} >
+                            <X className="size-4" />
+                        </span>
+                    </div>
                 </div>
                 <div className={`absolute bg-white max-h-[30rem] min-w-[25rem] md:w-[15rem] lg:w-[25rem] top-40 left-1/3.5 rounded-4xl p-6 pt-10 shadow-card overflow-scroll scrollbar-none scrollbar-thin-y ${searchSuggestionBox ? "block" : "hidden pointer-events-none border "}`}>
                     {filteredItems.length > 0 ? (

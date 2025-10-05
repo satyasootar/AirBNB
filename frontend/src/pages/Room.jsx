@@ -15,6 +15,7 @@ import HotelGallery from '../components/Room/HotelGallery.jsx';
 import AboutPlace from '../components/Room/AboutPlace.jsx';
 import RareFind from '../components/utils/RareFind.jsx';
 import GuestFavourite from '../components/Room/GuestFavourite.jsx';
+import { seededValueInRange } from '../components/utils/seededValueInRange.jsx';
 
 const Room = () => {
     const { id } = useParams();
@@ -486,7 +487,7 @@ const Room = () => {
                 <div className='flex flex-col-reverse md:flex-row justify-between' >
                     <div className='md:w-3/5 '>
                         {/* Guest Favourite card */}
-                        <GuestFavCard ratings={"5.0"} reviews={"7"} />
+                        <GuestFavCard ratings={seededValueInRange(hotel.price_per_night)} reviews={"6"} />
 
                         {/* Host Small card */}
                         <div className='mt-5 py-10 flex gap-5 border-b-1  border-gray-300' >
@@ -623,7 +624,7 @@ const Room = () => {
 
                 {/* Ratings */}
                 <GuestFavourite
-                    rating={hotel.reviews[0]?.rating}
+                    rating={seededValueInRange(hotel.price_per_night)}
                     title="Guests favourite"
                     description="This home is a guest favourite based on ratings, reviews and reliability"
                 />

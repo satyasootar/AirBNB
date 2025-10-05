@@ -42,7 +42,7 @@ export const SearchCard = ({
             {/* TEXT PART */}
             <div className="mt-2">
                 <div className='flex justify-between'>
-                    <p className="font-medium">{hotelName}</p>
+                    <p className="font-medium text-balance w-50">{hotelName}</p>
                     <span>★{ratings}</span>
                 </div>
                 <p className="text-xs">{`₹${(night * price).toLocaleString("en-IN")} for ${night} night `}</p>

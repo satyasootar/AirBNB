@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { StoreContext } from "../context/StoreContext";
 import { SearchCard } from "../components/utils/SearchCard";
+import { seededValueInRange } from "../components/utils/seededValueInRange";
 
 // ============================================================================
 // SKELETON COMPONENT
@@ -10,7 +11,7 @@ import { SearchCard } from "../components/utils/SearchCard";
 const SearchResultsSkeleton = () => {
     return (
         <div className="flex justify-between py-15 relative animate-pulse">
-            
+
             {/* Left side - Hotels Skeleton */}
             <div className="flex flex-wrap gap-6 h-full">
                 {[1, 2, 3, 4].map((item) => (
@@ -80,14 +81,14 @@ export const SearchResults = () => {
 
     // Set default selected hotel if not already set
     const currentSelectedHotel = selectedHotel || searchHotel[2] || searchHotel[0];
-    
+
     const mapSrc = `https://maps.google.com/maps?q=${currentSelectedHotel.location.lat},${currentSelectedHotel.location.lon}&z=15&hl=en&output=embed`;
 
 
 
     return (
         <div className="flex justify-between py-15 relative">
-            
+
             {/* LEFT SIDE - HOTELS LIST */}
             <div className="flex flex-wrap gap-6 h-full">
                 {searchHotel.map((item) => (
@@ -100,7 +101,7 @@ export const SearchResults = () => {
                             image={item.images[1].url}
                             hotelName={item.title}
                             price={item.price_per_night}
-                            ratings={(Math.random() * 2 + 3).toFixed(2)}
+                            ratings={seededValueInRange(item.price_per_night)}
                             id={item.id}
                             checkIn={userData.current.checkIn}
                             checkOut={userData.current.checkOut}

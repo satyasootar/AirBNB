@@ -1,12 +1,13 @@
-import data from '../../Dummy/Dummy.json'
+// import data from '../../Dummy/Dummy.json'
 import { HeartButton } from './HeartButton';
 import { useNavigate } from 'react-router-dom'
+import { seededValueInRange } from './seededValueInRange';
 
 export const Card = ({
-    image = data.hotels[0].image[0],
-    hotelName = data.hotels[0].name,
-    price = data.payments[0].amount,
-    ratings = data.reviews[0].rating,
+    image,
+    hotelName,
+    price,
+    ratings,
     id,
     cardWidth = 200,
     cardHeight = 200
@@ -36,7 +37,7 @@ export const Card = ({
             </div>
             <div>
                 <p className="font-medium pt-1">{hotelName}</p>
-                <p className="text-xs">{`₹${(price).toLocaleString("en-IN")} for one night ★ ${ratings}`}</p>
+                <p className="text-xs">{`₹${(price).toLocaleString("en-IN")} for one night ★ ${seededValueInRange(ratings)}`}</p>
             </div>
         </div>
     )
