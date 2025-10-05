@@ -13,6 +13,8 @@ from django.db.models import Q
 from rest_framework.exceptions import ValidationError
 from datetime import date
 from django.urls import reverse
+from decimal import Decimal
+
 # Create your views here.
 
 
@@ -95,7 +97,7 @@ class BookingViewSet(viewsets.ModelViewSet):
             payment, _ = Payment.objects.update_or_create(
                 booking=booking,
                 defaults={
-                    "amount": payment_data.get("amount", booking.total_price + (booking.total_price * 0.18) ),
+                    "amount": payment_data.get("amount", str(Decimal(booking.total_price) + Decimal(booking.total_price * 0.18) )),
                     "status": payment_data.get("status", PaymentStatus.PENDING),
                     "payment_method": payment_data.get("payment_method", "upi"),
                     "provider_payment_id": payment_data.get("provider_payment_id"),
