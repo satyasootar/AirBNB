@@ -106,6 +106,9 @@ class BookingViewSet(viewsets.ModelViewSet):
             if payment.status == PaymentStatus.PAID:
                 booking.status = BookingStatus.CONFIRMED
                 booking.save(update_fields=["status"])
+                
+                return serializer
+            return serializer
 
 
 
