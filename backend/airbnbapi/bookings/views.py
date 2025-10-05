@@ -22,83 +22,90 @@ class BookingViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-
     def get_queryset(self):
-        # Guests see their own bookings by default
-        # Hosts can pass ?role=host to see bookings on their listings
         role = self.request.query_params.get("role")
         qs = (
             Booking.objects.select_related("listing", "user", "listing__host_id")
-        .all()
-        .order_by("-created_at")
+            .all()
+            .order_by("-created_at")
         )
         if role == "host":
-            
             return qs.filter(listing__host_id=self.request.user)
         return qs.filter(user=self.request.user)
-
- 
-
 
     def perform_create(self, serializer):
         check_in = serializer.validated_data["check_in"]
         check_out = serializer.validated_data["check_out"]
         listing = serializer.validated_data["listing"]
 
-        # Prevent booking if check-in date is in the past
+        # ❌ Check-in in the past
         if check_in < date.today():
             raise ValidationError({"detail": "Check-in date cannot be in the past."})
 
-        # Prevent booking if check-out is before check-in
+        # ❌ Check-out before check-in
         if check_out <= check_in:
             raise ValidationError({"detail": "Check-out must be after check-in."})
 
-        # Check for overlapping bookings
+        # ❌ Overlapping bookings
         overlap = Booking.objects.filter(
             listing=listing,
-            status=BookingStatus.CONFIRMED,
-        ).filter(
-            Q(check_in__lt=check_out) & Q(check_out__gt=check_in)
-        )
+            status__in=[BookingStatus.CONFIRMED, BookingStatus.PENDING],
+        ).filter(Q(check_in__lt=check_out) & Q(check_out__gt=check_in))
 
         if overlap.exists():
-            raise ValidationError({"detail": "This listing is already booked for the selected dates."})
+            raise ValidationError(
+                {"detail": "This listing is already booked for the selected dates."}
+            )
 
-        # Save booking with pending status
-        booking = serializer.save(user=self.request.user, status=BookingStatus.PENDING)
-        
-        # Calculate price (basic: nights * listing.price_per_night)
+        # ✅ Calculate total and tax
         nights = (check_out - check_in).days
-        total_amount = listing.price_per_night * nights
+        subtotal = listing.price_per_night * nights
+        tax_rate = 0.18
+        tax_amount = subtotal * tax_rate
+        total_amount = subtotal + tax_amount
 
-        # Create a Payment object
-        payment = Payment.objects.create(
-            booking=booking,
-            amount=total_amount,
-            status=PaymentStatus.PENDING,
+        # ✅ Save booking
+        booking = serializer.save(
+            user=self.request.user,
+            status=BookingStatus.PENDING,
+            total_price=total_amount,
         )
-        return payment
 
-      
+        # ✅ Create pending payment if not exists
+        Payment.objects.get_or_create(
+            booking=booking,
+            defaults={
+                "amount": total_amount,
+                "status": PaymentStatus.PENDING,
+                "payment_method": "UPI",  # optional default
+            },
+        )
 
+        return booking
 
+    def perform_update(self, serializer):
+        """
+        ✅ Allow partial booking update — example: confirming payment or changing dates.
+        """
+        booking = serializer.save()
 
-    @action(detail=True, methods=["put"], permission_classes=[IsAuthenticated])
-    def cancel(self, request, pk=None):
-        booking = self.get_object()
-        # Only booking owner or listing host can cancel
-        if not IsBookingOwnerOrHost().has_object_permission(request, self, booking):
-            return Response({"detail": "Not allowed."}, status=status.HTTP_403_FORBIDDEN)
+        # ✅ If payment data is nested, update it inside serializer (handled automatically)
+        payment_data = self.request.data.get("payment")
+        if payment_data:
+            payment, _ = Payment.objects.update_or_create(
+                booking=booking,
+                defaults={
+                    "amount": payment_data.get("amount", booking.total_price),
+                    "status": payment_data.get("status", PaymentStatus.PENDING),
+                    "payment_method": payment_data.get("payment_method", "UPI"),
+                    "provider_payment_id": payment_data.get("provider_payment_id"),
+                },
+            )
 
-
-        # Simple rule: cannot cancel on/after check-in day
-        if booking.check_in <= date.today():
-            return Response({"detail": "You can no longer cancel on/after the check-in date."},status=status.HTTP_400_BAD_REQUEST,)
-
-
-        booking.status = BookingStatus.CANCELLED
-        booking.save(update_fields=["status"])
-        return Response(self.get_serializer(booking).data)
+            # ✅ Auto-confirm booking if payment is PAID
+            if payment.status == PaymentStatus.PAID:
+                booking.status = BookingStatus.CONFIRMED
+                booking.save(update_fields=["status"])
 
 
 
