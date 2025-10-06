@@ -56,15 +56,15 @@ class PaymentStatus(models.TextChoices):
 
 class PaymentMethod(models.TextChoices):
     CARD = "card", "Card"
-    UPI = "upi", "UPI"
-    PAYPAL = "paypal", "PayPal"
-    OTHER = "other", "Other"
+    UPIID = "upiID", "UPIUPIID"
+    UPIQR = "upiQR", "UPIQR"
+    NETBANKING = "netbanking", "NETBANKING"
 
 class Payment(models.Model):
     booking = models.OneToOneField("Booking", on_delete=models.CASCADE, related_name="payment")
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=10, choices=PaymentStatus.choices, default=PaymentStatus.PENDING)
-    payment_method = models.CharField( max_length=10, choices=PaymentMethod.choices)
+    payment_method = models.CharField( max_length=11, choices=PaymentMethod.choices)
     provider_payment_id  = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
