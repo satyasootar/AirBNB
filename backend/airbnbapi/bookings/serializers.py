@@ -133,6 +133,7 @@ class BookingSerializer(serializers.ModelSerializer):
                     BookingStatus.PENDING,
                     BookingStatus.CONFIRMED,
                     BookingStatus.COMPLETED,
+                    BookingStatus.CANCELLED
                 ],
                 check_in__lt=check_out,
                 check_out__gt=check_in,
@@ -176,7 +177,12 @@ class BookingSerializer(serializers.ModelSerializer):
             if payment.status == PaymentStatus.PAID:
                 booking.status = BookingStatus.CONFIRMED
                 booking.save(update_fields=["status"])
-
+            if payment.status == PaymentStatus.FAILED or payment.status == PaymentStatus.REFUNDED :
+                booking.status = BookingStatus.CANCELLED
+                booking.save(update_fields=["status"])
+            if payment.status == PaymentStatus.PENDING:
+                booking.status = BookingStatus.PENDING
+                booking.save(update_fields=["status"])
         return booking
 
     def to_representation(self, instance):
@@ -208,5 +214,12 @@ class BookingSerializer(serializers.ModelSerializer):
             if payment.status == PaymentStatus.PAID:
                 instance.status = BookingStatus.CONFIRMED
                 instance.save(update_fields=["status"])
+            if payment.status == PaymentStatus.FAILED or payment.status == PaymentStatus.REFUNDED :
+                instance.status = BookingStatus.CANCELLED
+                instance.save(update_fields=["status"])
+            if payment.status == PaymentStatus.PENDING:
+                instance.status = BookingStatus.PENDING
+                instance.save(update_fields=["status"])
+                
 
         return instance

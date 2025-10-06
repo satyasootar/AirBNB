@@ -56,7 +56,7 @@ class PaymentStatus(models.TextChoices):
 
 class PaymentMethod(models.TextChoices):
     CARD = "card", "Card"
-    UPIID = "upiID", "UPIUPIID"
+    UPIID = "upiID", "UPIID"
     UPIQR = "upiQR", "UPIQR"
     NETBANKING = "netbanking", "NETBANKING"
 
