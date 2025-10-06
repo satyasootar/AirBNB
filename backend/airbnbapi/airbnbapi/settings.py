@@ -8,7 +8,6 @@ import cloudinary.api
 
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -120,10 +119,6 @@ cloudinary.config(
     api_key = os.getenv("CLOUD_API_KEY"),
     api_secret = os.getenv("CLOUD_API_SECRET"),
 )
-
-
-
-
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
