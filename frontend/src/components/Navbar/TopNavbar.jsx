@@ -35,7 +35,7 @@ export default function TopNavbar() {
 
                 {
                     user && Object.keys(user).length > 0 ? (
-                        <Profile name={user.email || user.username || user.name || "User"} />
+                        <Profile onClick={() => navigate("/profile")} name={user.email || user.username || user.name || "User"} />
                     ) : (
                         <div className='bg-gray-1 hover:bg-gray-2 size-10 rounded-full flex justify-center items-center cursor-pointer'>
                             <div>
@@ -74,7 +74,7 @@ export default function TopNavbar() {
                 <div className={`absolute z-60 bg-white top-15 right-5 p-5 rounded-2xl max-w-[270px] shadow-xl ${toggleHamburger ? "block" : "hidden"}`}>
                     {/* Wishlists */}
                     <div className={`${user && Object.keys(user).length > 0 ? "block" : "hidden"}`}>
-                        <div className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
+                        {/* <div className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
@@ -83,10 +83,10 @@ export default function TopNavbar() {
                             <div>
                                 <p className="font-medium">Wishlists</p>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Trips */}
-                        <div className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
+                        <div onClick={() => navigate("/trips")} className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
@@ -95,12 +95,12 @@ export default function TopNavbar() {
                                 </svg>
                             </div>
                             <div>
-                                <p onClick={() => navigate("/trips")} className="font-medium">Trips</p>
+                                <p className="font-medium">Trips</p>
                             </div>
                         </div>
 
                         {/* Messages */}
-                        <div className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
+                        {/* <div className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -109,7 +109,7 @@ export default function TopNavbar() {
                             <div>
                                 <p className="font-medium">Messages</p>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Profile */}
                         <div className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>

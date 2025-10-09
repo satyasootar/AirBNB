@@ -9,6 +9,7 @@ import { createSearchItemsFromHotels } from '../components/utils/createSearchIte
 const StoreContextProvider = ({ children }) => {
     // const hotels = structuredClone(data)
     const [hotels, setHotels] = useState([]);
+    console.log("hotels: ", hotels);
     const [searchItems, setSearchItems] = useState([
         {
             id: 11,
@@ -56,6 +57,7 @@ const StoreContextProvider = ({ children }) => {
     const [loader, setLoader] = useState(false);
     const [authError, setAuthError] = useState(null);
     const [user, setUser] = useState(null)
+    console.log("user: ", user);
 
 
     // Refs
@@ -261,7 +263,6 @@ const StoreContextProvider = ({ children }) => {
         }
     };
 
-    // Combined initialization effect
     useEffect(() => {
         // Load from localStorage
         fetchHotels()
@@ -290,7 +291,7 @@ const StoreContextProvider = ({ children }) => {
                 localStorage.removeItem("bookingDetails");
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, []);
 
     // User data effect with proper authentication
