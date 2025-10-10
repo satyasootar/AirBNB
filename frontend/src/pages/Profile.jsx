@@ -5,8 +5,7 @@ import { toast } from 'react-toastify';
 import TripCard_Profile from '../components/Profile/TripCard_Profile';
 
 export const Profile = () => {
-    const { user, myBookings,refreshUser } = useContext(StoreContext);
-    const [trips, setTrips] = useState([]);
+    const { user,refreshUser, trips } = useContext(StoreContext);
     const [activeTab, setActiveTab] = useState('trips');
     const [isEditing, setIsEditing] = useState(false);
     const [profileData, setProfileData] = useState({

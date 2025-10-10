@@ -9,7 +9,9 @@ import { createSearchItemsFromHotels } from '../components/utils/createSearchIte
 const StoreContextProvider = ({ children }) => {
     // const hotels = structuredClone(data)
     const [hotels, setHotels] = useState([]);
-    const[trips, setTrips] = useState()
+    const [trips, setTrips] = useState(null);
+    console.log("trips: ", trips);
+    const [tripLoading, setTripLoading] = useState(true)
     console.log("hotels: ", hotels);
     const [searchItems, setSearchItems] = useState([
         {
@@ -230,12 +232,16 @@ const StoreContextProvider = ({ children }) => {
 
     const myBookings = async () => {
         try {
+            setTripLoading(true)
             const res = await axiosInstance.get("/api/bookings");
             const bookings = res.data?.results;
             if (bookings && bookings.length > 0) {
-                return bookings; 
+                setTrips(bookings)
+                setTripLoading(false)
+                return bookings;
             } else {
-                return "There are no trips"; 
+                setTripLoading(false)
+                return "There are no trips";
             }
 
         } catch (error) {
@@ -257,8 +263,8 @@ const StoreContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        // Load from localStorage
         fetchHotels()
+        myBookings()
         const storedAccess = localStorage.getItem("access");
         const storedRefresh = localStorage.getItem("refresh");
         const savedUserData = localStorage.getItem("userData");
@@ -336,6 +342,7 @@ const StoreContextProvider = ({ children }) => {
     const value = {
         hotels,
         trips,
+        tripLoading,
         userData,
         updateUserData,
         bookingDetails,

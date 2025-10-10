@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { StoreContext } from '../context/StoreContext';
 import { TripCard } from '../components/Trips/TripCard';
 import { TripsSkeleton } from '../components/Trips/TripSkeleton';
@@ -6,40 +6,16 @@ import { TripsSkeleton } from '../components/Trips/TripSkeleton';
 
 
 const Trips = () => {
-    const { myBookings } = useContext(StoreContext);
-    const [bookings, setBookings] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { trips, tripLoading } = useContext(StoreContext);
+    // const [bookings, setBookings] = useState([]);
+    // const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchBookings = async () => {
-            try {
-                setLoading(true);
-                setError(null);
-                const result = await myBookings();
 
-                if (typeof result === 'string') {
-                    setBookings([]);
-                } else {
-                    setBookings(result);
-                }
-            } catch (err) {
-                setError(err.message);
-                setBookings([]);
-            } finally {
-                setLoading(false);
-            }
-        };
+    if (tripLoading) return <TripsSkeleton />;
 
-        fetchBookings();
-    }, [myBookings]);
+    // if (error) return <div>Error: {error}</div>;
 
-    // Show skeleton while loading
-    if (loading) return <TripsSkeleton />;
-
-    if (error) return <div>Error: {error}</div>;
-
-    if (bookings.length === 0) return <div>There are no trips</div>;
+    if (trips.length === 0) return <div>There are no trips</div>;
 
     return (
         <div className="min-h-screen bg-white">
@@ -64,7 +40,7 @@ const Trips = () => {
 
                 {/* Trips List */}
                 <div className="mb-8">
-                    {bookings.map(booking => (
+                    {trips.map(booking => (
                         <TripCard key={booking.id} booking={booking} />
                     ))}
                 </div>

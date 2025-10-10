@@ -4,7 +4,7 @@ import { StoreContext } from "../../context/StoreContext"
 
 function TripCard_Profile({ trip }) {
 
-    const { hotels } = useContext(StoreContext)
+    const { hotels,} = useContext(StoreContext)
     let image = hotels.find(h => h.id == trip.listing_info.id);
     return (
         <div className="border border-gray-2 rounded-md overflow-hidden hover:shadow-card transition-shadow">
