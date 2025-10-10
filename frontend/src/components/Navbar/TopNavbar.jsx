@@ -35,7 +35,7 @@ export default function TopNavbar() {
 
                 {
                     user && Object.keys(user).length > 0 ? (
-                        <Profile onClick={() => navigate("/profile")} name={user.email || user.username || user.name || "User"} />
+                        <Profile onClick={() => navigate("/profile")} user={user} />
                     ) : (
                         <div className='bg-gray-1 hover:bg-gray-2 size-10 rounded-full flex justify-center items-center cursor-pointer'>
                             <div>

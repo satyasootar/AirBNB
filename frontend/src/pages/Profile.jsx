@@ -1,22 +1,28 @@
 import { useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../context/StoreContext';
 import axiosInstance from '../components/utils/axiosInstance';
+import { toast } from 'react-toastify';
+import TripCard_Profile from '../components/Profile/TripCard_Profile';
 
 export const Profile = () => {
-    const { user, myBookings, hotels, updateProfile } = useContext(StoreContext);
+    const { user, myBookings,refreshUser } = useContext(StoreContext);
     const [trips, setTrips] = useState([]);
     const [activeTab, setActiveTab] = useState('trips');
     const [isEditing, setIsEditing] = useState(false);
     const [profileData, setProfileData] = useState({
         username: user?.username || '',
         email: user?.email || ''
-    });
+    }); 
     const [isUploading, setIsUploading] = useState(false);
 
-    const mockFavorites = [
-        { id: 1, title: 'Cozy Mountain Cabin', location: 'Aspen, CO', price: '$189', image: '/api/placeholder/300/200' },
-        { id: 2, title: 'City Center Loft', location: 'Chicago, IL', price: '$156', image: '/api/placeholder/300/200' }
-    ];
+   const mockFavorites = [
+    { id: 1, title: 'Lake Palace Udaipur', location: 'Udaipur, Rajasthan', price: '₹2891', image: 'https://picsum.photos/seed/udaipur/300/200' },
+    { id: 2, title: 'Serene Kerala Backwaters', location: 'Alleppey, Kerala', price: '₹1452', image: 'https://picsum.photos/seed/alleppey/300/200' },
+    { id: 3, title: 'Royal Rajputana Heritage', location: 'Jaipur, Rajasthan', price: '₹165', image: 'https://picsum.photos/seed/jaipur/300/200' },
+    { id: 4, title: 'Himalayan Mountain Retreat', location: 'Darjeeling, West Bengal', price: '₹1203', image: 'https://picsum.photos/seed/darjeeling/300/200' },
+    { id: 5, title: 'Golden Temple View Stay', location: 'Amritsar, Punjab', price: '₹9942', image: 'https://picsum.photos/seed/amritsar/300/200' },
+    { id: 6, title: 'Goan Beachfront Villa', location: 'North Goa, Goa', price: '₹2102', image: 'https://picsum.photos/seed/goa/300/200' }
+];
 
     const formatJoinDate = (dateString) => {
         const date = new Date(dateString);
@@ -24,79 +30,59 @@ export const Profile = () => {
     };
 
     const handleImageUpload = async (event) => {
-        const file = event.target.files[0];
-        console.log("file: ", file);
+        const file = event.target.files?.[0];
         if (!file) return;
-
-        // Validate file type
         if (!file.type.startsWith('image/')) {
             alert('Please select a valid image file');
+            event.target.value = '';
             return;
         }
-
-        // Validate file size (max 5MB)
-        if (file.size > 5 * 1024 * 1024) {
+        if (file.size > 5 * 1024 * 1024) { // 5MB
             alert('Image size should be less than 5MB');
+            event.target.value = '';
             return;
         }
+        const formData = new FormData();
+        formData.append('profile_pic', file);
 
         setIsUploading(true);
-        
         try {
-            
-            // Call your backend API to upload the image
-            const response = await axiosInstance.patch('/api/auth/me/', 
-                file
+            const response = await axiosInstance.patch(
+                '/api/auth/me/',      
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: (progressEvent) => {
+                        if (progressEvent.total) {
+                            const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                            console.log('Upload progress:', percent, '%');
+                        }
+                    }
+                }
             );
 
-            if (response.ok) {
-                const updatedUser = await response.json();
-                // Update the user context or trigger a refresh
+            if (response.status >= 200 && response.status < 300) {
+                refreshUser()
                 console.log('Profile image updated successfully');
-                // You might want to refresh the user data here or update context
-                window.location.reload(); // Simple refresh to get updated data
+
+                toast.success('Profile updated');
+
             } else {
-                throw new Error('Failed to upload image');
+                console.error('Upload failed', response);
+                alert('Failed to upload image. Try again.');
             }
         } catch (error) {
             console.error('Error uploading image:', error);
-            alert('Error uploading image. Please try again.');
+            const msg = error?.response?.data?.detail || error?.message || 'Error uploading image';
+            alert(msg);
         } finally {
             setIsUploading(false);
-            // Reset the file input
             event.target.value = '';
         }
     };
 
-    const handleSaveProfile = async () => {
-        try {
-            // Call your backend API to update the username
-            const response = await fetch('/api/update-profile', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}` // or however you handle auth
-                },
-                body: JSON.stringify({
-                    username: profileData.username
-                    // Don't send email as it cannot be changed
-                })
-            });
-
-            if (response.ok) {
-                const updatedUser = await response.json();
-                console.log('Profile updated successfully');
-                setIsEditing(false);
-                // You might want to update the user context here
-                window.location.reload(); // Simple refresh to get updated data
-            } else {
-                throw new Error('Failed to update profile');
-            }
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            alert('Error updating profile. Please try again.');
-        }
-    };
 
     const getInitials = (username) => {
         return username ? username.charAt(0).toUpperCase() : 'U';
@@ -109,13 +95,12 @@ export const Profile = () => {
     };
 
     useEffect(() => {
-        ;(async () => {
+        ; (async () => {
             let res = await myBookings();
             setTrips(res || []);
         })()
     }, []);
 
-    // Update profileData when user changes
     useEffect(() => {
         if (user) {
             setProfileData({
@@ -149,11 +134,10 @@ export const Profile = () => {
                                 </div>
                             )}
 
-                            <label 
-                                htmlFor="profile-upload" 
-                                className={`absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-card border border-gray-2 cursor-pointer hover:shadow-md transition-shadow ${
-                                    isUploading ? 'opacity-50 cursor-not-allowed' : ''
-                                }`}
+                            <label
+                                htmlFor="profile-upload"
+                                className={`absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-card border border-gray-2 cursor-pointer hover:shadow-md transition-shadow ${isUploading ? 'opacity-50 cursor-not-allowed' : ''
+                                    }`}
                             >
                                 {isUploading ? (
                                     <svg className="animate-spin h-4 w-4 text-gray-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -201,7 +185,7 @@ export const Profile = () => {
                                     </div>
                                     <div className="flex space-x-3">
                                         <button
-                                            onClick={handleSaveProfile}
+                                            // onClick={handleSaveProfile}
                                             className="bg-airbnb text-white px-6 py-2 rounded-md hover:bg-airbnb-dark transition-colors disabled:opacity-50"
                                         >
                                             Save
@@ -235,11 +219,10 @@ export const Profile = () => {
                                         >
                                             Edit profile
                                         </button>
-                                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                                            user?.role === 'GU' 
-                                                ? 'bg-green-100 text-green-800' 
+                                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${user?.role === 'GU'
+                                                ? 'bg-green-100 text-green-800'
                                                 : 'bg-airbnb text-white'
-                                        }`}>
+                                            }`}>
                                             {user?.role === 'GU' ? 'Guest' : 'Host'}
                                         </span>
                                     </div>
@@ -262,11 +245,10 @@ export const Profile = () => {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 transition-colors ${
-                                    activeTab === tab.id
+                                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 transition-colors ${activeTab === tab.id
                                         ? 'border-airbnb text-airbnb'
                                         : 'border-transparent text-gray-3 hover:text-gray-700'
-                                }`}
+                                    }`}
                             >
                                 <span>{tab.label}</span>
                                 {tab.count !== undefined && (
@@ -289,17 +271,7 @@ export const Profile = () => {
                         {trips?.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {trips.map((trip) => (
-                                    <div key={trip.id} className="border border-gray-2 rounded-md overflow-hidden hover:shadow-card transition-shadow">
-                                        {/* You might want to get the actual image from hotels data */}
-                                        <div className="w-full h-48 bg-gray-1 flex items-center justify-center">
-                                            <span className="text-gray-3">Property Image</span>
-                                        </div>
-                                        <div className="p-4">
-                                            <h4 className="font-semibold text-black mb-1">{trip.listing_info?.title || 'Unknown Listing'}</h4>
-                                            <p className="text-gray-3 text-sm mb-2">{trip.listing_info?.address || 'Unknown Address'}</p>
-                                            <p className="text-black font-medium">Check-in: {trip.check_in}</p>
-                                        </div>
-                                    </div>
+                                    <TripCard_Profile key={trip.id} trip={trip} />
                                 ))}
                             </div>
                         ) : (
@@ -319,7 +291,6 @@ export const Profile = () => {
                     </div>
                 )}
 
-                {/* Other tabs remain the same */}
                 {/* Favorites Tab */}
                 {activeTab === 'favorites' && (
                     <div>
@@ -360,56 +331,6 @@ export const Profile = () => {
                                 </button>
                             </div>
                         )}
-                    </div>
-                )}
-
-                {/* Account Tab */}
-                {activeTab === 'account' && (
-                    <div className="max-w-2xl">
-                        <h3 className="text-2xl font-semibold text-black mb-6">Account Settings</h3>
-                        <div className="space-y-6">
-                            <div className="border border-gray-2 rounded-md p-6">
-                                <h4 className="font-semibold text-black mb-4">Personal Info</h4>
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center">
-                                        <div>
-                                            <p className="font-medium text-black">Username</p>
-                                            <p className="text-gray-3 text-sm">{user?.username}</p>
-                                        </div>
-                                        <button 
-                                            onClick={() => setIsEditing(true)}
-                                            className="text-airbnb hover:text-airbnb-dark font-medium"
-                                        >
-                                            Edit
-                                        </button>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        <div>
-                                            <p className="font-medium text-black">Email address</p>
-                                            <p className="text-gray-3 text-sm">{user?.email}</p>
-                                        </div>
-                                        <span className="text-gray-3 text-sm">Cannot be changed</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="border border-gray-2 rounded-md p-6">
-                                <h4 className="font-semibold text-black mb-4">Login & Security</h4>
-                                <button className="text-airbnb hover:text-airbnb-dark font-medium">
-                                    Update password
-                                </button>
-                            </div>
-
-                            {user?.role === 'GU' && (
-                                <div className="border border-gray-2 rounded-md p-6">
-                                    <h4 className="font-semibold text-black mb-4">Become a Host</h4>
-                                    <p className="text-gray-3 mb-4">Share your space with travelers around the world</p>
-                                    <button className="bg-airbnb text-white px-6 py-2 rounded-md hover:bg-airbnb-dark transition-colors">
-                                        Get started
-                                    </button>
-                                </div>
-                            )}
-                        </div>
                     </div>
                 )}
             </div>

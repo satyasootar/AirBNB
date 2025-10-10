@@ -9,6 +9,7 @@ import { createSearchItemsFromHotels } from '../components/utils/createSearchIte
 const StoreContextProvider = ({ children }) => {
     // const hotels = structuredClone(data)
     const [hotels, setHotels] = useState([]);
+    const[trips, setTrips] = useState()
     console.log("hotels: ", hotels);
     const [searchItems, setSearchItems] = useState([
         {
@@ -59,8 +60,6 @@ const StoreContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     console.log("user: ", user);
 
-
-    // Refs
     const userData = useRef({
         destination: "",
         checkIn: "",
@@ -78,7 +77,6 @@ const StoreContextProvider = ({ children }) => {
         cancelBy: "",
         hotelId: 0,
     })
-
 
     // Error message helper
     const getErrorMessage = (error) => {
@@ -233,16 +231,11 @@ const StoreContextProvider = ({ children }) => {
     const myBookings = async () => {
         try {
             const res = await axiosInstance.get("/api/bookings");
-            console.log("res: ", res);
-
-            // Extract the bookings array from the nested response structure
             const bookings = res.data?.results;
-
-            // Check if bookings array exists and has items
             if (bookings && bookings.length > 0) {
-                return bookings; // Return array of hotel bookings
+                return bookings; 
             } else {
-                return "There are no trips"; // Return message for empty results
+                return "There are no trips"; 
             }
 
         } catch (error) {
@@ -294,34 +287,40 @@ const StoreContextProvider = ({ children }) => {
 
     }, []);
 
-    // User data effect with proper authentication
-    useEffect(() => {
+    const refreshUser = useCallback(async (signal = null) => {
         if (!accessToken) {
             setUser({});
             return;
         }
 
-        const abortController = new AbortController();
-
-        (async () => {
-            try {
-                const response = await axiosInstance.get("/api/auth/me/", {
-                    headers: { Authorization: `Bearer ${accessToken}` },
-                    signal: abortController.signal
-                });
-                setUser(response.data);
-            } catch (error) {
-                if (error.name !== 'AbortError') {
-                    console.error("Error fetching user:", error);
-                    if (error.response?.status === 401) {
-                        logout();
-                    }
-                }
+        try {
+            const config = {
+                headers: { Authorization: `AIRBNB ${accessToken}` }
+            };
+            if (signal) {
+                config.signal = signal;
             }
-        })();
+            const response = await axiosInstance.get("/api/auth/me/", config);
+            setUser(response.data);
+            localStorage.setItem("user", JSON.stringify(response.data));
+        } catch (error) {
+            if (signal?.aborted) {
+                return;
+            }
+            console.error("Error refreshing user:", error);
+            if (error.response?.status === 401) {
+                logout();
+            }
+        }
+    }, [accessToken, logout]);
+
+
+    useEffect(() => {
+        const abortController = new AbortController();
+        refreshUser(abortController.signal);
 
         return () => abortController.abort();
-    }, [accessToken, logout]);
+    }, [refreshUser]);
 
     // Update functions
     const updateUserData = useCallback((newData) => {
@@ -336,6 +335,7 @@ const StoreContextProvider = ({ children }) => {
 
     const value = {
         hotels,
+        trips,
         userData,
         updateUserData,
         bookingDetails,
@@ -349,6 +349,7 @@ const StoreContextProvider = ({ children }) => {
         authError,
         setAuthError,
         user,
+        refreshUser,
         searchItems,
         bookings,
         myBookings
