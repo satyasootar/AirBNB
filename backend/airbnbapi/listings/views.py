@@ -26,8 +26,12 @@ class ListingAllHotelsView(generics.ListAPIView):
             .prefetch_related("rooms", "images")
             .order_by("id")
         )
+        role = self.request.query_params.get('role')
         
-        
+        if role == 'host' and self.request.user.is_authenticated:
+            queryset = queryset.filter(host_id=self.request.user)
+            
+            
         return queryset[:500]
     
     
