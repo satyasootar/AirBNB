@@ -86,7 +86,7 @@ export default function TopNavbar() {
                         </div> */}
 
                         {/* Trips */}
-                        <div onClick={() => {navigate("/trips"); setToggleHamburger(false)} } className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
+                        <div onClick={() => { navigate("/trips"); setToggleHamburger(false) }} className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
@@ -112,7 +112,7 @@ export default function TopNavbar() {
                         </div> */}
 
                         {/* Profile */}
-                        <div className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
+                        <div onClick={() => { navigate("/profile"); setToggleHamburger(false) }} className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
@@ -163,7 +163,10 @@ export default function TopNavbar() {
                     <hr className="border-gray-300 my-3" />
 
                     {/* Become a Host */}
-                    <div className='flex items-center justify-between cursor-pointer py-3 hover:bg-gray-50 rounded-lg px-2'>
+                    <div
+                        className='flex items-center justify-between cursor-pointer py-3 hover:bg-gray-50 rounded-lg px-2'
+                        onClick={() => { navigate("/host"); setToggleHamburger(false) }}
+                    >
                         <div className='cursor-pointer'>
                             <p className='font-medium text-[14px]'>Become a Host</p>
                             <p className='text-xs text-gray-500'>It's easy to start hosting and earn extra income.</p>

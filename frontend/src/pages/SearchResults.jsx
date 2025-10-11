@@ -98,7 +98,7 @@ export const SearchResults = () => {
                         className="flex-shrink-0"
                     >
                         <SearchCard
-                            image={item.images[1].url}
+                            image={item?.images[1]?.url}
                             hotelName={item.title}
                             price={item.price_per_night}
                             ratings={seededValueInRange(item.price_per_night)}

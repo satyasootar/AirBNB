@@ -64,7 +64,7 @@ export const CardCarousel = ({ destination }) => {
                             key={idx}
                             hotelName={item.title}
                             price={item.price_per_night}
-                            image={item.images[0].url}
+                            image={item.images[0]?.url}
                             id={item.id}
                             ratings={item.price_per_night}
                         />
