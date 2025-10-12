@@ -10,7 +10,6 @@ const StoreContextProvider = ({ children }) => {
     // const hotels = structuredClone(data)
     const [hotels, setHotels] = useState([]);
     const [trips, setTrips] = useState(null);
-    console.log("trips: ", trips);
     const [tripLoading, setTripLoading] = useState(true)
     console.log("hotels: ", hotels);
     const [searchItems, setSearchItems] = useState([
@@ -151,7 +150,7 @@ const StoreContextProvider = ({ children }) => {
             updateTokens(access, refresh);
             setLoader(false);
             toast.success("Login Successful!");
-            navigate("/")
+            navigate(-1)
             console.log("Login successful:", res.data);
 
         } catch (error) {
@@ -295,7 +294,7 @@ const StoreContextProvider = ({ children }) => {
 
     const refreshUser = useCallback(async (signal = null) => {
         if (!accessToken) {
-            setUser({});
+            setUser(null);
             return;
         }
 

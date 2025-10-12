@@ -4,9 +4,6 @@ import { StoreContext } from "../context/StoreContext";
 import { SearchCard } from "../components/utils/SearchCard";
 import { seededValueInRange } from "../components/utils/seededValueInRange";
 
-// ============================================================================
-// SKELETON COMPONENT
-// ============================================================================
 
 const SearchResultsSkeleton = () => {
     return (
@@ -29,43 +26,19 @@ const SearchResultsSkeleton = () => {
     );
 };
 
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
 
 export const SearchResults = () => {
-    // ============================================================================
-    // HOOKS & CONTEXT
-    // ============================================================================
 
     const { city } = useParams();
     const { hotels, userData } = useContext(StoreContext);
-
-    // ============================================================================
-    // STATE - MOVED TO TOP (FIXES THE HOOKS ERROR)
-    // ============================================================================
-
     const [selectedHotel, setSelectedHotel] = useState(null);
-
-    // ============================================================================
-    // DATA PROCESSING
-    // ============================================================================
-
     const searchHotel = hotels.filter(
         (h) => h.location.city.toLowerCase() === city.toLowerCase()
     );
 
-    // ============================================================================
-    // LOADING STATE
-    // ============================================================================
-
     if (hotels.length === 0) {
         return <SearchResultsSkeleton />;
     }
-
-    // ============================================================================
-    // EARLY RETURNS
-    // ============================================================================
 
     if (!searchHotel.length) {
         return (
@@ -75,11 +48,6 @@ export const SearchResults = () => {
         );
     }
 
-    // ============================================================================
-    // CALCULATIONS
-    // ============================================================================
-
-    // Set default selected hotel if not already set
     const currentSelectedHotel = selectedHotel || searchHotel[2] || searchHotel[0];
 
     const mapSrc = `https://maps.google.com/maps?q=${currentSelectedHotel.location.lat},${currentSelectedHotel.location.lon}&z=15&hl=en&output=embed`;

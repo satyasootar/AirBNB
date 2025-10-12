@@ -450,8 +450,6 @@ const Room = () => {
         return <RoomSkeleton />;
     }
 
-
-
     return (
         <div className='flex flex-col items-center mx-auto py-10'>
             <div>

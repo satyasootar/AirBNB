@@ -163,18 +163,31 @@ export default function TopNavbar() {
                     <hr className="border-gray-300 my-3" />
 
                     {/* Become a Host */}
-                    <div
-                        className='flex items-center justify-between cursor-pointer py-3 hover:bg-gray-50 rounded-lg px-2'
-                        onClick={() => { navigate("/host"); setToggleHamburger(false) }}
-                    >
-                        <div className='cursor-pointer'>
-                            <p className='font-medium text-[14px]'>Become a Host</p>
-                            <p className='text-xs text-gray-500'>It's easy to start hosting and earn extra income.</p>
+
+                    {user?.role === "HO" ? (
+                        <div
+                            className='flex items-center justify-between cursor-pointer py-3 hover:bg-gray-50 rounded-lg px-2'
+                            onClick={() => { navigate("/host"); setToggleHamburger(false); }}
+                        >
+                            <div className='cursor-pointer'>
+                                <p className='font-medium text-[14px]'>Host Dashboard</p>
+                                <p className='text-xs text-gray-500'>Manage your listings and hosting activities.</p>
+                            </div>
                         </div>
-                        <div>
-                            <img src="/assets/host.png" alt="host" className='w-10 h-10' />
+                    ) : (
+                        <div
+                            className='flex items-center justify-between cursor-pointer py-3 hover:bg-gray-50 rounded-lg px-2'
+                            onClick={() => { navigate("/host"); setToggleHamburger(false); }}
+                        >
+                            <div className='cursor-pointer'>
+                                <p className='font-medium text-[14px]'>Become a Host</p>
+                                <p className='text-xs text-gray-500'>It's easy to start hosting and earn extra income.</p>
+                            </div>
+                            <div>
+                                <img src="/assets/host.png" alt="host" className='w-10 h-10' />
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <hr className="border-gray-300 my-3" />
 

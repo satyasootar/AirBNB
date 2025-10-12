@@ -7,7 +7,6 @@ import { calculateDays } from './utils/CalculateDays';
 import Loader from './utils/Loader';
 
 
-
 const PaymentMethodSkeleton = () => {
     return (
         <div className="md:w-lg mx-auto bg-white rounded-2xl shadow-lg p-6 space-y-4 animate-pulse">
@@ -85,8 +84,6 @@ const PaymentMethodSkeleton = () => {
     );
 };
 
-
-
 const UPIIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -131,10 +128,10 @@ export default function PaymentMethod({ hotelId, checkIn, checkOut }) {
     });
 
     const navigate = useNavigate();
-    const { hotels, updateBookingdetails, userData, bookings } = useContext(StoreContext);
+    const { hotels, updateBookingdetails, userData, bookings, user } = useContext(StoreContext);
     const hotel = hotels.find((h) => h.id == hotelId);
 
-
+    ;
 
     if (!hotel) {
         return <PaymentMethodSkeleton />;
@@ -164,6 +161,12 @@ export default function PaymentMethod({ hotelId, checkIn, checkOut }) {
     };
 
     const handlePayment = async () => {
+        console.log("hello")
+        if (user == null) {
+            console.log(user)
+            toast("Please Login")
+            navigate("/auth")
+        }
         let success = false;
         let message = "";
 

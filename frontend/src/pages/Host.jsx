@@ -1,19 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import axiosInstance from '../components/utils/axiosInstance';
 import { toast } from 'react-toastify';
 
 export const Host = () => {
-    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [currentFlow, setCurrentFlow] = useState('dashboard');
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(false);
     const [converting, setConverting] = useState(false);
+    const [listingId, setListingId] = useState()
     const [formStep, setFormStep] = useState(1);
     const [uploadingImages, setUploadingImages] = useState(false);
     const [uploadProgress, setUploadProgress] = useState({});
-
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -28,8 +26,8 @@ export const Host = () => {
     const [images, setImages] = useState([]);
 
     const amenities = [
-        'Wi-fi', 'Parking', 'Kitchen', 'Washer', 'Dryer', 'Air conditioning', 
-        'Heating', 'TV', 'Breakfast', 'Lunch', 'Dinner', 'Cab Services', 
+        'Wi-fi', 'Parking', 'Kitchen', 'Washer', 'Dryer', 'Air conditioning',
+        'Heating', 'TV', 'Breakfast', 'Lunch', 'Dinner', 'Cab Services',
         'Swimming Pool', 'Gym', 'Hot tub', 'Workspace'
     ];
 
@@ -50,9 +48,9 @@ export const Host = () => {
     const fetchListings = async () => {
         try {
             setLoading(true);
-            const response = await axiosInstance.get('/api/bookings/?role=host');
-            console.log("response: ", response);
-            setListings(response.data.listings || []);
+            const response = await axiosInstance.get('/api/listings/?role=host');
+            console.log("response: ", response.data.results);
+            setListings(response.data.results || []);
         } catch (error) {
             console.error('Error fetching listings:', error);
         } finally {
@@ -116,20 +114,20 @@ export const Host = () => {
     const validateStep = (step) => {
         switch (step) {
             case 1:
-                return formData.title.trim().length > 0 && 
-                       formData.description.trim().length > 0 &&
-                       formData.title.length <= 50 &&
-                       formData.description.length <= 500;
+                return formData.title.trim().length > 0 &&
+                    formData.description.trim().length > 0 &&
+                    formData.title.length <= 50 &&
+                    formData.description.length <= 500;
             case 2:
-                return formData.rooms.every(room => 
-                    room.bedroom >= 1 && room.bathroom >= 1 && 
+                return formData.rooms.every(room =>
+                    room.bedroom >= 1 && room.bathroom >= 1 &&
                     room.beds >= 1 && room.guest >= 1
                 );
             case 3:
                 return formData.address.trim().length > 0 &&
-                       formData.location.city.trim().length > 0 &&
-                       formData.location.state.trim().length > 0 &&
-                       formData.location.country.trim().length > 0;
+                    formData.location.city.trim().length > 0 &&
+                    formData.location.state.trim().length > 0 &&
+                    formData.location.country.trim().length > 0;
             case 4:
                 return formData.price_per_night > 0;
             default:
@@ -151,8 +149,11 @@ export const Host = () => {
         try {
             setLoading(true);
             const response = await axiosInstance.post('/api/listings/', formData);
+            setListingId(response.data.id)
+            console.log("Listing Uploaded ", response);
             toast.success('Listing created successfully!');
             setCurrentFlow('image-upload');
+            console.log("Listing ID: ", response.data.id);
             return response.data.id;
         } catch (error) {
             toast.error('Failed to create listing. Please try again.');
@@ -164,7 +165,7 @@ export const Host = () => {
     };
 
     const handleImageUpload = async (files) => {
-        const validFiles = Array.from(files).filter(file => 
+        const validFiles = Array.from(files).filter(file =>
             ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type) &&
             file.size <= 5 * 1024 * 1024
         );
@@ -193,7 +194,7 @@ export const Host = () => {
 
         try {
             setUploadingImages(true);
-            const uploadPromises = images.map(async (image, index) => {
+            const uploadPromises = images.map(async (image) => {
                 const formData = new FormData();
                 formData.append('image', image.file);
 
@@ -207,6 +208,7 @@ export const Host = () => {
                     }
                 });
 
+                console.log("Image uploaded: ", response);
                 return response.data;
             });
 
@@ -226,7 +228,6 @@ export const Host = () => {
     };
 
     const handleImageSubmit = async () => {
-        const listingId = await submitListing();
         if (listingId) {
             await uploadImages(listingId);
         }
@@ -428,19 +429,17 @@ export const Host = () => {
                                 {[1, 2, 3, 4, 5].map((stepNum) => (
                                     <div key={stepNum} className="flex items-center">
                                         <div
-                                            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                                                formStep >= stepNum
+                                            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${formStep >= stepNum
                                                     ? 'bg-[#FF385C] text-white'
                                                     : 'bg-gray-200 text-gray-600'
-                                            }`}
+                                                }`}
                                         >
                                             {stepNum}
                                         </div>
                                         {stepNum < 5 && (
                                             <div
-                                                className={`w-8 h-1 ${
-                                                    formStep > stepNum ? 'bg-[#FF385C]' : 'bg-gray-200'
-                                                }`}
+                                                className={`w-8 h-1 ${formStep > stepNum ? 'bg-[#FF385C]' : 'bg-gray-200'
+                                                    }`}
                                             />
                                         )}
                                     </div>
@@ -498,11 +497,10 @@ export const Host = () => {
                                             handleInputChange('multiple_rooms', 1);
                                             handleInputChange('rooms', [{ bedroom: 1, bathroom: 1, beds: 1, guest: 1 }]);
                                         }}
-                                        className={`px-6 py-3 border rounded-lg font-medium ${
-                                            formData.multiple_rooms === 1
+                                        className={`px-6 py-3 border rounded-lg font-medium ${formData.multiple_rooms === 1
                                                 ? 'border-[#FF385C] bg-red-50 text-[#FF385C]'
                                                 : 'border-gray-300 text-gray-700 hover:border-gray-400'
-                                        }`}
+                                            }`}
                                     >
                                         Yes
                                     </button>
@@ -511,11 +509,10 @@ export const Host = () => {
                                             handleInputChange('multiple_rooms', 0);
                                             handleInputChange('rooms', [{ bedroom: 1, bathroom: 1, beds: 1, guest: 1 }]);
                                         }}
-                                        className={`px-6 py-3 border rounded-lg font-medium ${
-                                            formData.multiple_rooms === 0
+                                        className={`px-6 py-3 border rounded-lg font-medium ${formData.multiple_rooms === 0
                                                 ? 'border-[#FF385C] bg-red-50 text-[#FF385C]'
                                                 : 'border-gray-300 text-gray-700 hover:border-gray-400'
-                                        }`}
+                                            }`}
                                     >
                                         No
                                     </button>
@@ -534,7 +531,7 @@ export const Host = () => {
                                         value={formData.rooms.length}
                                         onChange={(e) => {
                                             const count = Math.max(1, parseInt(e.target.value) || 1);
-                                            const newRooms = Array(count).fill().map((_, i) => 
+                                            const newRooms = Array(count).fill().map((_, i) =>
                                                 formData.rooms[i] || { bedroom: 1, bathroom: 1, beds: 1, guest: 1 }
                                             );
                                             handleInputChange('rooms', newRooms);
@@ -762,7 +759,7 @@ export const Host = () => {
                         <div className="space-y-6">
                             <div className="border border-gray-200 rounded-lg p-6">
                                 <h3 className="text-lg font-medium text-gray-900 mb-4">Property Summary</h3>
-                                
+
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-start">
                                         <div>
@@ -847,7 +844,7 @@ export const Host = () => {
                         >
                             Back
                         </button>
-                        
+
                         {formStep < 5 ? (
                             <button
                                 onClick={nextStep}
@@ -894,7 +891,7 @@ export const Host = () => {
 
                         <div>
                             <h3 className="text-xl font-semibold text-gray-900 mb-6">Your Listings</h3>
-                            
+
                             {loading ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {[1, 2].map((i) => (
@@ -973,12 +970,12 @@ export const Host = () => {
                                     <div className="font-medium text-gray-900">Create New Listing</div>
                                     <div className="text-sm text-gray-600">Add a new property</div>
                                 </button>
-                                
+
                                 <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:border-gray-400 transition-colors">
                                     <div className="font-medium text-gray-900">View Calendar</div>
                                     <div className="text-sm text-gray-600">Manage availability</div>
                                 </button>
-                                
+
                                 <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:border-gray-400 transition-colors">
                                     <div className="font-medium text-gray-900">Message Center</div>
                                     <div className="text-sm text-gray-600">Guest communications</div>
