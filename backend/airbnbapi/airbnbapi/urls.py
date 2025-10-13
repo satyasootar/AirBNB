@@ -39,9 +39,9 @@ urlpatterns = [
 
     # Admin Access Paths
     path('api/admin/listings/', admin_listings_list , name="admin_listing_view"),
-    path('api/admin/listings/<int:pk>', AdminListingDetailViewset.as_view() , name="admin_listingDetail_view"),
+    path('api/admin/listings/<int:pk>/', AdminListingDetailViewset.as_view() , name="admin_listingDetail_view"),
     path('api/admin/users/', admin_users_list , name="admin_users_view"),
-    path('api/admin/users/<int:pk>', AdminUserDetailViewset.as_view , name="admin_usersDetail_view"),
+    path('api/admin/users/<int:pk>/', AdminUserDetailViewset.as_view() , name="admin_usersDetail_view"),
 
     # Docs API
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'), # This one Downloads the YAML file to you local device

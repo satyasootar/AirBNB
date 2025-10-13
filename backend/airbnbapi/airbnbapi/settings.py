@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2)a!)xw1bqrt(8nid!)wy@yq@ja6nv7_n+uiu8o6)yiv$!nc(7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [ "airbnbapi-6s4b.onrender.com" ]
 
