@@ -56,12 +56,16 @@ class ListingListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         # attach the currently logged-in user as host (field is host_id)
         serializer.save(host_id=self.request.user)
+        
 
-class ListingDetailView(generics.RetrieveUpdateAPIView):
+
+class ListingDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = HotelsListing.objects.select_related("location", "host_id").prefetch_related("rooms", "images")
     serializer_class = HotelsListingSerializer
     authentication_classes = [authentication.JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsHostOrReadOnly, IsListingOwner]
+    
+
 
 class ListingImageUploadView(generics.ListCreateAPIView):
     authentication_classes = [authentication.JWTAuthentication]
