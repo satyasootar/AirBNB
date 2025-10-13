@@ -129,7 +129,6 @@ export default function TopNavbar() {
 
                     {/* Account Settings Section */}
                     <div className="mb-3">
-                        <p className="text-sm font-semibold text-gray-600 mb-2">Account settings</p>
 
                         {/* Languages & currency */}
                         <div className='flex justify-start gap-2 cursor-pointer py-2 hover:bg-gray-50 rounded-lg px-2'>
