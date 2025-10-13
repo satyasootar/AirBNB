@@ -70,7 +70,7 @@ export const TripDetails = () => {
                         onCancel={() => setShowCancelModal(true)}
                     />
 
-                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+                    <div className="bg-white rounded-2xl overflow-hidden border border-gray-200">
                         <TripHeroSection
                             image={image}
                             title={listing_info.title}
