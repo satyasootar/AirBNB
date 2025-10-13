@@ -1,9 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
+import axiosInstance from "../utils/axiosInstance";
+import { toast } from "react-toastify";
+import Loader from "../utils/Loader";
 
 export const TripCard = ({ booking }) => {
-    const { listing_info, check_in, check_out, nights, payment, adult, children, infant } = booking;
-    const { hotels } = useContext(StoreContext);
+    const { listing_info, check_in, check_out, nights, payment, adult, children, infant, id } = booking;
+    const { hotels, myBookings } = useContext(StoreContext);
+    const [loading, setLoading] = useState(false)
 
     let image = hotels.find(h => h.id == listing_info.id);
 
@@ -22,6 +26,20 @@ export const TripCard = ({ booking }) => {
     };
 
     const status = getTripStatus(check_out);
+
+    const deleteBooking = async (hotelId) => {
+        try {
+            setLoading(true)
+            await axiosInstance.delete(`/api/bookings/${hotelId}/`)
+            toast.success("Booking deleted sucessfully")
+            setLoading(false)
+            myBookings()
+        } catch (error) {
+            console.log("error: ", error);
+            toast.error("Something went wrong")
+            setLoading(false)
+        }
+    }
 
     return (
         <div className="border border-gray-2 rounded-2xl overflow-hidden mb-6 hover:shadow-card transition-all duration-300 bg-white">
@@ -108,8 +126,8 @@ export const TripCard = ({ booking }) => {
                                 <button className="w-full px-4 py-2 border border-black rounded-lg text-sm font-medium text-black hover:bg-gray-1 transition-colors sm:w-auto">
                                     View details
                                 </button>
-                                <button className="w-full px-4 py-2 bg-black text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors sm:w-auto">
-                                    Message host
+                                <button onClick={() => deleteBooking(id)} className="w-full px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-800 transition-colors sm:w-auto cursor-pointer">
+                                    {loading ? (<Loader size={20} />) : "Cancle"}
                                 </button>
                             </div>
                         </div>

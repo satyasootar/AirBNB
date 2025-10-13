@@ -1,5 +1,4 @@
 
-
 export default function Loader({ size = 40, ariaLabel = "Loading..." }) {
     const style = {
         width: size,

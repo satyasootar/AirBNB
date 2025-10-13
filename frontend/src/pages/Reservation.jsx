@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import { ArrowUp } from 'lucide-react';
 import PaymentMethod from "../components/PaymentMethod";
 import BookingSummaryCard from "../components/BookingSummaryCard";
-import { ToastContainer } from 'react-toastify';
+
 
 
 
@@ -22,7 +22,7 @@ export const Reservation = () => {
 
     return (
         <div className="md:px-50">
-            <ToastContainer />
+ 
             <div className="text-3xl font-bold text-gray-900 flex items-center gap-6 py-6 ">
                 <button onClick={() => navigate(-1)} className="cursor-pointer"><ArrowUp className="rotate-270" /></button>
                 <div>Confirm and pay</div>
