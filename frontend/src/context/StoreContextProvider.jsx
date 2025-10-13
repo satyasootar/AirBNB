@@ -222,6 +222,7 @@ const StoreContextProvider = ({ children }) => {
             const res = await axiosInstance.post("/api/bookings/", payload)
             await new Promise(resolve => setTimeout(resolve, 2000));
             await axiosInstance.patch(`/api/bookings/${res.data.id}`, PaymentPayload)
+            myBookings()
             return true;
         } catch (error) {
             console.log("error: ", error);

@@ -23,7 +23,7 @@ export const TripDetails = () => {
             setLoading(false);
             setShowCancelModal(false);
             myBookings();
-            navigate('/trips'); // Redirect back to trips after cancellation
+            navigate('/trips');
         } catch (error) {
             console.log("error: ", error);
             toast.error("Something went wrong");
@@ -35,7 +35,6 @@ export const TripDetails = () => {
         setShowCancelModal(true);
     };
 
-    // If no booking data, redirect back to trips
     if (!booking) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">

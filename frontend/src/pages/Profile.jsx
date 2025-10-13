@@ -16,7 +16,7 @@ export const Profile = () => {
         email: user?.email || ''
     });
     const [isUploading, setIsUploading] = useState(false);
-    const [listings, setListings] = useState(null)
+    const [listings, setListings] = useState(null);
 
     const mockFavorites = [
         { id: 1, title: 'Lake Palace Udaipur', location: 'Udaipur, Rajasthan', price: '₹2891', image: 'https://picsum.photos/seed/udaipur/300/200' },
