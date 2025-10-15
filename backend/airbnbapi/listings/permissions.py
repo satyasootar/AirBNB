@@ -26,3 +26,4 @@ class IsListingOwner(BasePermission):
         if request.method in SAFE_METHODS:
             return True
         return obj.host_id_id == request.user.id  
+

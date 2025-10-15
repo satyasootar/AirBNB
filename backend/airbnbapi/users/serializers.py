@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    profile_pic = serializers.ImageField(required=False, allow_null=True)  # ✅ accepts upload
+    profile_pic = serializers.ImageField(required=False, allow_null=True)  
 
     class Meta:
         model = Users
