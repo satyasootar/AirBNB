@@ -2,7 +2,7 @@
 from django.contrib import admin
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from users.views import home
-from .views import AdminListingsViewset , AdminUserViewset , AdminListingDetailViewset , AdminUserDetailViewset
+from .views import AdminListingsViewset , AdminUserViewset , AdminListingDetailViewset , AdminUserDetailViewset , AdminBookingViewset , AdminBookingDetailViewset
 from django.urls import path , include
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -17,6 +17,12 @@ admin_listings_list = AdminListingsViewset.as_view({
 admin_users_list = AdminUserViewset.as_view({
     'get': 'list',
     'post': 'create'
+})
+
+admin_booking_list = AdminBookingViewset.as_view({
+     'get': 'list',
+    'post': 'create'
+    
 })
 
 urlpatterns = [
@@ -42,6 +48,8 @@ urlpatterns = [
     path('api/admin/listings/<int:pk>/', AdminListingDetailViewset.as_view() , name="admin_listingDetail_view"),
     path('api/admin/users/', admin_users_list , name="admin_users_view"),
     path('api/admin/users/<int:pk>/', AdminUserDetailViewset.as_view() , name="admin_usersDetail_view"),
+    path('api/admin/booking/', admin_booking_list , name="admin_users_view"),
+    path('api/admin/booking/<int:pk>/', AdminBookingDetailViewset.as_view() , name="admin_usersDetail_view"),
 
     # Docs API
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'), # This one Downloads the YAML file to you local device
