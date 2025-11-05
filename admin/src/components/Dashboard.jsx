@@ -1254,7 +1254,7 @@ function topCitiesFromListings(listings = []) {
     })
     .sort((a, b) => b.count - a.count)
     .slice(0, 7);
-}
+} 
 
 /* --------------------------- IconButton Helper --------------------------- */
 
