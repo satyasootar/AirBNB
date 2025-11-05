@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
 
@@ -9,11 +9,12 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true)
-        const res =  login(email, password)
-        if(!res){
+        const res = await login(email, password)
+        console.log(" login res: ", res);
+        if (!res) {
             alert("Invalid credentials")
             setLoading(false)
             return
@@ -34,7 +35,7 @@ export default function Login() {
                 </div>
 
                 {loginError && (
-                    <div className="mb-4 text-sm text-red-700 bg-red-50 border border-red-100 p-3 rounded">{error}</div>
+                    <div className="mb-4 text-sm text-red-700 bg-red-50 border border-red-100 p-3 rounded">{loginError}</div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -46,7 +47,7 @@ export default function Login() {
                             type="email"
                             placeholder="you@example.com"
                             className="mt-1 block w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300"
-                            
+
                         />
                     </div>
 
@@ -58,7 +59,7 @@ export default function Login() {
                             type="password"
                             placeholder="Your secure password"
                             className="mt-1 block w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300"
-                            
+
                         />
                     </div>
 
@@ -81,7 +82,7 @@ export default function Login() {
                             type="submit"
                             disabled={loading}
                             className="w-full py-3 rounded-lg font-semibold text-white bg-red-600 hover:bg-red-700 disabled:opacity-60"
-                            
+
                         >
                             {loading ? "Signing in..." : "Sign in"}
                         </button>

@@ -1,9 +1,10 @@
 import { StoreContext } from "./StoreContext"
-import axiosInstance, { saveCredentials } from "../components/utils/axiosInstance"
+import axiosInstance, { saveTokens, clearTokens, getTokens } from "../components/utils/axiosInstance"
 import { useEffect, useState } from "react";
 
 export const StoreContextProvider = ({ children }) => {
     const [users, setUsers] = useState([])
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [totalUser, setTotalUser] = useState(0)
     const [userLoading, setUserLoading] = useState(false)
     const [loginError, setLoginError] = useState()
@@ -21,16 +22,47 @@ export const StoreContextProvider = ({ children }) => {
     const [isLoadingMoreListings, setIsLoadingMoreListings] = useState(false);
     const [hasMoreListings, setHasMoreListings] = useState(true);
 
-    const login = (email, password) => {
-        console.log("password: ", password);
-        console.log("email: ", email);
-        if (email === "rroxx460@gmail.com" && password === "zebra@qwerty") {
-            saveCredentials(email, password);
-            return true
+    //Bookings
+    const [bookings, setBookings] = useState()
+
+    const login = async (email, password) => {
+        try {
+            setLoginError(null);
+            const response = await axiosInstance.post("api/auth/login/", {
+                email,
+                password
+            });
+
+            if (response.data && response.data.access) {
+                saveTokens({
+                    access: response.data.access,
+                    refresh: response.data.refresh
+                });
+                setIsLoggedIn(true)
+                return true;
+
+            }
+        } catch (error) {
+            console.error("Login error: ", error);
+            setLoginError(error.message || "Login failed");
+            return false;
         }
-        console.error("Invalid credentials")
-        setLoginError("Invalid credentials")
-        return false;
+    }
+
+    const logout = () => {
+        clearTokens();
+        setIsLoggedIn(false)
+        window.location.reload();
+    }
+
+    const isAuthenticated = () => {
+        const tokens = getTokens();
+        if (tokens) {
+            setIsLoggedIn(true)
+            return !!(tokens && tokens.access);
+        }
+        setIsLoggedIn(false)
+        return !!(tokens && tokens.access);
     }
 
     const fetchUsers = async () => {
@@ -52,14 +84,12 @@ export const StoreContextProvider = ({ children }) => {
         }
     }
 
-    // Fetch more users when user scrolls to bottom
     const fetchMoreUsers = async () => {
         if (!userNextPage || isLoadingMoreUsers || !hasMoreUsers) return;
 
         try {
             setIsLoadingMoreUsers(true);
             let res = await axiosInstance.get(userNextPage);
-            console.log("More users: ", res);
 
             setUsers(prev => [...prev, ...res.data.results]);
             setUserNextPage(res.data.next);
@@ -71,11 +101,8 @@ export const StoreContextProvider = ({ children }) => {
         }
     }
 
-
-
     const deleteUser = async (userId) => {
         try {
-            console.log("Delete user inititated");
             await axiosInstance.delete(`/api/admin/users/${userId}`)
         } catch (error) {
             console.log("error deleting user: ", error);
@@ -86,7 +113,6 @@ export const StoreContextProvider = ({ children }) => {
         try {
             setIsLoadingMoreListings(true);
             let res = await axiosInstance.get('/api/admin/listings/?&limit=10&offset=0');
-            console.log("res: ", res);
             setTotalListings(res.data.count)
             setListings(res.data.results);
             setNextPage(res.data.next);
@@ -98,14 +124,12 @@ export const StoreContextProvider = ({ children }) => {
         }
     }
 
-    // Fetch more listings when user scrolls to bottom
     const fetchMoreListings = async () => {
         if (!nextPage || isLoadingMoreListings || !hasMoreListings) return;
 
         try {
             setIsLoadingMoreListings(true);
             let res = await axiosInstance.get(nextPage);
-            console.log("More listings: ", res);
 
             setListings(prev => [...prev, ...res.data.results]);
             setNextPage(res.data.next);
@@ -117,13 +141,40 @@ export const StoreContextProvider = ({ children }) => {
         }
     }
 
+    const deleteListing = async (id) => {
+        try {
+            await axiosInstance.delete(`/api/admin/listings/${id}`)
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    }
+
+    const fetchAllBookings = async () => {
+        try {
+            let res = await axiosInstance.get('/api/admin/booking/')
+            setBookings(res.data.results)
+        } catch (error) {
+            console.log("error: ", error);
+
+        }
+    }
+
+
+
     useEffect(() => {
-        fetchUsers()
-        fetchListings()
-    }, [])
+        if (isAuthenticated()) {
+            fetchUsers()
+            fetchListings()
+            fetchAllBookings()
+        }
+        console.log("isAuthenticated(): ", isAuthenticated());
+        console.log("isLoggedIn: ", isLoggedIn);
+    }, [isLoggedIn])
 
     const value = {
         login,
+        logout,
+        isLoggedIn,
         loginError,
         users,
         setUsers,
@@ -132,7 +183,7 @@ export const StoreContextProvider = ({ children }) => {
         totalUser,
 
         // User infinite scroll
-        fetchMoreUsers, // Use dummy for now, replace with fetchMoreUsers when API supports it
+        fetchMoreUsers,
         hasMoreUsers,
         isLoadingMoreUsers,
 
@@ -141,12 +192,16 @@ export const StoreContextProvider = ({ children }) => {
         setListings,
         setTotalListings,
         totalListings,
+        deleteListing,
 
         // Listing infinite scroll
         fetchMoreListings,
         hasMoreListings,
-        isLoadingMoreListings
+        isLoadingMoreListings,
 
+
+        //
+        bookings
     }
     return (
         <StoreContext.Provider value={value}>
