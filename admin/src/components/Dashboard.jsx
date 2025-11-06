@@ -884,6 +884,35 @@ function Avatar({ src, alt = "User", initial = "?", size = "md" }) {
   );
 }
 
+/* --------------------------- ImageThumb Helper --------------------------- */
+
+function ImageThumb({ src, alt = "Image", fallbackIcon = "🏠", size = "md" }) {
+  const sizeClasses = {
+    sm: "w-8 h-8 text-sm",
+    md: "w-10 h-10 text-base",
+    lg: "w-14 h-14 text-lg",
+  };
+
+  return (
+    <div
+      className={`relative rounded-lg overflow-hidden bg-gray-200 flex items-center justify-center font-semibold text-gray-700 ${sizeClasses[size]}`}
+    >
+      {src ? (
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.style.display = "none";
+          }}
+        />
+      ) : (
+        <span className="select-none">{fallbackIcon}</span>
+      )}
+    </div>
+  );
+}
 
 /* --------------------------- RoleBadge Helper --------------------------- */
 
@@ -928,8 +957,193 @@ function RoleBadge({ role = "" }) {
   );
 }
 
+/* --------------------------- IconButton Helper --------------------------- */
 
-// Enhanced Chart Components
+function IconButton({ 
+  icon: Icon, 
+  onClick, 
+  title = "", 
+  danger = false, 
+  disabled = false 
+}) {
+  return (
+    <button
+      onClick={onClick}
+      title={title}
+      disabled={disabled}
+      className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border text-gray-600 hover:bg-gray-100 transition-colors
+        ${danger ? "border-rose-200 hover:bg-rose-50 text-rose-600" : "border-gray-200"}
+        ${disabled ? "opacity-50 cursor-not-allowed" : ""}
+      `}
+    >
+      {Icon && <Icon className="w-4 h-4" />}
+    </button>
+  );
+}
+
+/* --------------------------- Drawer Components --------------------------- */
+
+function UserDrawer({ user, onClose }) {
+  return (
+    <Drawer onClose={onClose} title="User Details" subtitle={user.username}>
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <Avatar src={user.profile_pic} initial={user.username?.[0]} size="lg" />
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900">{user.username}</h3>
+            <RoleBadge role={user.role} />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <InfoField label="Email" value={user.email || "Not provided"} />
+          <InfoField label="Phone" value={user.phone || "Not provided"} />
+          <InfoField label="Joined Date" value={user.date_joined} />
+          <InfoField label="Last Login" value={user.last_login} />
+        </div>
+
+        {user.bio && (
+          <InfoField label="Bio" value={user.bio} fullWidth />
+        )}
+      </div>
+    </Drawer>
+  );
+}
+
+function ListingDrawer({ listing, onClose }) {
+  return (
+    <Drawer onClose={onClose} title="Listing Details" subtitle={listing.title}>
+      <div className="space-y-6">
+        <div className="aspect-video rounded-xl bg-gray-200 overflow-hidden">
+          {listing.images?.[0]?.url ? (
+            <img 
+              src={listing.images[0].url} 
+              alt={listing.title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-gray-400">
+              <HomeIcon className="w-16 h-16" />
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <InfoField label="Price per Night" value={`₹${listing.price_per_night}`} />
+          <InfoField label="Max Guests" value={listing.max_guests} />
+          <InfoField label="Bedrooms" value={listing.bedrooms} />
+          <InfoField label="Bathrooms" value={listing.bathrooms} />
+        </div>
+
+        <InfoField label="Description" value={listing.description} fullWidth />
+        
+        <div className="grid grid-cols-2 gap-4">
+          <InfoField label="City" value={listing.location?.city} />
+          <InfoField label="State" value={listing.location?.state} />
+        </div>
+
+        <InfoField label="Address" value={listing.location?.address} fullWidth />
+      </div>
+    </Drawer>
+  );
+}
+
+function BookingDrawer({ booking, onClose }) {
+  return (
+    <Drawer onClose={onClose} title="Booking Details" subtitle={`#${booking.id}`}>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <StatusBadge status={booking.status} />
+          <div className="text-lg font-semibold text-gray-900">
+            ₹{booking?.payment?.amount || booking?.total_price || 0}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <InfoField label="Check-in" value={booking.check_in} />
+          <InfoField label="Check-out" value={booking.check_out} />
+          <InfoField label="Nights" value={booking.nights} />
+          <InfoField label="Guests" value={booking.guests} />
+        </div>
+
+        <div>
+          <h4 className="font-medium text-gray-900 mb-2">Guest Information</h4>
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div className="font-medium">{booking.user?.username}</div>
+            <div className="text-sm text-gray-600">{booking.user?.email}</div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="font-medium text-gray-900 mb-2">Listing Information</h4>
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div className="font-medium">{booking.listing_info?.title}</div>
+            <div className="text-sm text-gray-600">{booking.listing_info?.address}</div>
+          </div>
+        </div>
+
+        {booking.payment && (
+          <div>
+            <h4 className="font-medium text-gray-900 mb-2">Payment Details</h4>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <div className="flex justify-between text-sm">
+                <span>Method:</span>
+                <span className="font-medium">{booking.payment.payment_method}</span>
+              </div>
+              <div className="flex justify-between text-sm mt-1">
+                <span>Status:</span>
+                <span className="font-medium">{booking.payment.status}</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </Drawer>
+  );
+}
+
+function Drawer({ children, onClose, title, subtitle }) {
+  useEffect(() => { 
+    const onEsc = (e) => e.key === "Escape" && onClose?.(); 
+    window.addEventListener("keydown", onEsc); 
+    return () => window.removeEventListener("keydown", onEsc); 
+  }, [onClose]);
+  
+  return (
+    <div className="fixed inset-0 z-50">
+      <div className="absolute inset-0 bg-black/30" onClick={onClose}></div>
+      <div className="absolute top-0 right-0 h-full w-full sm:w-96 bg-white shadow-xl p-0 overflow-y-auto rounded-l-xl">
+        <div className="p-6 border-b bg-white sticky top-0">
+          <div className="flex items-start justify-between">
+            <div>
+              <div className="text-lg font-semibold text-gray-900">{title}</div>
+              {subtitle && <div className="text-sm text-gray-500 mt-1">{subtitle}</div>}
+            </div>
+            <button 
+              onClick={onClose} 
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+        <div className="p-6">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function InfoField({ label, value, fullWidth = false }) {
+  return (
+    <div className={fullWidth ? "col-span-2" : ""}>
+      <div className="text-sm font-medium text-gray-500 mb-1">{label}</div>
+      <div className="text-gray-900">{value || "Not provided"}</div>
+    </div>
+  );
+}
+
+/* --------------------------- Chart Components --------------------------- */
+
 function EnhancedLineChart({ data = [], xKey, yKey }) {
   if (!data.length) return <EmptyChart />;
   
@@ -937,7 +1151,6 @@ function EnhancedLineChart({ data = [], xKey, yKey }) {
     <div className="h-full w-full">
       <div className="text-sm text-gray-500 mb-4">Bookings over time</div>
       <div className="relative h-64">
-        {/* Simplified chart implementation - in real app, use a chart library */}
         <div className="flex items-end justify-between h-48 gap-1">
           {data.slice(-14).map((item, index) => {
             const maxVal = Math.max(...data.map(d => d[yKey]));
@@ -1081,45 +1294,8 @@ function EmptyChart() {
   );
 }
 
-/* --------------------------- Keep existing helper components --------------------------- */
+/* --------------------------- Segmented Control --------------------------- */
 
-// Keep all your existing helper components like:
-// Avatar, ImageThumb, RoleBadge, StatusBadge, IconButton, Drawer components, etc.
-// But update the Drawer to use the modern styling
-
-// Update the Drawer component to be more modern
-function Drawer({ children, onClose, title, subtitle }) {
-  useEffect(() => { 
-    const onEsc = (e) => e.key === "Escape" && onClose?.(); 
-    window.addEventListener("keydown", onEsc); 
-    return () => window.removeEventListener("keydown", onEsc); 
-  }, [onClose]);
-  
-  return (
-    <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-black/30" onClick={onClose}></div>
-      <div className="absolute top-0 right-0 h-full w-full sm:w-96 bg-white shadow-xl p-0 overflow-y-auto rounded-l-xl">
-        <div className="p-6 border-b bg-white sticky top-0">
-          <div className="flex items-start justify-between">
-            <div>
-              <div className="text-lg font-semibold text-gray-900">{title}</div>
-              {subtitle && <div className="text-sm text-gray-500 mt-1">{subtitle}</div>}
-            </div>
-            <button 
-              onClick={onClose} 
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              ✕
-            </button>
-          </div>
-        </div>
-        <div className="p-6">{children}</div>
-      </div>
-    </div>
-  );
-}
-
-// Update Segmented Control
 function Segmented({ value, onChange, options }) {
   return (
     <div className="inline-flex bg-gray-100 rounded-lg p-1 border">
@@ -1139,6 +1315,8 @@ function Segmented({ value, onChange, options }) {
     </div>
   );
 }
+
+/* --------------------------- Utility Functions --------------------------- */
 
 function buildAnalytics(bookings = []) {
   const dailyMap = new Map();
@@ -1254,49 +1432,80 @@ function topCitiesFromListings(listings = []) {
     })
     .sort((a, b) => b.count - a.count)
     .slice(0, 7);
-} 
+}
 
-/* --------------------------- IconButton Helper --------------------------- */
+/* --------------------------- Icons --------------------------- */
 
-function IconButton({ 
-  icon: Icon, 
-  onClick, 
-  title = "", 
-  danger = false, 
-  disabled = false 
-}) {
+function SearchIcon(props) { 
   return (
-    <button
-      onClick={onClick}
-      title={title}
-      disabled={disabled}
-      className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border text-gray-600 hover:bg-gray-100 transition-colors
-        ${danger ? "border-rose-200 hover:bg-rose-50 text-rose-600" : "border-gray-200"}
-        ${disabled ? "opacity-50 cursor-not-allowed" : ""}
-      `}
-    >
-      {Icon && <Icon className="w-4 h-4" />}
-    </button>
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
   );
 }
 
+function UsersIcon() { 
+  return (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+    </svg>
+  );
+}
 
+function HomeIcon() { 
+  return (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+    </svg>
+  );
+}
 
-/* --------------------------- Keep existing utility functions --------------------------- */
+function CalendarIcon() { 
+  return (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  );
+}
 
-// Keep all your existing utility functions like:
-// buildAnalytics, maxItem, monthName, topCitiesFromListings, etc.
+function CurrencyIcon() { 
+  return (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+    </svg>
+  );
+}
 
-/* --------------------------- Enhanced Icons --------------------------- */
+function LogoutIcon(props) { 
+  return (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M16 13v-2H7V8l-5 4 5 4v-3h9z"/>
+      <path d="M20 3H10c-1.1 0-2 .9-2 2v4h2V5h10v14H10v-4H8v4c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+    </svg>
+  );
+}
 
-function SearchIcon(props) { return <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> }
-function UsersIcon() { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" /></svg> }
-function CalendarIcon() { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg> }
-function ExclamationIcon(props) { return <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg> }
-function LogoutIcon(props){return(<svg {...props} viewBox="0 0 24 24" fill="currentColor"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9z"/><path d="M20 3H10c-1.1 0-2 .9-2 2v4h2V5h10v14H10v-4H8v4c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>)}
-function UserIcon(){return(<svg className="w-5 h-5 text-rose-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.31 0-10 1.66-10 5v3h20v-3c0-3.34-6.69-5-10-5z"/></svg>)}
-function HomeIcon(){return(<svg className="w-5 h-5 text-rose-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l9 8h-3v9h-12v-9h-3l9-8z"/></svg>)}
-function BuildingIcon(){return(<svg className="w-5 h-5 text-rose-500" viewBox="0 0 24 24" fill="currentColor"><path d="M3 22h18v-2H3v2zM19 2H5c-1.1 0-2 .9-2 2v14h18V4c0-1.1-.9-2-2-2zm-9 14H6v-2h4v2zm0-4H6V8h4v4zm8 4h-6v-2h6v2zm0-4h-6V8h6v4z"/></svg>)}
-function CurrencyIcon(){return(<svg className="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm1 15h-2v-2H9v-2h2V9h2v2h2v2h-2v2z"/></svg>)}
-function EyeIcon(props){return(<svg className={props.className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>)}
-function TrashIcon(props){return(<svg className={props.className} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>)}
+function ExclamationIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+    </svg>
+  );
+}
+
+function EyeIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+    </svg>
+  );
+}
+
+function TrashIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+    </svg>
+  );
+}
