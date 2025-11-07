@@ -167,8 +167,6 @@ export const StoreContextProvider = ({ children }) => {
             fetchListings()
             fetchAllBookings()
         }
-        console.log("isAuthenticated(): ", isAuthenticated());
-        console.log("isLoggedIn: ", isLoggedIn);
     }, [isLoggedIn])
 
     const value = {

@@ -1,6 +1,9 @@
 import React, { useContext, useMemo, useState, useRef, useCallback, useEffect } from "react";
 import { StoreContext } from "../context/StoreContext";
 
+// Move formatPrice outside of Dashboard to make it globally available in this file
+const formatPrice = (price) => new Intl.NumberFormat("en-IN").format(Number(price || 0));
+
 export default function Dashboard() {
   const {
     users = [],
@@ -48,7 +51,8 @@ export default function Dashboard() {
     }
   };
   const getRoleDisplay = (role) => (role === "HO" ? "Host" : role === "GU" ? "Guest" : "User");
-  const formatPrice = (price) => new Intl.NumberFormat("en-IN").format(Number(price || 0));
+
+  // Remove the duplicate formatPrice definition from here since it's now at the top
 
   const roleStats = useMemo(
     () => ({
@@ -246,7 +250,7 @@ export default function Dashboard() {
                 onClick={() => setSearch("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                ✕
+                <XIcon className="w-4 h-4" />
               </button>
             )}
           </div>
@@ -266,7 +270,9 @@ export default function Dashboard() {
         {message && (
           <div className="fixed top-20 right-6 z-50 p-4 rounded-xl bg-emerald-500 text-white shadow-lg min-w-64 animate-slide-in flex items-center justify-between gap-4">
             <span className="font-medium">{message}</span>
-            <button onClick={() => setMessage(null)} className="text-white/80 hover:text-white">✕</button>
+            <button onClick={() => setMessage(null)} className="text-white/80 hover:text-white">
+              <XIcon className="w-4 h-4" />
+            </button>
           </div>
         )}
 
@@ -274,7 +280,7 @@ export default function Dashboard() {
         {search && (
           <div className="p-3 bg-white border rounded-xl text-sm flex items-center justify-between">
             <div className="text-gray-700">
-              Found <b>{filteredUsers.length}</b> users, <b>{filteredListings.length}</b> listings, <b>{filteredBookings.length}</b> bookings for “{search}”
+              Found <b>{filteredUsers.length}</b> users, <b>{filteredListings.length}</b> listings, <b>{filteredBookings.length}</b> bookings for "{search}"
             </div>
             <button onClick={() => setSearch("")} className="text-gray-500 hover:text-gray-700">Clear</button>
           </div>
@@ -302,27 +308,11 @@ export default function Dashboard() {
           </Card>
 
           <Card>
-            <h3 className="text-base font-semibold text-gray-900">Booking Status</h3>
-            <SimpleDonut data={derived.statusCounts} labelKey="status" valueKey="count" />
-          </Card>
-
-          <Card className="xl:col-span-2">
-            <h3 className="text-base font-semibold text-gray-900">Monthly Bookings</h3>
-            <p className="text-xs text-gray-500 mb-4">All years combined</p>
-            <SimpleBarChart data={monthlySeries} xKey="label" yKey="count" maxBars={12} />
-          </Card>
-
-          <Card>
             <h3 className="text-base font-semibold text-gray-900">Payment Methods</h3>
             <SimpleDonut data={derived.paymentMethodCounts} labelKey="method" valueKey="count" />
           </Card>
 
-          <Card className="xl:col-span-2">
-            <h3 className="text-base font-semibold text-gray-900">Yearly Bookings</h3>
-            <SimpleBarChart data={yearlySeries} xKey="year" yKey="count" />
-          </Card>
-
-          <Card>
+          <Card className="xl:col-span-3">
             <h3 className="text-base font-semibold text-gray-900">Top Cities by Listings</h3>
             <TopCitiesBars data={topCitiesFromListings(listings)} />
           </Card>
@@ -465,15 +455,27 @@ export default function Dashboard() {
       {/* Modal */}
       {confirm.open && (
         <ModernModal onClose={cancelConfirm}>
-          <div className="text-center">
-            <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-              <ExclamationIcon className="w-8 h-8 text-red-600" />
+          <div className="text-center p-2">
+            <div className="mx-auto w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mb-6">
+              <ExclamationTriangleIcon className="w-10 h-10 text-red-600" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Confirm Deletion</h3>
-            <p className="text-gray-600 mb-6">Delete this {confirm.type}? This action cannot be undone.</p>
-            <div className="flex gap-3 justify-center">
-              <button onClick={cancelConfirm} className="px-6 py-2.5 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50">Cancel</button>
-              <button onClick={runConfirm} className="px-6 py-2.5 bg-red-600 text-white rounded-xl hover:bg-red-700">Delete {confirm.type}</button>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Confirm Deletion</h3>
+            <p className="text-gray-600 mb-8 text-lg leading-relaxed">
+              Are you sure you want to delete this {confirm.type}? This action cannot be undone and all associated data will be permanently removed.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <button 
+                onClick={cancelConfirm} 
+                className="px-8 py-3.5 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 font-medium transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={runConfirm} 
+                className="px-8 py-3.5 bg-red-600 text-white rounded-xl hover:bg-red-700 font-medium transition-colors shadow-sm"
+              >
+                Delete {confirm.type}
+              </button>
             </div>
           </div>
         </ModernModal>
@@ -662,9 +664,17 @@ function ModernModal({ children, onClose }) {
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-2xl p-6 mx-4 max-w-md w-full shadow-2xl animate-scale-in" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600">✕</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
+      <div 
+        className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl animate-scale-in border border-gray-200" 
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button 
+          onClick={onClose} 
+          className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <XIcon className="w-5 h-5" />
+        </button>
         {children}
       </div>
     </div>
@@ -686,7 +696,9 @@ function Drawer({ children, onClose, title, subtitle }) {
               <div className="text-[17px] font-semibold text-gray-900">{title}</div>
               {subtitle && <div className="text-xs text-gray-500 mt-0.5">{subtitle}</div>}
             </div>
-            <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100">✕</button>
+            <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100">
+              <XIcon className="w-5 h-5" />
+            </button>
           </div>
         </div>
         <div className="p-5">{children}</div>
@@ -1023,15 +1035,78 @@ function formatPaymentMethod(method) {
 }
 
 /* ------------------------------ Icons ------------------------------ */
-function SearchIcon(props) { return <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>; }
-function UsersIcon() { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" /></svg>; }
-function HomeIcon() { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>; }
-function CalendarIcon() { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>; }
-function CurrencyIcon() { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>; }
-function LogoutIcon(props) { return (<svg {...props} viewBox="0 0 24 24" fill="currentColor"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9z"/><path d="M20 3H10c-1.1 0-2 .9-2 2v4h2V5h10v14H10v-4H8v4c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>); }
-function ExclamationIcon(props) { return <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>; }
-function EyeIcon(props) { return <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>; }
-function TrashIcon(props) { return <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>; }
+function SearchIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  ); 
+}
+function UsersIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+    </svg>
+  ); 
+}
+function HomeIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+    </svg>
+  ); 
+}
+function CalendarIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  ); 
+}
+function CurrencyIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+    </svg>
+  ); 
+}
+function LogoutIcon(props) { 
+  return (
+    <svg {...props} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M16 13v-2H7V8l-5 4 5 4v-3h9z"/>
+      <path d="M20 3H10c-1.1 0-2 .9-2 2v4h2V5h10v14H10v-4H8v4c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+    </svg>
+  ); 
+}
+function XIcon(props) {
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  );
+}
+function ExclamationTriangleIcon(props) {
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+    </svg>
+  );
+}
+function EyeIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+    </svg>
+  ); 
+}
+function TrashIcon(props) { 
+  return (
+    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+    </svg>
+  ); 
+}
 
 function StatCard({ title, value, subtitle, icon, accent = false }) {
   return (

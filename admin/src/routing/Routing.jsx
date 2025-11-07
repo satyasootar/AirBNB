@@ -6,7 +6,6 @@ import { StoreContext } from '../context/StoreContext';
 
 export const Routing = () => {
     const { isLoggedIn } = useContext(StoreContext);
-    console.log("isLoggedIn: ", isLoggedIn);
 
     return (
         <Routes>
