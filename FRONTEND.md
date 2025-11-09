@@ -129,20 +129,34 @@ It implements **real-world patterns** like token-based authentication, trip mana
 
 ---
 
-## 🖼️ Screenshots
+## 🖼️ Screenshots in laptop view
 
 | Screen | Preview |
-|--------|----------|
-| **Home / Search Bar** | ![home-search](./public/screenshots/home-search.png) |
-| **City Results** | ![city-results](./public/screenshots/city-results.png) |
-| **Room Detail** | ![room-detail](./public/screenshots/room-detail.png) |
-| **Reservation Flow** | ![reservation](./public/screenshots/reservation.png) |
-| **Trips Dashboard** | ![trips](./public/screenshots/trips.png) |
-| **Trip Details** | ![trip-details](./public/screenshots/trip-details.png) |
-| **Profile Page** | ![profile](./public/screenshots/profile.png) |
-| **Mobile Search Overlay** | ![mobile-search](./public/screenshots/mobile-search.png) |
+|--------|---------|
+| **Home / Search Bar** | ![home-search](https://github.com/user-attachments/assets/ebf70d0a-3734-456f-95da-3716ced44da6) |
+| **City Results** | ![city-results](https://github.com/user-attachments/assets/066b8c06-0220-47af-8591-1a0b2f5e939c) |
+| **Room Detail** | ![room-detail](https://github.com/user-attachments/assets/f13c0593-f2fb-427d-b0f4-73153f0035f9) |
+| **Reservation Flow** | ![reservation](https://github.com/user-attachments/assets/8950fc8b-2a2f-4864-b14a-1f38760c778a) |
+| **Trips Dashboard** | ![trips](https://github.com/user-attachments/assets/a89fc6aa-224a-4e21-8695-58054d2d3065) |
+| **Trip Details** | ![trip-details](https://github.com/user-attachments/assets/54064a34-2502-430b-8631-dcea5eac04ec) |
+| **Profile Page** | ![profile](https://github.com/user-attachments/assets/663a2188-f22b-402c-8c96-d1d4a8848a4d) |
+| **Host Dashboard** | ![mobile-search](https://github.com/user-attachments/assets/b0d001e8-6c07-4cbe-a4e4-f2eae455ec0f) |
 
----
+
+## 🖼️ Screenshots in Mobile view
+
+| Screen | Preview |
+|--------|---------|
+| **Home / Search Bar** | ![home-search](https://github.com/user-attachments/assets/fe43f9e8-fcc0-4076-8fd8-1e3ca28ccbe8) |
+| **City Results** | ![city-results](https://github.com/user-attachments/assets/4502d393-6701-496d-9164-415d50586955) |
+| **Room Detail** | ![room-detail](https://github.com/user-attachments/assets/976f5106-45d6-4ea7-89c8-3f7819f484f1) |
+| **Reservation Flow** | ![reservation](https://github.com/user-attachments/assets/c8744caa-1753-40a3-9c4d-7ec68de0d7d5) |
+| **Trips Dashboard** | ![trips](https://github.com/user-attachments/assets/62d58d4a-e113-44ef-97d4-58ebe6fe964c) |
+| **Trip Details** | ![trip-details](https://github.com/user-attachments/assets/593beb14-7095-4a3a-86cf-ea391c973f02) |
+| **Profile Page** | ![profile](https://github.com/user-attachments/assets/608d644e-1c24-431b-bd4d-f75f34566bd6) |
+| **Host Dashboard** | ![mobile-search](https://github.com/user-attachments/assets/b85e2d46-80b6-4c37-93b3-a0588678553b) |
+
+
 
 ## 🧑‍💻 Developer Insight
 
