@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Share, Heart, Grip, DoorClosed, MessageCircleHeart, CircleParking, Shell, Wifi, Car, WashingMachine, BellOff, ChevronUp, ChevronDown, AirVent, Tv, Briefcase, CookingPot, BellRing } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import { GuestFavCard } from '../components/utils/GuestFavCard';
-import { Amenities } from '../components/utils/amenities';
+import { Amenities } from '../components/utils/Amenities';
 import { Features } from '../components/utils/Features';
 import { RatingsBar } from '../components/utils/RatingsBar';
 import { RatingIcon } from '../components/utils/RatingIcon';
