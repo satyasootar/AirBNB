@@ -1,291 +1,311 @@
+# 🏡 Airbnb Clone - Full Stack Accommodation Booking Platform
 
+A production-grade, full-stack accommodation booking application inspired by Airbnb, featuring a modern React frontend and a robust Django REST API backend. This project demonstrates enterprise-level architecture, authentication flows, real-time booking management, and responsive design principles.
 
-# API Documentation
-
-## Overview
-This API provides endpoints for managing users, hotels, and reviews.  
-It follows RESTful principles and uses JSON for request and response bodies.  
-
----
-
-## Authentication
-- Authentication is required for certain endpoints.
-- Add `Authorization: AIRBNB <token>` in the header for protected routes.
+> **Designed & Developed by Satya Prangya Sootar**  
+> B-Tech CSE | Full-Stack Developer | Passionate about scalable web experiences
 
 ---
 
-## Endpoints
-### 📌 Endpoints Overview
-### 🔹 Listings
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Architecture](#-architecture)
+- [Frontend Routes](#-frontend-routes)
+- [Authentication Flow](#-authentication-flow)
+- [Future Enhancements](#-future-enhancements)
+
+---
+
+## 🎯 Overview
+
+This project is a feature-complete Airbnb clone that enables users to:
+- **Search and discover** accommodations by location, price, and amenities
+- **Book stays** with intuitive date selection and guest management
+- **Manage trips** with detailed booking history and status tracking
+- **Review properties** with ratings across multiple dimensions
+- **Host listings** with property management capabilities
+
+The application showcases modern web development practices including JWT authentication, RESTful API design, responsive UI/UX, and optimized performance patterns.
+
+---
+
+## ✨ Features
+
+### User Experience
+- 🔍 **Smart Search** - Dynamic city suggestions with filters for price, dates, and guests
+- 📅 **Date Selection** - Intuitive calendar interface with availability checking
+- 🏠 **Property Discovery** - Rich listing cards with images, ratings, and amenities
+- 💳 **Seamless Booking** - Multi-step reservation flow with payment integration
+- 📊 **Trip Management** - Comprehensive dashboard for past and upcoming bookings
+- ⭐ **Review System** - Multi-dimensional ratings (cleanliness, location, service)
+- 👤 **Profile Management** - Avatar uploads, favorites, and account settings
+
+### Technical Capabilities
+- 🔐 **Secure Authentication** - JWT-based auth with automatic token refresh
+- 🚀 **High Performance** - React 19 concurrent rendering, Vite HMR
+- 📱 **Fully Responsive** - Mobile-first design with adaptive layouts
+- 🎨 **Smooth Animations** - Framer Motion micro-interactions
+- 🛡️ **Error Handling** - Comprehensive error states and user feedback
+- 🔄 **Real-time Updates** - Optimistic UI with server synchronization
+- 📡 **API Integration** - Axios interceptors for token lifecycle management
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+| Category | Technology |
+|----------|-----------|
+| **Framework** | React 19 (Concurrent APIs) |
+| **Routing** | React Router DOM v7 |
+| **Build Tool** | Vite 7 (ESM) |
+| **Styling** | Tailwind CSS v4 |
+| **Animation** | Framer Motion |
+| **HTTP Client** | Axios |
+| **State Management** | Context API + Custom Hooks |
+| **UI Components** | Heroicons, Lucide, React Slick |
+| **Form Handling** | react-datepicker |
+| **Notifications** | React Toastify |
+
+### Backend
+| Category | Technology |
+|----------|-----------|
+| **Framework** | Django REST Framework |
+| **Authentication** | JWT (JSON Web Tokens) |
+| **Database** | PostgreSQL / SQLite |
+| **API Architecture** | RESTful |
+| **File Uploads** | Multipart Form Data |
+
+---
+
+## 🏗️ Architecture
+
+### Frontend Architecture
 
 ```
-GET /api/listings/ → List all hotels
-
-POST /api/listings/ → Create new listing
-
-GET /api/listings/{id}/ → Retrieve hotel details
-
-PUT /api/listings/{id}/ → Update listing
-
-PATCH /api/listings/{id}/ → Partially update listing
-
-DELETE /api/listings/{id}/ → Delete listing
+frontend/
+├── public/
+│   ├── assets/              # Static images and icons
+│   │   ├── balloon.png
+│   │   ├── beachsearch.png
+│   │   ├── bell.png
+│   │   ├── citysearch.png
+│   │   ├── guest_fav.png
+│   │   ├── host.png
+│   │   ├── leaf.png
+│   │   └── mountainsearch.png
+│   └── logo/                # Brand assets
+│       ├── Airbnb_Logo_0.svg
+│       ├── Airbnb_Logo_1.png
+│       ├── Airbnb_Logo_2.webp
+│       └── symbol.svg
+│
+└── src/
+    ├── components/
+    │   ├── Navbar/          # Navigation system
+    │   │   ├── DesktopSearchBar.jsx
+    │   │   ├── MobileExpandedSearch.jsx
+    │   │   ├── MobileSearchTrigger.jsx
+    │   │   ├── Navbar.jsx
+    │   │   └── TopNavbar.jsx
+    │   ├── Profile/         # Profile management
+    │   │   ├── FavoritesTab.jsx
+    │   │   ├── ListingsTab.jsx
+    │   │   ├── ProfileEditForm.jsx
+    │   │   ├── ProfileHeader.jsx
+    │   │   ├── ProfileImageUpload.jsx
+    │   │   ├── ProfileTabs.jsx
+    │   │   ├── TripCard_Profile.jsx
+    │   │   └── TripsTab.jsx
+    │   ├── Room/            # Property detail components
+    │   │   ├── AboutPlace.jsx
+    │   │   ├── GuestFavourite.jsx
+    │   │   └── HotelGallery.jsx
+    │   ├── Trips/           # Booking management
+    │   │   ├── CancelModal.jsx
+    │   │   ├── GuestInfoSection.jsx
+    │   │   ├── HelpSection.jsx
+    │   │   ├── HostInfoSection.jsx
+    │   │   ├── PaymentSummary.jsx
+    │   │   ├── TripCard.jsx
+    │   │   ├── TripDetailsHeader.jsx
+    │   │   ├── TripHeroSection.jsx
+    │   │   ├── TripInfoCards.jsx
+    │   │   ├── TripNotFound.jsx
+    │   │   └── TripSkeleton.jsx
+    │   ├── utils/           # Reusable utilities
+    │   │   ├── Amenities.jsx
+    │   │   ├── axiosInstance.js
+    │   │   ├── CalculateDays.js
+    │   │   ├── Card.jsx
+    │   │   ├── createSearchItemsFromHotels.jsx
+    │   │   ├── Features.jsx
+    │   │   ├── GuestFavCard.jsx
+    │   │   ├── Header.jsx
+    │   │   ├── HeartButton.jsx
+    │   │   ├── Loader.jsx
+    │   │   ├── Profile.jsx
+    │   │   ├── RareFind.jsx
+    │   │   ├── RatingIcon.jsx
+    │   │   ├── RatingsBar.jsx
+    │   │   ├── ReviewCard.jsx
+    │   │   ├── ScrollButton.jsx
+    │   │   ├── ScrollToTop.jsx
+    │   │   ├── SearchCard.jsx
+    │   │   ├── SearchCards.jsx
+    │   │   └── seededValueInRange.jsx
+    │   ├── BookingSummaryCard.jsx
+    │   ├── CardCarousel.jsx
+    │   ├── Footer.jsx
+    │   ├── MapEmbed.jsx
+    │   └── PaymentMethod.jsx
+    │
+    ├── context/             # Global state
+    │   ├── StoreContext.js
+    │   └── StoreContextProvider.jsx
+    │
+    ├── pages/               # Route views
+    │   ├── Auth.jsx
+    │   ├── Confirmation.jsx
+    │   ├── Home.jsx
+    │   ├── Host.jsx
+    │   ├── Profile.jsx
+    │   ├── Reservation.jsx
+    │   ├── Room.jsx
+    │   ├── SearchResults.jsx
+    │   ├── TripDetails.jsx
+    │   └── Trips.jsx
+    │
+    ├── routing/
+    │   └── Routing.jsx      # React Router configuration
+    │
+    ├── App.jsx              # Root component
+    ├── main.jsx             # Application entry point
+    └── index.css            # Global styles
 ```
 
-### 🔹 Images
-```
-
-POST /api/listings/{id}/images/ → Upload hotel images
-```
-
-### 🔹 Reviews
-```
-
-GET /api/listings/{id}/reviews/ → List reviews for a hotel
-
-POST /api/listings/{id}/reviews/ → Add a review
-
-GET /api/listings/{id}/reviews/{id}/ → Get review details
-
-PUT /api/listings/{id}/reviews/{id}/ → Update review
-
-PATCH /api/listings/{id}/reviews/{id}/ → Partially update review
-
-DELETE /api/listings/{id}/reviews/{id}/ → Delete review
-```
-
-### 🔹 Bookings
-```
-
-GET /api/bookings/ → List all bookings
-
-POST /api/bookings/ → Create a booking
-
-GET /api/bookings/{id}/ → Retrieve booking details
-
-PUT /api/bookings/{id}/ → Update booking
-
-PATCH /api/bookings/{id}/ → Partially update booking
-
-DELETE /api/bookings/{id}/ → Cancel booking
-```
-
-
-### 🔹 Payments
-
-# GET : bookings/
+### Backend API Structure
 
 ```
-
-GET /api/bookings/payments/{id}/ → Retrieve payment
-
-PUT /api/bookings/payments/{id}/ → Update payment
-
-DELETE /api/bookings/payments/{id}/ → Delete payment
-
+backend/
+└── airbnbapi/
+    ├── airbnbapi/           # Core Django project
+    │   ├── settings.py      # Configuration
+    │   ├── urls.py          # Main URL routing
+    │   ├── views.py         # Shared views
+    │   ├── authentication.py # Custom auth backend
+    │   ├── asgi.py
+    │   ├── wsgi.py
+    │   └── __init__.py
+    │
+    ├── users/               # User management app
+    │   ├── models.py        # User model
+    │   ├── serializers.py   # User serialization
+    │   ├── views.py         # Auth endpoints
+    │   ├── urls.py          # User routes
+    │   ├── permissions.py   # Custom permissions
+    │   ├── admin.py
+    │   └── tests.py
+    │
+    ├── listings/            # Property management app
+    │   ├── models.py        # Listing, Room, Review models
+    │   ├── serializers.py   # Listing serialization
+    │   ├── views.py         # Listing CRUD + reviews
+    │   ├── urls.py          # Listing routes
+    │   ├── permissions.py   # Host permissions
+    │   ├── admin.py
+    │   └── tests.py
+    │
+    ├── bookings/            # Booking management app
+    │   ├── models.py        # Booking, Payment models
+    │   ├── serializers.py   # Booking serialization
+    │   ├── views.py         # Booking CRUD
+    │   ├── urls.py          # Booking routes
+    │   ├── permissions.py   # Booking permissions
+    │   ├── admin.py
+    │   └── tests.py
+    │
+    ├── manage.py            # Django management script
+    ├── schema.yml           # OpenAPI schema
+    ├── Procfile             # Deployment config
+    ├── req.txt              # Python dependencies
+    └── runtime.txt          # Python version
 ```
 
-## 🏗️ Data Models
-### Hotel Listing
+---
 
-```
-{
-    "id": 2,
-    "title": "Layla",
-    "description": "Amazing %-start Hotels with bunch of Stuff to do like swimming , jogging , Sitting at lakeside anything you want",
-    "multiple_rooms": 10,
-    "rooms": [
-        {
-            "id": 1,
-            "bedroom": 2,
-            "bathroom": 2,
-            "beds": 4,
-            "guest": 8,
-            "booked_from": null,
-            "booked_to": null,
-            "is_reserved": true
-        }
-    ],
-    "location": {
-        "id": 2,
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "country": "India"
-    },
-    "address": "Near the Beach , Bombay Nagar , Mumbai",
-    "price_per_night": 45000,
-    "offersOrExtras": [
-        "Wi-Fi",
-        "Foods",
-        "Door-to-Door servvices",
-        "Airport Services",
-        "swimming",
-        "Beach"
-    ],
-    "reviews": [
-        {
-            "id": 12,
-            "hotel": 2,
-            "user": {
-                "id": 4,
-                "username": "swayam",
-                "email": "swayam@gmail.com",
-                "role": "GU"
-            },
-            "rating": 5,
-            "cleanliness": 3,
-            "location": 4,
-            "service": 4,
-            "comment": "Overall a must visit place keeps the vibes as said Calm , Toned , Peaceful Vibes  , Best for its Price",
-            "created_at": "2025-08-27T20:44:43.753606Z"
-        }
-    ],
-    "created_at": "2025-08-27T20:32:35.898965Z",
-    "updated_at": "2025-08-27T20:32:35.898980Z",
-    "host": {
-        "id": 3,
-        "username": "rahul",
-        "email": "",
-        "role": "HO"
-    },
-    "images": [
-        {
-            "id": 18,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327027/kninhtxxmj1wkw2te1ev.avif"
-        },
-        {
-            "id": 19,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327028/ohinhokunyhn7bnpjzd4.avif"
-        },
-        {
-            "id": 20,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327029/c7im9xbuhmmwfcagww4x.avif"
-        },
-        {
-            "id": 21,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327030/uvsvqqbvacii4xgavazd.avif"
-        },
-        {
-            "id": 22,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327030/sbbirxzmzry69eet3icp.avif"
-        },
-        {
-            "id": 23,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327031/u7jcicvn0thefnpbhbjq.avif"
-        },
-        {
-            "id": 24,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327032/a5yf3h38aqiw54gzexsq.avif"
-        },
-        {
-            "id": 25,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327033/oetqdjkmwzfwuphvka44.avif"
-        },
-        {
-            "id": 26,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327034/mg4fngsqdtpxxe0oerca.avif"
-        },
-        {
-            "id": 27,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327035/w5ydrnksxzgheehdgvvr.avif"
-        },
-        {
-            "id": 28,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327035/ehgx4te22rfmljgjterd.webp"
-        },
-        {
-            "id": 29,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327036/tzof5mpoeodvvh85wqn8.avif"
-        },
-        {
-            "id": 30,
-            "url": "http://res.cloudinary.com/dghzubwry/image/upload/v1756327037/opska6deher2ehpy6jnw.avif"
-        }
-    ]
-}}
-```
-### Booking
-```
-        {
-            "id": 22,
-            "listing": 1,
-            "listing_info": {
-                "id": 1,
-                "title": "Mayfair",
-                "address": "InfoCity Sq. , Bhubaneshwar",
-                "price_per_night": 19000,
-                "host": {
-                    "id": 7,
-                    "username": "swayam21",
-                    "email": "swayam1@gamil.com",
-                    "role": "HO"
-                }
-            },
-            "user": {
-                "id": 3,
-                "username": "rahul",
-                "email": ""
-            },
-            "check_in": "2025-09-18",
-            "check_out": "2025-09-23",
-            "guests": 5,
-            "total_price": "95000.00",
-            "status": "confirmed",
-            "nights": 5,
-            "created_at": "2025-08-26T19:27:25.565493Z",
-            "updated_at": "2025-08-26T19:27:25.565512Z"
-        }
-```
-### Review
-```
-{
-            "id": 10,
-            "hotel": 1,
-            "user": {
-                "id": 4,
-                "username": "swayam",
-                "email": "swayam@gmail.com",
-                "role": "GU"
-            },
-            "rating": 4,
-            "cleanliness": 3,
-            "location": 2,
-            "service": 4,
-            "comment": "Quite Good Exprience  gave good vibes and luxirioius lifestyle as i was there for 1 week",
-            "created_at": "2025-08-27T19:55:50.826616Z"
-        }
-```
-### Payment
-```
-{
-    "id": 22,
-    "booking": 22,
-    "amount": "95000.00",
-    "status": "paid",
-    "payment_method": "UPI",
-    "provider_payment_id": "agwdiuaw 3743 i3tu t89 3 4 45985 gifdsdv",
-    "created_at": "2025-08-26T19:27:25.568564Z"
-}
-```
-## ⚡ Setup
+## 🧭 Frontend Routes
 
-- Clone the repo
+| Route | Description | Auth Required |
+|-------|-------------|---------------|
+| `/` | Landing page with search | No |
+| `/:city` | Search results for city | No |
+| `/room/:id` | Property details | No |
+| `/reservation` | Booking summary | Yes |
+| `/confirmation` | Booking success | Yes |
+| `/auth` | Login/Signup | No |
+| `/trips` | User's bookings | Yes |
+| `/trips/details/:bookingId` | Booking details | Yes |
+| `/profile` | User profile | Yes |
+| `/host` | Host dashboard | Yes |
 
-- Install dependencies
+---
+
+## 🔐 Authentication Flow
+
+1. **User Login/Signup** → Receives access + refresh tokens
+2. **Token Storage** → Stored securely in localStorage
+3. **API Requests** → Access token auto-injected via Axios interceptor
+4. **Token Expiry** → 401 response triggers refresh flow
+5. **Token Refresh** → New access token obtained from `/api/token/refresh/`
+6. **Request Retry** → Original request retried with new token
+7. **Session Hydration** → User data fetched on app reload via `/api/auth/me/`
+8. **Logout** → Tokens cleared, state reset, redirect to home
 
 
-- Configure PostgreSQL & Django environment
+---
 
-### Run migrations:
-```
-python manage.py makemigrations
+## 📈 Future Enhancements
 
-python manage.py migrate
-```
+### Performance
+- [ ] Route-based code splitting and lazy loading
+- [ ] Image optimization with WebP/AVIF formats
+- [ ] Service Worker for offline support
+- [ ] Skeleton loaders for improved perceived performance
 
-### Start server:
-```
-python manage.py runserver
-```
+### Features
+- [ ] Real-time availability calendar
+- [ ] Chat system for guest-host communication
+- [ ] Advanced filters (amenities, property type)
+- [ ] Wishlists and saved searches
+- [ ] Multi-currency support
+- [ ] Email notifications
 
+### Technical
+- [ ] Unit and integration testing (Jest, React Testing Library)
+- [ ] E2E testing with Playwright
+- [ ] Schema validation with Zod
+- [ ] Accessibility improvements (WCAG 2.1 AA)
+- [ ] Analytics integration
+- [ ] CI/CD pipeline
 
+---
+
+## 📄 License
+
+This project is for educational and portfolio purposes.
+
+---
+
+## 🙏 Acknowledgments
+
+- Inspired by Airbnb's user experience design
+- Built with best practices from React, Django, and REST API communities
+- Special thanks to open-source contributors of all libraries used
+
+---
+
+**⭐ If you found this project helpful, please consider giving it a star!**
