@@ -1,4 +1,4 @@
-# 🏡 Airbnb Clone — Frontend
+# 🏡 Airbnb — Frontend
 
 A modern, high-performance **Airbnb-inspired accommodation booking frontend** built with a **lean React + Vite stack**.  
 The project focuses on delivering a **smooth booking experience**, **authenticated user flows**, and **responsive, app-like interactions** — demonstrating production-grade frontend design and architectural skills.
