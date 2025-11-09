@@ -258,12 +258,12 @@ const Room = () => {
 
     useEffect(() => {
         if (userData?.current) {
-            setAdult(userData.current.adult || bookingData.adult);
-            setChildren(userData.current.children || bookingData.children);
-            setInfant(userData.current.infant || bookingData.infant);
+            setAdult(userData?.current?.adult || bookingData?.adult);
+            setChildren(userData.current?.children || bookingData?.children);
+            setInfant(userData.current?.infant || bookingData?.infant);
 
-            setCheckIn(userData.current.checkIn ? new Date(userData.current.checkIn) : bookingData.checkIn);
-            setCheckOut(userData.current.checkOut ? new Date(userData.current.checkOut) : bookingData.checkOut);
+            setCheckIn(userData.current?.checkIn ? new Date(userData.current.checkIn) : bookingData?.checkIn);
+            setCheckOut(userData.current.checkOut ? new Date(userData.current.checkOut) : bookingData?.checkOut);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
