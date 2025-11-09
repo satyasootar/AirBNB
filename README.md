@@ -1,9 +1,6 @@
-# 🏡 Airbnb Clone - Full Stack Accommodation Booking Platform
+# 🏡 Airbnb - Full Stack Accommodation Booking Platform
 
 A production-grade, full-stack accommodation booking application inspired by Airbnb, featuring a modern React frontend and a robust Django REST API backend. This project demonstrates enterprise-level architecture, authentication flows, real-time booking management, and responsive design principles.
-
-> **Designed & Developed by Satya Prangya Sootar**  
-> B-Tech CSE | Full-Stack Developer | Passionate about scalable web experiences
 
 ---
 
