@@ -141,6 +141,7 @@ It implements **real-world patterns** like token-based authentication, trip mana
 | **Trip Details** | ![trip-details](https://github.com/user-attachments/assets/54064a34-2502-430b-8631-dcea5eac04ec) |
 | **Profile Page** | ![profile](https://github.com/user-attachments/assets/663a2188-f22b-402c-8c96-d1d4a8848a4d) |
 | **Host Dashboard** | ![mobile-search](https://github.com/user-attachments/assets/b0d001e8-6c07-4cbe-a4e4-f2eae455ec0f) |
+| **Admin Dashboard** | ![admin-dashboard](https://github.com/user-attachments/assets/5f9d66cd-0f6e-4d83-a487-491b05487df9) |
 
 
 ## 🖼️ Screenshots in Mobile view
