@@ -22,8 +22,20 @@ SECRET_KEY = os.getenv("DB_NAME")
 DEBUG = False
 
 ALLOWED_HOSTS = [ "airbnbapi-6s4b.onrender.com" ]
+    
+CSRF_TRUSTED_ORIGINS = [
+        "https://airbnbapi-6s4b.onrender.com",
+    ]
+if not DEBUG:  
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
+    
 # Set it up before migrations
 AUTH_USER_MODEL = 'users.Users'
 
@@ -237,4 +249,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+
 
